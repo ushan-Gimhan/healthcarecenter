@@ -6,6 +6,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
@@ -19,7 +21,7 @@
 
 <StackPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.service.Project.HealthCare.controller.LoginPageController">
    <children>
-      <!-- AppInitializer container that will adapt to different screen sizes -->
+      <!-- Main container that will adapt to different screen sizes -->
       <BorderPane prefHeight="600.0" prefWidth="800.0">
          <center>
             <!-- Using GridPane for responsive layout -->
@@ -32,8 +34,8 @@
                   <RowConstraints vgrow="SOMETIMES" />
                </rowConstraints>
 
-               <!-- Left side - Image Panel -->
-               <VBox alignment="CENTER" style="-fx-background-color: #E6F2FC;" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+               <!-- Left side - Image Panel with gradient background -->
+               <VBox alignment="CENTER" style="-fx-background-color: linear-gradient(to bottom right, #E6F2FC, #C0E0FF);" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
                   <children>
                      <StackPane minHeight="100.0" VBox.vgrow="ALWAYS">
                         <children>
@@ -41,12 +43,16 @@
                               <image>
                                  <Image url="@../images/Mental+Health+Stigma.jpeg" />
                               </image>
+                              <effect>
+                                 <!-- Add a slight drop shadow to the image -->
+                                 <javafx.scene.effect.DropShadow color="#00000033" height="10.0" radius="4.5" width="10.0" />
+                              </effect>
                            </ImageView>
                         </children>
                      </StackPane>
                      <Label text="The Serenity" textFill="#2F7FB8" wrapText="true">
                         <font>
-                           <Font name="System Bold" size="28.0" />
+                           <Font name="System Bold" size="30.0" />
                         </font>
                         <VBox.margin>
                            <Insets top="20.0" />
@@ -54,7 +60,7 @@
                      </Label>
                      <Label text="Mental Health Therapy Center" textFill="#2F7FB8" wrapText="true">
                         <font>
-                           <Font size="20.0" />
+                           <Font size="22.0" />
                         </font>
                         <VBox.margin>
                            <Insets bottom="20.0" />
@@ -64,35 +70,38 @@
                         <font>
                            <Font name="System Italic" size="16.0" />
                         </font>
+                        <effect>
+                           <javafx.scene.effect.Glow level="0.1" />
+                        </effect>
                      </Label>
                   </children>
                   <padding>
-                     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     <Insets bottom="30.0" left="25.0" right="25.0" top="30.0" />
                   </padding>
                </VBox>
 
-               <!-- Right side - Login Form -->
-               <VBox alignment="CENTER" style="-fx-background-color: white;" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
+               <!-- Right side - Login Form with subtle card effect -->
+               <VBox alignment="CENTER" style="-fx-background-color: white; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">
                   <children>
                      <Label text="The Serenity" textFill="#333333" wrapText="true">
                         <font>
-                           <Font name="System Bold" size="24.0" />
+                           <Font name="System Bold" size="26.0" />
                         </font>
                         <VBox.margin>
                            <Insets bottom="40.0" />
                         </VBox.margin>
                      </Label>
 
-                     <VBox fillWidth="true" maxWidth="300.0" minWidth="180.0" spacing="20.0">
+                     <VBox fillWidth="true" maxWidth="320.0" minWidth="200.0" spacing="20.0">
                         <children>
                            <Label text="Username" textFill="#5A5A5A">
                               <font>
                                  <Font size="14.0" />
                               </font>
                            </Label>
-                           <TextField fx:id="usernameField" promptText="Enter your username">
+                           <TextField fx:id="usernameField" promptText="Enter your username" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #D8D8D8; -fx-border-width: 1;">
                               <padding>
-                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                                 <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
                               </padding>
                            </TextField>
 
@@ -101,11 +110,37 @@
                                  <Font size="14.0" />
                               </font>
                            </Label>
-                           <PasswordField fx:id="passwordField" promptText="Enter your password">
-                              <padding>
-                                 <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                              </padding>
-                           </PasswordField>
+
+                           <!-- Password field container with view toggle -->
+                           <StackPane>
+                              <!-- Password field (visible by default) -->
+                              <PasswordField fx:id="passwordField" promptText="Enter your password" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #D8D8D8; -fx-border-width: 1;">
+                                 <padding>
+                                    <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+                                 </padding>
+                              </PasswordField>
+
+                              <!-- Text field for password visibility (initially hidden) -->
+                              <TextField fx:id="passwordVisibleField" promptText="Enter your password" style="-fx-background-radius: 5; -fx-border-radius: 5; -fx-border-color: #D8D8D8; -fx-border-width: 1;" visible="false">
+                                 <padding>
+                                    <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+                                 </padding>
+                              </TextField>
+
+                              <!-- Eye icon for showing/hiding password -->
+                              <HBox alignment="CENTER_RIGHT" pickOnBounds="false">
+                                 <children>
+                                    <ImageView fx:id="visibilityIcon" fitHeight="20.0" fitWidth="20.0" onMouseClicked="#clickedToHidePassword" pickOnBounds="true" preserveRatio="true" visible="true">
+                                       <image>
+                                          <Image url="@../images/LoginFile/visible.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                                 <padding>
+                                    <Insets right="8.0" />
+                                 </padding>
+                              </HBox>
+                           </StackPane>
 
                            <HBox alignment="CENTER_RIGHT">
                               <children>
@@ -113,12 +148,12 @@
                               </children>
                            </HBox>
 
-                           <Button fx:id="loginButton" defaultButton="true" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleLogin" style="-fx-background-color: #2F7FB8;" text="Login" textFill="WHITE">
+                           <Button fx:id="loginButton" defaultButton="true" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleLogin" style="-fx-background-color: #2F7FB8; -fx-background-radius: 5; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5, 0, 0, 2);" text="Login" textFill="WHITE">
                               <padding>
-                                 <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+                                 <Insets bottom="14.0" left="12.0" right="12.0" top="14.0" />
                               </padding>
                               <font>
-                                 <Font size="14.0" />
+                                 <Font size="15.0" />
                               </font>
                            </Button>
 
@@ -138,7 +173,7 @@
                      </Label>
                   </children>
                   <padding>
-                     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                   </padding>
                </VBox>
             </GridPane>

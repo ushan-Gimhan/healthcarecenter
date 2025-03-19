@@ -14,21 +14,20 @@ public class AppInitializer extends Application {
     public static void main(String[] args) {
         Session session = FactoryConfiguration.getInstance().getSession();
         session.close();
-//        launch(args);
+        launch(args);
     }
 
     @Override
     public void start(Stage stage) throws Exception {
 
-//        Parent load=FXMLLoader.load(getClass().getResource("/View/LoadingView.fxml"));
-//
-//
-//        Image image = new Image(getClass().getResource("/images/healthicon2.png").toExternalForm());
-//
-//        Scene scene=new Scene(load);
-//        stage.setScene(scene);
-//        stage.setTitle("SERENITY");
-//        stage.getIcons().add(image);
-//        stage.show();
+        Parent load = FXMLLoader.load(getClass().getResource("/View/LoadingView.fxml"));
+
+        Image image = new Image(getClass().getResource("/images/healthicon2.png").toExternalForm());
+
+        Scene scene = new Scene(load);
+        stage.setScene(scene);
+        stage.setTitle("SERENITY");
+        stage.getIcons().add(image);
+        stage.show();
     }
 }
