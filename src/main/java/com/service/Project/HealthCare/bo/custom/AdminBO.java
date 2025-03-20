@@ -11,4 +11,5 @@ public interface AdminBO extends SuperBO {
     public boolean save(AdminDTO entity);
     public boolean update(AdminDTO entity);
     public boolean delete(String id);
+    public String genareateID();
 }

@@ -10,4 +10,5 @@ public interface CrudDAO<T extends SuperEntity,id> extends SuperDAO{
     public boolean save(T entity);
     public boolean update(T entity);
     public boolean delete(String id);
+    public String genarateId();
 }

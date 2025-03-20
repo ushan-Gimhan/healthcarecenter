@@ -35,4 +35,9 @@ public class AdminBOImpl implements AdminBO {
     public boolean delete(String id) {
         return adminDAO.delete(id);
     }
+
+    @Override
+    public String genareateID() {
+        return adminDAO.genarateId();
+    }
 }

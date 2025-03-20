@@ -6,11 +6,11 @@ import com.service.Project.HealthCare.entity.Admin;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-
 import java.util.List;
 
 public class AdminDAOImpl implements AdminDAO {
     private final FactoryConfiguration config=FactoryConfiguration.getInstance();
+
     @Override
     public Admin findByuserNAme(String username) {
         Session session=config.getSession();
@@ -62,7 +62,7 @@ public class AdminDAOImpl implements AdminDAO {
 
     @Override
     public boolean delete(String id) {
-        Session session = FactoryConfiguration.getInstance().getSession();
+        Session session = config.getSession();
         Transaction tx=session.beginTransaction();
 
         if(id!=null){
@@ -73,5 +73,26 @@ public class AdminDAOImpl implements AdminDAO {
             tx.rollback();
             return false;
         }
+    }
+
+    @Override
+    public String genarateId() {
+        String newCustomerId = "A001"; // Default if no records exist
+
+        try (Session session = config.getSession()) {
+            // Get the last customer ID
+            Query<String> query = session.createQuery("SELECT id FROM Admin a ORDER BY a.id DESC", String.class);
+            query.setMaxResults(1);
+            String lastId = query.uniqueResult();
+
+            if (lastId != null) {
+                // Extract the numeric part of the ID
+                int lastNumericId = Integer.parseInt(lastId.substring(1));
+                newCustomerId = String.format("A%03d", lastNumericId + 1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return newCustomerId;
     }
 }

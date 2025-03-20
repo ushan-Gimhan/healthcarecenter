@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
@@ -85,22 +86,22 @@ public class AdminController implements Initializable {
         String passwordHidden=txtPasswordHidden.getText();
 
         if(password.equals(passwordHidden)){
-            new Alert(Alert.AlertType.INFORMATION,"Password Matches").show();
+            AdminDTO adminDTO= new AdminDTO();
+            adminDTO.setEmail(email);
+            adminDTO.setPassword(password);
+            adminDTO.setName(name);
+            adminDTO.setId(adminId);
+            adminDTO.setPhone(mobileNumber);
+
+            boolean saved=adminBO.save(adminDTO);
+
+            if(saved){
+                new Alert(Alert.AlertType.INFORMATION,"Admin Added Successfully").show();
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Admin Not Added Successfully").show();
+            }
         }else{
             new Alert(Alert.AlertType.ERROR,"Input your Password Correctly!!").show();
-        }
-        AdminDTO adminDTO= new AdminDTO();
-        adminDTO.setEmail(email);
-        adminDTO.setPassword(password);
-        adminDTO.setName(name);
-        adminDTO.setId(adminId);
-        adminDTO.setPhone(mobileNumber);
-
-        boolean saved=adminBO.save(adminDTO);
-        if(saved){
-            new Alert(Alert.AlertType.INFORMATION,"Admin Added Successfully").show();
-        }else {
-            new Alert(Alert.AlertType.ERROR,"Admin Not Added Successfully").show();
         }
     }
 
@@ -126,6 +127,23 @@ public class AdminController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        colAdminId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colMobileNumber.setCellValueFactory(new PropertyValueFactory<>("mobileNumber"));
+        passwordColum.setCellValueFactory(new PropertyValueFactory<>("password"));
 
+        genarateId();
+    }
+    public void refreshPage(){
+        txtAdminId.setText("");
+        txtEmail.setText("");
+        txtMobileNumber.setText("");
+        txtName.setText("");
+        txtPassword.setText("");
+        txtPasswordHidden.setText("");
+    }
+    public void genarateId(){
+        txtAdminId.setText(adminBO.genareateID());
     }
 }

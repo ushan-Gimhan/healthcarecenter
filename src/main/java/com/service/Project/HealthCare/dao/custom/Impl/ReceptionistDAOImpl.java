@@ -75,4 +75,9 @@ public class ReceptionistDAOImpl implements ReceptionistDAO {
             return false;
         }
     }
+
+    @Override
+    public String genarateId() {
+        return "";
+    }
 }

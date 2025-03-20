@@ -64,9 +64,6 @@ public class LoginPageController {
 
     @FXML
     void handleLogin(ActionEvent event) throws IOException {
-        Admin admin = new Admin();
-        Receptionist receptionist = new Receptionist();
-
         String username = usernameField.getText();
         String password = passwordField.getText();
 
@@ -89,10 +86,10 @@ public class LoginPageController {
 
         }
 
-        admin = loginPageBO.Adminlogin(username);
+        Admin admin = loginPageBO.Adminlogin(username);
+        Receptionist receptionist = loginPageBO.Receptionlogin(username);
 
         if (admin == null) {
-            receptionist = loginPageBO.Receptionlogin(username);
             if (receptionist == null) {
                 new Alert(Alert.AlertType.INFORMATION, "Invalid User Name!").show();
                 usernameField.setStyle(usernameField.getStyle() + ";-fx-border-color: red;");
