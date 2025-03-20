@@ -1,6 +1,7 @@
 package com.service.Project.HealthCare.controller;
 
-import com.service.Project.HealthCare.bo.custom.Impl.LoginPageBOImpl;
+import com.service.Project.HealthCare.bo.BOFactory;
+import com.service.Project.HealthCare.bo.custom.LoginPageBO;
 import com.service.Project.HealthCare.entity.Admin;
 import com.service.Project.HealthCare.entity.Receptionist;
 import javafx.event.ActionEvent;
@@ -12,13 +13,16 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class LoginPageController {
     public ImageView showPassword;
-    LoginPageBOImpl loginPageBO = new LoginPageBOImpl();
+    public AnchorPane mainPane;
+    LoginPageBO loginPageBO = (LoginPageBO) BOFactory.getInstance().getBOType(BOFactory.BOType.loginPage);
 
     @FXML
     private Label errorLabel;
@@ -55,20 +59,11 @@ public class LoginPageController {
 
     @FXML
     void handleForgotPassword(ActionEvent event) throws IOException {
-        Parent load = FXMLLoader.load(getClass().getResource("/View/fogotPassword.fxml"));
-        Stage stage = new Stage();
-        Image image1 = new Image(getClass().getResource("/images/healthicon2.png").toExternalForm());
-
-        Scene scene = new Scene(load);
-        stage.setScene(scene);
-        stage.setTitle("SERENITY");
-//        stage.getIcons().add(image);
-        stage.show();
-
+        navigate("/View/fogotPassword.fxml");
     }
 
     @FXML
-    void handleLogin(ActionEvent event) {
+    void handleLogin(ActionEvent event) throws IOException {
         Admin admin = new Admin();
         Receptionist receptionist = new Receptionist();
 
@@ -85,39 +80,44 @@ public class LoginPageController {
             usernameField.setStyle(usernameField.getStyle() + ";-fx-border-color: red;");
         }
 
-        if(username.equals("")){
+        if (username.equals("")) {
             new Alert(Alert.AlertType.INFORMATION, "Enter you user Name").show();
             return;
-        }else if(password.equals("")){
+        } else if (password.equals("")) {
             new Alert(Alert.AlertType.INFORMATION, "Enter you Password").show();
             return;
 
         }
 
         admin = loginPageBO.Adminlogin(username);
-        receptionist= loginPageBO.Receptionlogin(username);
 
-        if(admin==null){
-            if(receptionist==null){
+        if (admin == null) {
+            receptionist = loginPageBO.Receptionlogin(username);
+            if (receptionist == null) {
                 new Alert(Alert.AlertType.INFORMATION, "Invalid User Name!").show();
                 usernameField.setStyle(usernameField.getStyle() + ";-fx-border-color: red;");
                 return;
             }
         }
 
-        if(admin != null){
-            if(admin.getPassword().equals(password)){
+        if (admin != null) {
+            if (admin.getPassword().equals(password)) {
                 new Alert(Alert.AlertType.INFORMATION, "Login Successful As Admid").show();
-            }else {
+                navigate("/View/Dashboard.fxml");
+            } else {
                 passwordField.setStyle(passwordField.getStyle() + ";-fx-border-color: red;");
                 new Alert(Alert.AlertType.INFORMATION, "Invalid Password").show();
+                return;
             }
-        }else if(receptionist != null){
-            if(receptionist.getPassword().equals(password)){
+        }
+        if (receptionist != null) {
+            if (receptionist.getPassword().equals(password)) {
                 new Alert(Alert.AlertType.INFORMATION, "Login Successful Receptionist").show();
-            }else{
+                navigate("/View/Dashboard.fxml");
+            } else {
                 passwordField.setStyle(passwordField.getStyle() + ";-fx-border-color: red;");
                 new Alert(Alert.AlertType.INFORMATION, "Invalid Password").show();
+                return;
             }
         }
 
@@ -127,6 +127,7 @@ public class LoginPageController {
     void handleSignup(ActionEvent event) {
 
     }
+
     @FXML
     public void clickedToHidePassword(MouseEvent mouseEvent) {
         if (isPasswordVisible) {
@@ -142,4 +143,16 @@ public class LoginPageController {
         }
         isPasswordVisible = !isPasswordVisible;
     }
+    public void navigate(String path) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
+        AnchorPane newPane = loader.load();
+
+        AnchorPane.setTopAnchor(newPane, 0.0);
+        AnchorPane.setRightAnchor(newPane, 0.0);
+        AnchorPane.setBottomAnchor(newPane, 0.0);
+        AnchorPane.setLeftAnchor(newPane, 0.0);
+        mainPane.getChildren().add(newPane);
+
+    }
 }
+

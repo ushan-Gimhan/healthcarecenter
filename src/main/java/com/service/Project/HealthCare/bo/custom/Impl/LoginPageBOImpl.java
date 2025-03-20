@@ -1,15 +1,15 @@
 package com.service.Project.HealthCare.bo.custom.Impl;
 
 import com.service.Project.HealthCare.bo.custom.LoginPageBO;
-import com.service.Project.HealthCare.dao.custom.Impl.AdminDAOImpl;
-import com.service.Project.HealthCare.dao.custom.Impl.ReceptionistDAOImpl;
+import com.service.Project.HealthCare.dao.DAOFactory;
+import com.service.Project.HealthCare.dao.custom.AdminDAO;
+import com.service.Project.HealthCare.dao.custom.ReceptionistDAO;
 import com.service.Project.HealthCare.entity.Admin;
 import com.service.Project.HealthCare.entity.Receptionist;
-import com.service.Project.HealthCare.entity.SuperEntity;
 
 public class LoginPageBOImpl implements LoginPageBO {
-    AdminDAOImpl adminDAO = new AdminDAOImpl();
-    ReceptionistDAOImpl receptionistDAO = new ReceptionistDAOImpl();
+    AdminDAO adminDAO = (AdminDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.Admin);
+    ReceptionistDAO receptionistDAO = (ReceptionistDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.Receptionist);
     Admin admin;
     Receptionist receptionist;
 

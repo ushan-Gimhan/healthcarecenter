@@ -19,10 +19,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.service.Project.HealthCare.controller.LoginPageController">
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane fx:id="mainPane" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.service.Project.HealthCare.controller.LoginPageController">
    <children>
       <!-- Main container that will adapt to different screen sizes -->
-      <BorderPane prefHeight="600.0" prefWidth="800.0">
+      <BorderPane  prefHeight="600.0" prefWidth="800.0">
          <center>
             <!-- Using GridPane for responsive layout -->
             <GridPane>
@@ -180,4 +181,4 @@
          </center>
       </BorderPane>
    </children>
-</StackPane>
+</AnchorPane>
