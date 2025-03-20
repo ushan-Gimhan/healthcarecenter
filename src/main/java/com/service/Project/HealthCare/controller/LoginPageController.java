@@ -102,7 +102,6 @@ public class LoginPageController {
 
         if (admin != null) {
             if (admin.getPassword().equals(password)) {
-                new Alert(Alert.AlertType.INFORMATION, "Login Successful As Admid").show();
                 navigate("/View/Dashboard.fxml");
             } else {
                 passwordField.setStyle(passwordField.getStyle() + ";-fx-border-color: red;");
@@ -112,12 +111,10 @@ public class LoginPageController {
         }
         if (receptionist != null) {
             if (receptionist.getPassword().equals(password)) {
-                new Alert(Alert.AlertType.INFORMATION, "Login Successful Receptionist").show();
                 navigate("/View/Dashboard.fxml");
             } else {
                 passwordField.setStyle(passwordField.getStyle() + ";-fx-border-color: red;");
                 new Alert(Alert.AlertType.INFORMATION, "Invalid Password").show();
-                return;
             }
         }
 

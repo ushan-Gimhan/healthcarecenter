@@ -2,16 +2,19 @@ package com.service.Project.HealthCare.controller;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
+
+import java.io.IOException;
 
 public class DashboardController {
 
     @FXML
-    private Button btnAppointments;
+    private Button btnAdmin;
 
     @FXML
-    private Button btnBilling;
+    private Button btnAppointments;
 
     @FXML
     private Button btnDashboard;
@@ -23,7 +26,7 @@ public class DashboardController {
     private Button btnPatients;
 
     @FXML
-    private Button btnReports;
+    private Button btnReseptionist;
 
     @FXML
     private Button btnSessions;
@@ -32,18 +35,24 @@ public class DashboardController {
     private Button btnTherapists;
 
     @FXML
+    private Button btnTheropyPrograms;
+
+    @FXML
+    private Button btnpayment;
+
+    @FXML
     private AnchorPane contentPane;
 
     @FXML
     private AnchorPane mainPane;
 
     @FXML
-    void clickedAppointments(ActionEvent event) {
-
+    void clickedAdmin(ActionEvent event) throws IOException {
+        navigation("/View/admin.fxml");
     }
 
     @FXML
-    void clickedBilling(ActionEvent event) {
+    void clickedAppointments(ActionEvent event) {
 
     }
 
@@ -63,7 +72,12 @@ public class DashboardController {
     }
 
     @FXML
-    void clickedReports(ActionEvent event) {
+    void clickedPayment(ActionEvent event) {
+
+    }
+
+    @FXML
+    void clickedReceptionts(ActionEvent event) {
 
     }
 
@@ -74,6 +88,23 @@ public class DashboardController {
 
     @FXML
     void clickedTherapists(ActionEvent event) {
+
+    }
+
+    @FXML
+    void clickedTheraryPrograms(ActionEvent event) {
+
+    }
+
+    public void navigation(String path) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
+        AnchorPane newPane = loader.load();
+
+        AnchorPane.setTopAnchor(newPane, 0.0);
+        AnchorPane.setRightAnchor(newPane, 0.0);
+        AnchorPane.setBottomAnchor(newPane, 0.0);
+        AnchorPane.setLeftAnchor(newPane, 0.0);
+        contentPane.getChildren().add(newPane);
 
     }
 
