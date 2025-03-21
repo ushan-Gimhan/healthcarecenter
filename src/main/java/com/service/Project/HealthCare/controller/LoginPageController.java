@@ -16,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import org.mindrot.jbcrypt.BCrypt;
 
 import java.io.IOException;
 
@@ -98,7 +99,8 @@ public class LoginPageController {
         }
 
         if (admin != null) {
-            if (admin.getPassword().equals(password)) {
+
+            if (BCrypt.checkpw((password),admin.getPassword())) {
                 navigate("/View/Dashboard.fxml");
             } else {
                 passwordField.setStyle(passwordField.getStyle() + ";-fx-border-color: red;");

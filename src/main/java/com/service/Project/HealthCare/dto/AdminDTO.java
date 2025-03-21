@@ -12,8 +12,8 @@ import lombok.Setter;
 public class AdminDTO {
     private String id;
     private String name;
-    private String password;
     private String email;
     private String phone;
+    private String password;
 
 }

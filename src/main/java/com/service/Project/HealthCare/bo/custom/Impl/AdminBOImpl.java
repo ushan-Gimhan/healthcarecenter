@@ -7,13 +7,21 @@ import com.service.Project.HealthCare.dao.custom.Impl.AdminDAOImpl;
 import com.service.Project.HealthCare.dto.AdminDTO;
 import com.service.Project.HealthCare.entity.Admin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdminBOImpl implements AdminBO {
     AdminDAO adminDAO = (AdminDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.Admin);
     @Override
     public List<AdminDTO> findAll() {
-        return List.of();
+        List<Admin> all = adminDAO.findAll();
+        List<AdminDTO> Alladmin = new ArrayList<AdminDTO>();
+
+        for (Admin admmin : all) {
+            AdminDTO dto = new AdminDTO(admmin.getId(),admmin.getName(),admmin.getEmail(),admmin.getPhone(),admmin.getPassword());
+            Alladmin.add(dto);
+        }
+        return Alladmin;
     }
 
     @Override

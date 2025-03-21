@@ -21,7 +21,9 @@ public class AdminDAOImpl implements AdminDAO {
 
     @Override
     public List<Admin> findAll() {
-        return List.of();
+        Session session=config.getSession();
+        Query<Admin> query = session.createQuery("FROM Admin", Admin.class);
+        return query.list();
     }
 
     @Override
