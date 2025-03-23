@@ -67,8 +67,8 @@ public class DashboardController {
     }
 
     @FXML
-    void clickedPatients(ActionEvent event) {
-
+    void clickedPatients(ActionEvent event) throws IOException {
+        navigation("/View/patient.fxml");
     }
 
     @FXML
@@ -87,8 +87,8 @@ public class DashboardController {
     }
 
     @FXML
-    void clickedTherapists(ActionEvent event) {
-
+    void clickedTherapists(ActionEvent event) throws IOException {
+        navigation("/View/therapist.fxml");
     }
 
     @FXML

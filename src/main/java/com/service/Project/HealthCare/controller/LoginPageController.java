@@ -84,7 +84,6 @@ public class LoginPageController {
         } else if (password.equals("")) {
             new Alert(Alert.AlertType.INFORMATION, "Enter you Password").show();
             return;
-
         }
 
         Admin admin = loginPageBO.Adminlogin(username);
@@ -99,8 +98,7 @@ public class LoginPageController {
         }
 
         if (admin != null) {
-
-            if (BCrypt.checkpw((password),admin.getPassword())) {
+            if (BCrypt.checkpw(password, admin.getPassword())){
                 navigate("/View/Dashboard.fxml");
             } else {
                 passwordField.setStyle(passwordField.getStyle() + ";-fx-border-color: red;");
@@ -108,12 +106,13 @@ public class LoginPageController {
                 return;
             }
         }
-        if (receptionist != null) {
+        if(receptionist != null) {
             if (receptionist.getPassword().equals(password)) {
                 navigate("/View/Dashboard.fxml");
             } else {
                 passwordField.setStyle(passwordField.getStyle() + ";-fx-border-color: red;");
                 new Alert(Alert.AlertType.INFORMATION, "Invalid Password").show();
+                return;
             }
         }
 

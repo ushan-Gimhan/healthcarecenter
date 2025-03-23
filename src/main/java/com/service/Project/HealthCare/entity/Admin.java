@@ -19,6 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Admin implements SuperEntity{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     private String name;
