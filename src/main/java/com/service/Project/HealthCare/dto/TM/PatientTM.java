@@ -9,11 +9,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdminTM {
-    private String id;
-    private String name;
-    private String email;
-    private String phone;
-    private String userName;
-    private String password;
+public class PatientTM {
+    String id;
+    String name;
+    String mobile;
+    String NIC;
+    String email;
+    String gender;
 }

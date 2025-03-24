@@ -9,11 +9,13 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdminTM {
+public class TeropistTM {
     private String id;
     private String name;
+    private int age;
+    private String gender;
     private String email;
     private String phone;
-    private String userName;
-    private String password;
+    private String specialization;
+    private String experience;
 }

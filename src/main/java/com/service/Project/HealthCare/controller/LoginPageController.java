@@ -99,6 +99,7 @@ public class LoginPageController {
 
         if (admin != null) {
             if (BCrypt.checkpw(password, admin.getPassword())){
+//            if (password.equals(admin.getPassword())){
                 navigate("/View/Dashboard.fxml");
             } else {
                 passwordField.setStyle(passwordField.getStyle() + ";-fx-border-color: red;");

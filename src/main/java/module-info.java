@@ -1,4 +1,4 @@
-module lk.com.service.Project.healthcare {
+module com.service.Project.healthcare {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;

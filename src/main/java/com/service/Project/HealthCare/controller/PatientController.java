@@ -1,5 +1,6 @@
 package com.service.Project.HealthCare.controller;
 
+import com.service.Project.HealthCare.dto.TM.PatientTM;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -28,25 +29,25 @@ public class PatientController {
     private ComboBox<?> cmbGender;
 
     @FXML
-    private TableColumn<?, ?> colAge;
+    private TableColumn<String, PatientTM> colAge;
 
     @FXML
-    private TableColumn<?, ?> colEmail;
+    private TableColumn<String, PatientTM> colEmail;
 
     @FXML
-    private TableColumn<?, ?> colGender;
+    private TableColumn<String, PatientTM> colGender;
 
     @FXML
-    private TableColumn<?, ?> colMobileNumber;
+    private TableColumn<String, PatientTM> colMobileNumber;
 
     @FXML
-    private TableColumn<?, ?> colName;
+    private TableColumn<String, PatientTM> colName;
 
     @FXML
-    private TableColumn<?, ?> colPatientId;
+    private TableColumn<String, PatientTM> colPatientId;
 
     @FXML
-    private TableView<?> patientTable;
+    private TableView<PatientTM> patientTable;
 
     @FXML
     private TextField txtAge;
@@ -68,6 +69,12 @@ public class PatientController {
 
     @FXML
     void addPatient(ActionEvent event) {
+        String patientId = txtPatientId.getText();
+        String name = txtName.getText();
+        String email = txtEmail.getText();
+        String mobileNumber = txtMobileNumber.getText();
+        String age = txtAge.getText();
+        String gender = cmbGender.getSelectionModel().getSelectedItem().toString();
 
     }
 

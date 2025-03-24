@@ -18,7 +18,7 @@ public class AdminBOImpl implements AdminBO {
         List<AdminDTO> Alladmin = new ArrayList<AdminDTO>();
 
         for (Admin admmin : all) {
-            AdminDTO dto = new AdminDTO(admmin.getId(),admmin.getName(),admmin.getEmail(),admmin.getPhone(),admmin.getPassword());
+            AdminDTO dto = new AdminDTO(admmin.getId(),admmin.getName(),admmin.getEmail(),admmin.getPhone(),admmin.getUserName(),admmin.getPassword());
             Alladmin.add(dto);
         }
         return Alladmin;
@@ -31,12 +31,12 @@ public class AdminBOImpl implements AdminBO {
 
     @Override
     public boolean save(AdminDTO entity) {
-        return adminDAO.save(new Admin(entity.getId(),entity.getName(),entity.getPhone(),entity.getPassword(),entity.getEmail()));
+        return adminDAO.save(new Admin(entity.getId(),entity.getName(),entity.getPhone(),entity.getPassword(),entity.getEmail(),entity.getUserNAme()));
     }
 
     @Override
     public boolean update(AdminDTO entity) {
-        return adminDAO.update(new Admin(entity.getId(),entity.getName(),entity.getPhone(),entity.getPassword(),entity.getEmail()));
+        return adminDAO.update(new Admin(entity.getId(),entity.getName(),entity.getPhone(),entity.getPassword(),entity.getEmail(),entity.getUserNAme()));
     }
 
     @Override

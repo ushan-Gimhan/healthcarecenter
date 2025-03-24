@@ -56,11 +56,16 @@ public class AdminController implements Initializable {
     private TableColumn<AdminTM,String> passwordColum;
 
     @FXML
+    public TableColumn<AdminTM,String> coluserName;
+
+    @FXML
     private Button sendMail;
 
     @FXML
     private Label txtAdminId;
 
+    @FXML
+    private TextField txtUserName;
 
     @FXML
     private TextField txtConfirmPasswordHidden;
@@ -86,6 +91,7 @@ public class AdminController implements Initializable {
         String email=txtEmail.getText();
         String mobileNumber=txtMobileNumber.getText();
         String name=txtName.getText();
+        String userName=txtUserName.getText();
         String password=txtPassword.getText();
         String passwordHidden=txtPasswordHidden.getText();
 
@@ -96,6 +102,7 @@ public class AdminController implements Initializable {
             adminDTO.setEmail(email);
             adminDTO.setPassword(hashedPassword);
             adminDTO.setName(name);
+            adminDTO.setUserNAme(userName);
             adminDTO.setId(adminId);
             adminDTO.setPhone(mobileNumber);
 
@@ -120,6 +127,7 @@ public class AdminController implements Initializable {
             txtEmail.setText(adminTM.getEmail());
             txtMobileNumber.setText(adminTM.getPhone());
             txtName.setText(adminTM.getName());
+            txtUserName.setText(adminTM.getUserName());
             txtPassword.setText(adminTM.getPassword());
             txtPasswordHidden.setText(adminTM.getPassword());
         }
@@ -154,6 +162,7 @@ public class AdminController implements Initializable {
         String email=txtEmail.getText();
         String mobileNumber=txtMobileNumber.getText();
         String name=txtName.getText();
+        String userName= txtUserName.getText();
         String password=txtPassword.getText();
         String passwordHidden=txtPasswordHidden.getText();
 
@@ -164,6 +173,7 @@ public class AdminController implements Initializable {
             adminDTO.setEmail(email);
             adminDTO.setPassword(hashedPassword);
             adminDTO.setName(name);
+            adminDTO.setUserNAme(userName);
             adminDTO.setId(adminId);
             adminDTO.setPhone(mobileNumber);
 
@@ -184,9 +194,10 @@ public class AdminController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colAdminId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
-        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colMobileNumber.setCellValueFactory(new PropertyValueFactory<>("phone"));
         passwordColum.setCellValueFactory(new PropertyValueFactory<>("password"));
+        coluserName.setCellValueFactory(new PropertyValueFactory<>("userName"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
 
         try{
             refreshPage();
@@ -204,6 +215,7 @@ public class AdminController implements Initializable {
         txtEmail.setText("");
         txtMobileNumber.setText("");
         txtName.setText("");
+        txtUserName.setText("");
         txtPassword.setText("");
         txtPasswordHidden.setText("");
     }
@@ -220,6 +232,7 @@ public class AdminController implements Initializable {
                     adminDTO.getName(),
                     adminDTO.getEmail(),
                     adminDTO.getPhone(),
+                    adminDTO.getUserNAme(),
                     adminDTO.getPassword()
             );
             adminTMS.add(adminTM);

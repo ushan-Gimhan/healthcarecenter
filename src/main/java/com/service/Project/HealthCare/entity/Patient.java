@@ -16,7 +16,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Patient implements SuperEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     String id;
     String name;
     String mobile;

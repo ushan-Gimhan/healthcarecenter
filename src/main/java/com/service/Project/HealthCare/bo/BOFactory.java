@@ -2,6 +2,7 @@ package com.service.Project.HealthCare.bo;
 
 import com.service.Project.HealthCare.bo.custom.Impl.AdminBOImpl;
 import com.service.Project.HealthCare.bo.custom.Impl.LoginPageBOImpl;
+import com.service.Project.HealthCare.bo.custom.Impl.PatientBOImpl;
 
 public class BOFactory {
     private static BOFactory instance;
@@ -16,7 +17,7 @@ public class BOFactory {
         return instance;
     }
     public enum BOType {
-        loginPage,admin,
+        loginPage,admin,Patient
     }
 
     public SuperBO getBOType(BOType type) {
@@ -25,6 +26,8 @@ public class BOFactory {
                 return new LoginPageBOImpl();
                 case admin:
                     return new AdminBOImpl();
+            case Patient:
+                return new PatientBOImpl();
                 default:
                     return null;
         }

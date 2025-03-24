@@ -14,7 +14,7 @@ public class AdminDAOImpl implements AdminDAO {
     @Override
     public Admin findByuserNAme(String username) {
         Session session=config.getSession();
-        Query<Admin> query = session.createQuery("FROM Admin WHERE name = :username", Admin.class);
+        Query<Admin> query = session.createQuery("FROM Admin a WHERE a.userName = :username", Admin.class);
         query.setParameter("username", username);
         return query.uniqueResult();
     }

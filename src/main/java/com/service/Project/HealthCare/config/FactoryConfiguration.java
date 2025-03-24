@@ -1,5 +1,6 @@
 package com.service.Project.HealthCare.config;
 import com.service.Project.HealthCare.entity.Admin;
+import com.service.Project.HealthCare.entity.Patient;
 import com.service.Project.HealthCare.entity.Receptionist;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,6 +15,7 @@ public class FactoryConfiguration {
 
         config.addAnnotatedClass(Admin.class);
         config.addAnnotatedClass(Receptionist.class);
+        config.addAnnotatedClass(Patient.class);
 
         sessionFactory = config.buildSessionFactory();
     }

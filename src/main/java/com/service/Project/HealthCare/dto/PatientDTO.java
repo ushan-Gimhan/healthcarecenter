@@ -9,12 +9,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdminDTO {
-    private String id;
-    private String name;
-    private String email;
-    private String phone;
-    private String userNAme;
-    private String password;
-
+public class PatientDTO {
+    String id;
+    String name;
+    String mobile;
+    String NIC;
+    String email;
+    String gender;
 }

@@ -19,23 +19,24 @@ import java.util.List;
 @NoArgsConstructor
 public class Admin implements SuperEntity{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private String id;
 
     private String name;
     private String password;
     private String email;
     private String phone;
+    private String userName;
 
 
     @OneToMany(mappedBy = "admin",cascade = CascadeType.ALL)
     private List<Receptionist> receptionists;
 
-    public Admin(String id, String name, String phone, String password, String email) {
+    public Admin(String id, String name, String phone, String password, String email,String userName) {
         this.id = id;
         this.name = name;
         this.phone = phone;
         this.password = password;
         this.email = email;
+        this.userName = userName;
     }
 }
