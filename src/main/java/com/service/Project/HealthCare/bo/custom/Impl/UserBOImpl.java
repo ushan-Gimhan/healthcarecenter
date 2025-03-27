@@ -39,7 +39,7 @@ public class UserBOImpl implements UserBO {
     }
 
     @Override
-    public boolean update(UserDTO entity) throws IOException {
+    public boolean update(UserDTO entity){
         return userDAO.update(new User(entity.getId(),entity.getName(),entity.getPhone(),entity.getPassword(),entity.getEmail(),entity.getUserNAme(),entity.getRole()));
     }
 

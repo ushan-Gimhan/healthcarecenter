@@ -11,7 +11,7 @@ public interface PatientBO extends SuperBO {
     public List<PatientDTO> findAll();
     public PatientDTO find(String id);
     public boolean save(PatientDTO patient);
-    public boolean update(PatientDTO patient) throws IOException;
+    public boolean update(PatientDTO patient);
     public boolean delete(String id);
     public String generateId();
 }

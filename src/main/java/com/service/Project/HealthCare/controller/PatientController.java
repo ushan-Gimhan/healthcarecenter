@@ -8,12 +8,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
@@ -86,7 +81,7 @@ public class PatientController implements Initializable {
         String name = txtName.getText();
         String email = txtEmail.getText();
         String mobileNumber = txtMobileNumber.getText();
-        String age = txtAge.getText();
+        int age = Integer.parseInt(txtAge.getText());
         String gender = cmbGender.getSelectionModel().getSelectedItem().toString();
         String NIC = txtnic.getText();
 
@@ -99,41 +94,86 @@ public class PatientController implements Initializable {
         String nicPattern = "^\\d{9}[VX]$";
         String emailPattern = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
         String phonePattern = "^(\\d+)||((\\d+\\.)(\\d){2})$";
-        String agePattern = "^\\d{1,3}$";
 
         boolean isValidName= name.matches(namePattern);
         boolean isValidNic = NIC.matches(nicPattern);
         boolean isValidEmail = email.matches(emailPattern);
-        boolean isValidMobileNumber = mobileNumber.matches(mobileNumber);
-        boolean isValidAge = age.matches(agePattern);
-
-//        if (isValidAge && isValidEmail && isValidMobileNumber && isValidName) {
-//            PatientDTO patientDTO = new PatientDTO(patientId,name,email,mobileNumber,age,gender);
-//
-//        }
+        boolean isValidMobileNumber = mobileNumber.matches(phonePattern);
 
 
+        if (isValidEmail && isValidMobileNumber && isValidName) {
+            PatientDTO patientDTO = new PatientDTO(patientId,name,email,NIC,mobileNumber,gender,age);
+
+            boolean saved = patientBO.save(patientDTO);
+
+            if(saved){
+                new Alert(Alert.AlertType.INFORMATION,"Patient saved!!");
+                refreshPage();
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Patient not saved!!");
+            }
+        }
 
     }
 
     @FXML
     void clicked(MouseEvent event) {
-
+        PatientTM patientTM=patientTable.getSelectionModel().getSelectedItem();
+        if(patientTM!=null){
+            txtName.setText(patientTM.getName());
+            txtEmail.setText(patientTM.getEmail());
+            txtMobileNumber.setText(patientTM.getMobile());
+            txtAge.setText(String.valueOf(patientTM.getAge()));
+            txtnic.setText(patientTM.getNIC());
+            cmbGender.getSelectionModel().select(patientTM.getGender());
+        }
     }
 
     @FXML
     void deletePatient(ActionEvent event) {
-
     }
 
     @FXML
     void resetFields(ActionEvent event) {
-
+       refreshPage();
     }
 
     @FXML
     void updatePatient(ActionEvent event) {
+        String patientId = txtPatientId.getText();
+        String name = txtName.getText();
+        String email = txtEmail.getText();
+        String mobileNumber = txtMobileNumber.getText();
+        int age = Integer.parseInt(txtAge.getText());
+        String gender = cmbGender.getSelectionModel().getSelectedItem().toString();
+        String NIC = txtnic.getText();
 
+        txtName.setStyle(txtName.getStyle() + "-fx-text-fill: blue;");
+        txtnic.setStyle(txtnic.getStyle() + "-fx-text-fill: blue;");
+        txtEmail.setStyle(txtEmail.getStyle() + "-fx-text-fill: blue;");
+        txtMobileNumber.setStyle(txtMobileNumber.getStyle() + "-fx-text-fill: blue;");
+
+        String namePattern = "^[A-Za-z ]+$";
+        String nicPattern = "^\\d{9}[VX]$";
+        String emailPattern = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
+        String phonePattern = "^(\\d+)||((\\d+\\.)(\\d){2})$";
+
+        boolean isValidName= name.matches(namePattern);
+        boolean isValidNic = NIC.matches(nicPattern);
+        boolean isValidEmail = email.matches(emailPattern);
+        boolean isValidMobileNumber = mobileNumber.matches(phonePattern);
+
+        if (isValidEmail && isValidNic && isValidName && isValidMobileNumber){
+            PatientDTO patientDTO = new PatientDTO(patientId,name,email,NIC,mobileNumber,gender,age);
+
+            boolean updated = patientBO.update(patientDTO);
+            if(updated){
+                new Alert(Alert.AlertType.INFORMATION,"Patient updated!!");
+                refreshPage();
+            }else {
+                new Alert(Alert.AlertType.ERROR,"Patient not updated!!");
+            }
+        }
     }
 
     @Override
@@ -143,4 +183,17 @@ public class PatientController implements Initializable {
         txtPatientId.setText(patientBO.generateId());
     }
 
+    public void genarateId(){
+        txtPatientId.setText(patientBO.generateId());
+    }
+    public void refreshPage(){
+        genarateId();
+
+        txtName.setText("");
+        txtEmail.setText("");
+        txtMobileNumber.setText("");
+        txtAge.setText("");
+        txtnic.setText("");
+        cmbGender.getSelectionModel().clearSelection();
+    }
 }

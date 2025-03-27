@@ -31,7 +31,7 @@ public class PatientBOImpl implements PatientBO {
     }
 
     @Override
-    public boolean update(PatientDTO patient) throws IOException {
+    public boolean update(PatientDTO patient){
         return patientDAO.update(new Patient(patient.getId(),patient.getName(),patient.getMobile(), patient.getEmail(),patient.getNIC(), patient.getGender(),patient.getAge()));
     }
 

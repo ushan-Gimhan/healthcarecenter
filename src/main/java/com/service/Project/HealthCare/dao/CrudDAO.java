@@ -9,7 +9,7 @@ public interface CrudDAO<T extends SuperEntity,id> extends SuperDAO{
     public List<T> findAll();
     public T find(String id);
     public boolean save(T entity);
-    public boolean update(T entity) throws IOException;
+    public boolean update(T entity);
     public boolean delete(String id);
     public String generateId();
 }

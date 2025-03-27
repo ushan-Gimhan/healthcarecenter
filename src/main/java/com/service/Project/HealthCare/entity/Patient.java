@@ -39,5 +39,6 @@ public class Patient implements SuperEntity {
         this.email = email;
         this.NIC = nic;
         this.gender = gender;
+        this.age = age;
     }
 }

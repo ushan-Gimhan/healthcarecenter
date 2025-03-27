@@ -10,7 +10,7 @@ public interface UserBO extends SuperBO {
     public List<UserDTO> findAll();
     public UserDTO find(String id);
     public boolean save(UserDTO entity);
-    public boolean update(UserDTO entity) throws IOException;
+    public boolean update(UserDTO entity);
     public boolean delete(String id);
     public String genareateID();
 }
