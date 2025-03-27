@@ -3,6 +3,7 @@ package com.service.Project.HealthCare.dao.custom.Impl;
 import com.service.Project.HealthCare.config.FactoryConfiguration;
 import com.service.Project.HealthCare.dao.custom.PatientDAO;
 import com.service.Project.HealthCare.entity.Patient;
+import com.service.Project.HealthCare.entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -18,7 +19,9 @@ public class PatientDAOImpl implements PatientDAO {
 
     @Override
     public List<Patient> findAll() {
-        return List.of();
+        Session session=config.getSession();
+        Query<Patient> query = session.createQuery("FROM Patient ", Patient.class);
+        return query.list();
     }
 
     @Override

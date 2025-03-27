@@ -7,6 +7,7 @@ import com.service.Project.HealthCare.dto.PatientDTO;
 import com.service.Project.HealthCare.entity.Patient;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PatientBOImpl implements PatientBO {
@@ -17,7 +18,13 @@ public class PatientBOImpl implements PatientBO {
 
     @Override
     public List<PatientDTO> findAll() {
-        return List.of();
+        List<Patient> all = patientDAO.findAll();
+        List<PatientDTO> patientDTOs = new ArrayList<PatientDTO>();
+        for (Patient patient : all) {
+            PatientDTO patientDTO = new PatientDTO(patient.getId(),patient.getName(),patient.getMobile(),patient.getNIC(),patient.getEmail(),patient.getGender(),patient.getAge());
+           patientDTOs.add(patientDTO);
+        }
+        return patientDTOs;
     }
 
     @Override

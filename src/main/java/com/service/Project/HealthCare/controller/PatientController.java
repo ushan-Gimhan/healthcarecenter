@@ -5,14 +5,17 @@ import com.service.Project.HealthCare.bo.custom.PatientBO;
 import com.service.Project.HealthCare.dto.PatientDTO;
 import com.service.Project.HealthCare.dto.TM.PatientTM;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class PatientController implements Initializable {
@@ -179,8 +182,16 @@ public class PatientController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cmbGender.setItems(FXCollections.observableArrayList("Male", "Female","Other"));
+        colPatientId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colMobileNumber.setCellValueFactory(new PropertyValueFactory<>("mobile"));
+        colAge.setCellValueFactory(new PropertyValueFactory<>("age"));
+        colGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
 
-        txtPatientId.setText(patientBO.generateId());
+        genarateId();
+        loadTableData();
+
     }
 
     public void genarateId(){
@@ -195,5 +206,17 @@ public class PatientController implements Initializable {
         txtAge.setText("");
         txtnic.setText("");
         cmbGender.getSelectionModel().clearSelection();
+    }
+    public void loadTableData(){
+        List<PatientDTO> all = patientBO.findAll();
+
+        ObservableList<PatientTM> data = FXCollections.observableArrayList();
+
+        for (PatientDTO patientDTO : all) {
+            PatientTM patientTM = new PatientTM(patientDTO.getId(),patientDTO.getName(),patientDTO.getMobile(),patientDTO.getEmail(),patientDTO.getNIC(),patientDTO.getGender(),patientDTO.getAge());
+
+            data.add(patientTM);
+        }
+        patientTable.setItems(data);
     }
 }
