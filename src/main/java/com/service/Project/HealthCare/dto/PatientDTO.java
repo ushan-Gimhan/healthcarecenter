@@ -10,10 +10,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PatientDTO {
-    String id;
-    String name;
-    String mobile;
-    String NIC;
-    String email;
-    String gender;
+    private String id;
+    private String name;
+    private String mobile;
+    private String NIC;
+    private String email;
+    private String gender;
+    private int age;
 }

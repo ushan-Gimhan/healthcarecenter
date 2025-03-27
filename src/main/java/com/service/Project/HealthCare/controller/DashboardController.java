@@ -4,8 +4,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -57,18 +62,40 @@ public class DashboardController implements Initializable {
     }
 
     @FXML
-    void clickedAppointments(ActionEvent event) {
-
+    void clickedAppointments(ActionEvent event) throws IOException {
+        navigation("/View/registration.fxml");
     }
 
     @FXML
-    void clickedDashboard(ActionEvent event) {
+    void clickedDashboard(ActionEvent event) throws IOException {
+        Parent load = FXMLLoader.load(getClass().getResource("/View/AdminDashboard.fxml"));
 
+        Image image = new Image(getClass().getResource("/images/healthicon2.png").toExternalForm());
+        Stage stage= new Stage();
+        Scene scene = new Scene(load);
+        stage.setScene(scene);
+        stage.setTitle("SERENITY");
+        stage.getIcons().add(image);
+
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.close();
+        stage.show();
     }
 
     @FXML
-    void clickedLogOut(ActionEvent event) {
+    void clickedLogOut(ActionEvent event) throws IOException {
+        Parent load = FXMLLoader.load(getClass().getResource("/View/LoagingView.fxml"));
 
+        Image image = new Image(getClass().getResource("/images/healthicon2.png").toExternalForm());
+        Stage stage= new Stage();
+        Scene scene = new Scene(load);
+        stage.setScene(scene);
+        stage.setTitle("SERENITY");
+        stage.getIcons().add(image);
+
+        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        currentStage.close();
+        stage.show();
     }
 
     @FXML
@@ -77,13 +104,8 @@ public class DashboardController implements Initializable {
     }
 
     @FXML
-    void clickedPayment(ActionEvent event) {
-
-    }
-
-    @FXML
-    void clickedReceptionts(ActionEvent event) {
-
+    void clickedPayment(ActionEvent event) throws IOException {
+        navigation("/View/payment.fxml");
     }
 
     @FXML

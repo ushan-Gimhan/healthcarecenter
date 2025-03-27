@@ -83,23 +83,30 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public String genarateId() {
-        String newCustomerId = "A001"; // Default if no records exist
+    public String generateId() {
+        String newUserId = "A001"; // Default ID if no records exist
 
         try (Session session = config.getSession()) {
-            // Get the last customer ID
-            Query<String> query = session.createQuery("SELECT id FROM User a ORDER BY a.id DESC", String.class);
+            // Get the last user ID
+            Query<String> query = session.createQuery("SELECT id FROM User u ORDER BY u.id DESC", String.class);
             query.setMaxResults(1);
             String lastId = query.uniqueResult();
 
-            if (lastId != null) {
+            if (lastId != null && lastId.length() > 1) {
                 // Extract the numeric part of the ID
-                int lastNumericId = Integer.parseInt(lastId.substring(1));
-                newCustomerId = String.format("A%03d", lastNumericId + 1);
+                String numericPart = lastId.substring(1);
+                try {
+                    int lastNumericId = Integer.parseInt(numericPart);
+                    newUserId = String.format("A%03d", lastNumericId + 1);
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                    // Optionally log the error or handle gracefully
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return newCustomerId;
+        return newUserId;
     }
+
 }

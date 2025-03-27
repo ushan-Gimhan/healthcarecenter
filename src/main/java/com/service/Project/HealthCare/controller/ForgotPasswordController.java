@@ -8,7 +8,6 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 
 import java.io.IOException;
 
@@ -32,7 +31,7 @@ public class ForgotPasswordController {
 
     @FXML
     void handleBackToLogin(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoadingView.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/View/LoagingView.fxml"));
         AnchorPane newPane = loader.load();
 
         AnchorPane.setTopAnchor(newPane, 0.0);

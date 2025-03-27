@@ -238,7 +238,11 @@ public class UserController implements Initializable {
         roleSelector.setValue("");
     }
     public void genarateId(){
-        txtAdminId.setText(userBO.genareateID());
+        if (txtAdminId != null) {
+            txtAdminId.setText(userBO.genareateID());
+        } else {
+            System.out.println("txtAdminId is null");
+        }
     }
     public void loadTableData(){
         List<UserDTO> allAdmin = userBO.findAll();

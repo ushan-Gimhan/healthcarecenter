@@ -50,6 +50,6 @@ public class UserBOImpl implements UserBO {
 
     @Override
     public String genareateID() {
-        return userDAO.genarateId();
+        return userDAO.generateId();
     }
 }

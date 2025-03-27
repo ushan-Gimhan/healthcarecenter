@@ -69,13 +69,6 @@ public class LoginPageController {
         usernameField.setStyle(usernameField.getStyle() + ";-fx-border-color: #7367F0;");
         passwordField.setStyle(passwordField.getStyle() + ";-fx-border-color: #7367F0;");
 
-        String namePattern = "^[A-Za-z ]+$";
-        boolean isValidName = username.matches(namePattern);
-
-        if (!isValidName) {
-            usernameField.setStyle(usernameField.getStyle() + ";-fx-border-color: red;");
-        }
-
         if (username.equals("")) {
             new Alert(Alert.AlertType.INFORMATION, "Enter you user Name").show();
             return;
@@ -85,17 +78,14 @@ public class LoginPageController {
         }
 
         User user = loginPageBO.Adminlogin(username);
-        ap=user.getRole();
-
 
         if (user == null) {
             new Alert(Alert.AlertType.INFORMATION, "Invalid User Name!").show();
             usernameField.setStyle(usernameField.getStyle() + ";-fx-border-color: red;");
-            return;
-        }
-        if (user != null) {
-//            if (BCrypt.checkpw(password, user.getPassword())){
+        }else{
+//          if (BCrypt.checkpw(password, user.getPassword())){
             if (password.equals(user.getPassword())){
+                ap=user.getRole();
                 navigate("/View/AdminDashboard.fxml");
             } else {
                 passwordField.setStyle(passwordField.getStyle() + ";-fx-border-color: red;");
