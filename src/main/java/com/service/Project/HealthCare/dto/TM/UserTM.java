@@ -1,4 +1,4 @@
-package com.service.Project.HealthCare.dto;
+package com.service.Project.HealthCare.dto.TM;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,12 +9,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdminDTO {
+public class UserTM {
     private String id;
     private String name;
     private String email;
     private String phone;
-    private String userNAme;
+    private String userName;
     private String password;
-
+    private String role;
 }

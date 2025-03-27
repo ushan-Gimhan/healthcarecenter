@@ -1,9 +1,9 @@
 package com.service.Project.HealthCare.controller;
 
 import com.service.Project.HealthCare.bo.BOFactory;
-import com.service.Project.HealthCare.bo.custom.AdminBO;
-import com.service.Project.HealthCare.dto.AdminDTO;
-import com.service.Project.HealthCare.dto.TM.AdminTM;
+import com.service.Project.HealthCare.bo.custom.UserBO;
+import com.service.Project.HealthCare.dto.UserDTO;
+import com.service.Project.HealthCare.dto.TM.UserTM;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,19 +14,20 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import org.mindrot.jbcrypt.BCrypt;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class AdminController implements Initializable {
+public class UserController implements Initializable {
 
-    AdminBO adminBO = (AdminBO) BOFactory.getInstance().getBOType(BOFactory.BOType.admin);
+    UserBO userBO = (UserBO) BOFactory.getInstance().getBOType(BOFactory.BOType.admin);
 
     @FXML
     private Button GenarateReport;
 
     @FXML
-    private TableView<AdminTM> adminTable;
+    private TableView<UserTM> adminTable;
 
     @FXML
     private Button btnAdd;
@@ -41,22 +42,22 @@ public class AdminController implements Initializable {
     private Button btnUpdate;
 
     @FXML
-    private TableColumn<AdminTM, String> colAdminId;
+    private TableColumn<UserTM, String> colAdminId;
 
     @FXML
-    private TableColumn<AdminTM,String> colEmail;
+    private TableColumn<UserTM,String> colEmail;
 
     @FXML
-    private TableColumn<AdminTM,String> colMobileNumber;
+    private TableColumn<UserTM,String> colMobileNumber;
 
     @FXML
-    private TableColumn<AdminTM,String> colName;
+    private TableColumn<UserTM,String> colName;
 
     @FXML
-    private TableColumn<AdminTM,String> passwordColum;
+    private TableColumn<UserTM,String> passwordColum;
 
     @FXML
-    public TableColumn<AdminTM,String> coluserName;
+    public TableColumn<UserTM,String> coluserName;
 
     @FXML
     private Button sendMail;
@@ -86,6 +87,15 @@ public class AdminController implements Initializable {
     private TextField txtPasswordHidden;
 
     @FXML
+    private ChoiceBox <String>roleSelector;
+
+    @FXML
+    public TableColumn<UserTM,String> colRole;
+
+    public UserController() throws IOException {
+    }
+
+    @FXML
     void addAdmin(ActionEvent event) {
         String adminId=txtAdminId.getText();
         String email=txtEmail.getText();
@@ -94,25 +104,27 @@ public class AdminController implements Initializable {
         String userName=txtUserName.getText();
         String password=txtPassword.getText();
         String passwordHidden=txtPasswordHidden.getText();
+        String role = roleSelector.getValue();
 
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
         if(password.equals(passwordHidden)){
-            AdminDTO adminDTO= new AdminDTO();
-            adminDTO.setEmail(email);
-            adminDTO.setPassword(hashedPassword);
-            adminDTO.setName(name);
-            adminDTO.setUserNAme(userName);
-            adminDTO.setId(adminId);
-            adminDTO.setPhone(mobileNumber);
+            UserDTO userDTO = new UserDTO();
+            userDTO.setEmail(email);
+            userDTO.setPassword(hashedPassword);
+            userDTO.setName(name);
+            userDTO.setUserNAme(userName);
+            userDTO.setId(adminId);
+            userDTO.setPhone(mobileNumber);
+            userDTO.setRole(role);
 
-            boolean saved=adminBO.save(adminDTO);
+            boolean saved= userBO.save(userDTO);
 
             if(saved){
-                new Alert(Alert.AlertType.INFORMATION,"Admin Added Successfully").show();
+                new Alert(Alert.AlertType.INFORMATION,"User Added Successfully").show();
                 refreshPage();
             }else {
-                new Alert(Alert.AlertType.ERROR,"Admin Not Added Successfully").show();
+                new Alert(Alert.AlertType.ERROR,"User Not Added Successfully").show();
             }
         }else{
             new Alert(Alert.AlertType.ERROR,"Input your Password Correctly!!").show();
@@ -121,29 +133,30 @@ public class AdminController implements Initializable {
 
     @FXML
     void clicked(MouseEvent event) {
-        AdminTM adminTM = adminTable.getSelectionModel().getSelectedItem();
-        if(adminTM!=null){
-            txtAdminId.setText(adminTM.getId());
-            txtEmail.setText(adminTM.getEmail());
-            txtMobileNumber.setText(adminTM.getPhone());
-            txtName.setText(adminTM.getName());
-            txtUserName.setText(adminTM.getUserName());
-            txtPassword.setText(adminTM.getPassword());
-            txtPasswordHidden.setText(adminTM.getPassword());
+        UserTM userTM = adminTable.getSelectionModel().getSelectedItem();
+        if(userTM !=null){
+            txtAdminId.setText(userTM.getId());
+            txtEmail.setText(userTM.getEmail());
+            txtMobileNumber.setText(userTM.getPhone());
+            txtName.setText(userTM.getName());
+            txtUserName.setText(userTM.getUserName());
+            txtPassword.setText(userTM.getPassword());
+            txtPasswordHidden.setText(userTM.getPassword());
+            roleSelector.setValue(userTM.getRole());
         }
         btnAdd.setDisable(true);
     }
 
     @FXML
     void deleteAdmin(ActionEvent event) {
-        AdminTM adminTM = adminTable.getSelectionModel().getSelectedItem();
-        if(adminTM!=null){
-            boolean b=adminBO.delete(adminTM.getId());
+        UserTM userTM = adminTable.getSelectionModel().getSelectedItem();
+        if(userTM !=null){
+            boolean b= userBO.delete(userTM.getId());
             if (b){
-                new Alert(Alert.AlertType.INFORMATION,"Admin Deleted Successfully").show();
+                new Alert(Alert.AlertType.INFORMATION,"User Deleted Successfully").show();
                 refreshPage();
             }else {
-                new Alert(Alert.AlertType.ERROR,"Admin Not Deleted Successfully").show();
+                new Alert(Alert.AlertType.ERROR,"User Not Deleted Successfully").show();
             }
         }else{
             new Alert(Alert.AlertType.ERROR,"Select admin for deleted!!").show();
@@ -157,7 +170,7 @@ public class AdminController implements Initializable {
     }
 
     @FXML
-    void updateAdmin(ActionEvent event) {
+    void updateAdmin(ActionEvent event) throws IOException {
         String adminId=txtAdminId.getText();
         String email=txtEmail.getText();
         String mobileNumber=txtMobileNumber.getText();
@@ -165,25 +178,27 @@ public class AdminController implements Initializable {
         String userName= txtUserName.getText();
         String password=txtPassword.getText();
         String passwordHidden=txtPasswordHidden.getText();
+        String role = roleSelector.getValue();
 
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt());
 
         if(password.equals(passwordHidden)){
-            AdminDTO adminDTO= new AdminDTO();
-            adminDTO.setEmail(email);
-            adminDTO.setPassword(hashedPassword);
-            adminDTO.setName(name);
-            adminDTO.setUserNAme(userName);
-            adminDTO.setId(adminId);
-            adminDTO.setPhone(mobileNumber);
+            UserDTO userDTO = new UserDTO();
+            userDTO.setEmail(email);
+            userDTO.setPassword(hashedPassword);
+            userDTO.setName(name);
+            userDTO.setUserNAme(userName);
+            userDTO.setId(adminId);
+            userDTO.setPhone(mobileNumber);
+            userDTO.setRole(role);
 
-            boolean updated=adminBO.update(adminDTO);
+            boolean updated= userBO.update(userDTO);
 
             if(updated){
-                new Alert(Alert.AlertType.INFORMATION,"Admin Updated Successfully").show();
+                new Alert(Alert.AlertType.INFORMATION,"User Updated Successfully").show();
                 refreshPage();
             }else {
-                new Alert(Alert.AlertType.ERROR,"Error!! Can't Update Admin").show();
+                new Alert(Alert.AlertType.ERROR,"Error!! Can't Update User").show();
             }
         }else{
             new Alert(Alert.AlertType.ERROR,"Input your Password Correctly!!").show();
@@ -192,12 +207,14 @@ public class AdminController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        roleSelector.setItems(FXCollections.observableArrayList("Admin", "Receptionist"));
         colAdminId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colMobileNumber.setCellValueFactory(new PropertyValueFactory<>("phone"));
         passwordColum.setCellValueFactory(new PropertyValueFactory<>("password"));
         coluserName.setCellValueFactory(new PropertyValueFactory<>("userName"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colRole.setCellValueFactory(new PropertyValueFactory<>("role"));
 
         try{
             refreshPage();
@@ -218,25 +235,27 @@ public class AdminController implements Initializable {
         txtUserName.setText("");
         txtPassword.setText("");
         txtPasswordHidden.setText("");
+        roleSelector.setValue("");
     }
     public void genarateId(){
-        txtAdminId.setText(adminBO.genareateID());
+        txtAdminId.setText(userBO.genareateID());
     }
     public void loadTableData(){
-        List<AdminDTO> allAdmin = adminBO.findAll();
-        ObservableList<AdminTM> adminTMS= FXCollections.observableArrayList();
+        List<UserDTO> allAdmin = userBO.findAll();
+        ObservableList<UserTM> userTMS = FXCollections.observableArrayList();
 
-        for(AdminDTO adminDTO : allAdmin){
-            AdminTM adminTM = new AdminTM(
-                    adminDTO.getId(),
-                    adminDTO.getName(),
-                    adminDTO.getEmail(),
-                    adminDTO.getPhone(),
-                    adminDTO.getUserNAme(),
-                    adminDTO.getPassword()
+        for(UserDTO userDTO : allAdmin){
+            UserTM userTM = new UserTM(
+                    userDTO.getId(),
+                    userDTO.getName(),
+                    userDTO.getEmail(),
+                    userDTO.getPhone(),
+                    userDTO.getUserNAme(),
+                    userDTO.getPassword(),
+                    userDTO.getRole()
             );
-            adminTMS.add(adminTM);
+            userTMS.add(userTM);
         }
-        adminTable.setItems(adminTMS);
+        adminTable.setItems(userTMS);
     }
 }

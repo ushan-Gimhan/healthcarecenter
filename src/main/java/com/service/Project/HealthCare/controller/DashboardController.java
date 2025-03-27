@@ -3,12 +3,17 @@ package com.service.Project.HealthCare.controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class DashboardController {
+import static com.service.Project.HealthCare.controller.LoginPageController.ap;
+
+public class DashboardController implements Initializable {
 
     @FXML
     private Button btnAdmin;
@@ -108,4 +113,12 @@ public class DashboardController {
 
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        if (ap.equals("Receptionist")){
+            btnTheropyPrograms.setDisable(true);
+            btnAdmin.setDisable(true);
+        }
+
+    }
 }

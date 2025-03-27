@@ -1,10 +1,8 @@
 package com.service.Project.HealthCare.bo.custom;
 
 import com.service.Project.HealthCare.bo.SuperBO;
-import com.service.Project.HealthCare.entity.Admin;
-import com.service.Project.HealthCare.entity.Receptionist;
+import com.service.Project.HealthCare.entity.User;
 
 public interface LoginPageBO extends SuperBO {
-    public Admin Adminlogin(String userName);
-    public Receptionist Receptionlogin(String userName);
+    public User Adminlogin(String userName);
 }

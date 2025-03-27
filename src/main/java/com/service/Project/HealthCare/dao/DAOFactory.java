@@ -1,9 +1,8 @@
 package com.service.Project.HealthCare.dao;
 
-import com.service.Project.HealthCare.bo.SuperBO;
-import com.service.Project.HealthCare.dao.custom.AdminDAO;
-import com.service.Project.HealthCare.dao.custom.Impl.AdminDAOImpl;
-import com.service.Project.HealthCare.dao.custom.Impl.ReceptionistDAOImpl;
+import com.service.Project.HealthCare.dao.custom.Impl.UserDAOImpl;
+
+import java.io.IOException;
 
 public class DAOFactory {
     private static DAOFactory instance;
@@ -19,15 +18,13 @@ public class DAOFactory {
     }
 
     public enum DAOType{
-        Admin,Receptionist,
+        Admin,
     }
 
-    public SuperDAO getDAO(DAOType daoType) {
+    public SuperDAO getDAO(DAOType daoType) throws IOException {
         switch (daoType) {
             case Admin:
-                return new AdminDAOImpl();
-            case Receptionist:
-                return new ReceptionistDAOImpl();
+                return new UserDAOImpl();
                 default:
                     return null;
         }

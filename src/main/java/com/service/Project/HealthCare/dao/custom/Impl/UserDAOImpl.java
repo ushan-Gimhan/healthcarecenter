@@ -1,38 +1,43 @@
 package com.service.Project.HealthCare.dao.custom.Impl;
 
 import com.service.Project.HealthCare.config.FactoryConfiguration;
-import com.service.Project.HealthCare.dao.custom.AdminDAO;
-import com.service.Project.HealthCare.entity.Admin;
+import com.service.Project.HealthCare.dao.custom.UserDAO;
+import com.service.Project.HealthCare.entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+
+import java.io.IOException;
 import java.util.List;
 
-public class AdminDAOImpl implements AdminDAO {
+public class UserDAOImpl implements UserDAO {
     private final FactoryConfiguration config=FactoryConfiguration.getInstance();
 
+    public UserDAOImpl() throws IOException {
+    }
+
     @Override
-    public Admin findByuserNAme(String username) {
+    public User findByuserNAme(String username) {
         Session session=config.getSession();
-        Query<Admin> query = session.createQuery("FROM Admin a WHERE a.userName = :username", Admin.class);
+        Query<User> query = session.createQuery("FROM User a WHERE a.userName = :username", User.class);
         query.setParameter("username", username);
         return query.uniqueResult();
     }
 
     @Override
-    public List<Admin> findAll() {
+    public List<User> findAll() {
         Session session=config.getSession();
-        Query<Admin> query = session.createQuery("FROM Admin", Admin.class);
+        Query<User> query = session.createQuery("FROM User", User.class);
         return query.list();
     }
 
     @Override
-    public Admin find(String id) {
+    public User find(String id) {
         return null;
     }
 
     @Override
-    public boolean save(Admin entity) {
+    public boolean save(User entity) {
         Session session=config.getSession();
         Transaction tx=session.beginTransaction();
         if(entity!=null){
@@ -46,8 +51,8 @@ public class AdminDAOImpl implements AdminDAO {
     }
 
     @Override
-    public boolean update(Admin entity) {
-        Session session = FactoryConfiguration.getInstance().getSession();
+    public boolean update(User entity)  {
+        Session session = config.getSession();
         Transaction tx=session.beginTransaction();
 
         if(entity!=null){
@@ -68,7 +73,7 @@ public class AdminDAOImpl implements AdminDAO {
         Transaction tx=session.beginTransaction();
 
         if(id!=null){
-            session.remove(session.get(Admin.class, id));
+            session.remove(session.get(User.class, id));
             tx.commit();
             return true;
         }else {
@@ -83,7 +88,7 @@ public class AdminDAOImpl implements AdminDAO {
 
         try (Session session = config.getSession()) {
             // Get the last customer ID
-            Query<String> query = session.createQuery("SELECT id FROM Admin a ORDER BY a.id DESC", String.class);
+            Query<String> query = session.createQuery("SELECT id FROM User a ORDER BY a.id DESC", String.class);
             query.setMaxResults(1);
             String lastId = query.uniqueResult();
 

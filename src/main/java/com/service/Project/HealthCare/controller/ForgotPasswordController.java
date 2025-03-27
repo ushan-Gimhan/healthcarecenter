@@ -14,7 +14,6 @@ import java.io.IOException;
 
 public class ForgotPasswordController {
     public AnchorPane mainPain;
-    LoginPageController loginPageController = new LoginPageController();
 
     @FXML
     private Hyperlink backToLoginLink;

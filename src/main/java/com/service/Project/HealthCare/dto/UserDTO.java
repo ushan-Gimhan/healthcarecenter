@@ -1,27 +1,21 @@
-package com.service.Project.HealthCare.entity;
+package com.service.Project.HealthCare.dto;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
-@Table(name = "receptionist")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Receptionist implements SuperEntity{
-    @Id
+public class UserDTO {
     private String id;
-
     private String name;
-    private String address;
-    private String phone;
     private String email;
+    private String phone;
+    private String userNAme;
     private String password;
+    private String role;
 
-    @ManyToOne
-    private Admin admin;
 }
