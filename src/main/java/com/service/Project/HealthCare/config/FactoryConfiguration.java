@@ -13,13 +13,19 @@ public class FactoryConfiguration {
     private SessionFactory sessionFactory;
 
     private FactoryConfiguration() throws IOException {
-        Configuration config = new Configuration().configure();
 
-        try{
-            InputStream inputStream = FactoryConfiguration.class.getClassLoader().getResourceAsStream("hibernate.properties");
-        }catch (Exception e){
-            e.printStackTrace();
+        Configuration config = new Configuration();
+
+        Properties properties = new Properties();
+        try (InputStream inputStream = FactoryConfiguration.class.getClassLoader().getResourceAsStream("hibernate.properties")) {
+            if (inputStream == null) {
+                throw new IOException("Unable to find hibernate.properties");
+            }
+            properties.load(inputStream);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to load hibernate.properties", e);
         }
+        config.setProperties(properties);
 
         config.addAnnotatedClass(User.class);
         config.addAnnotatedClass(Patient.class);

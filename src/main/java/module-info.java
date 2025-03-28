@@ -2,10 +2,12 @@ module com.service.Project.healthcare {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
+    requires javafx.graphics;
     requires static lombok;
     requires jakarta.persistence;
     requires org.hibernate.orm.core;
     requires java.naming;
+    requires java.sql;
     requires jbcrypt;
 
     opens com.service.Project.HealthCare.controller to javafx.fxml;
