@@ -1,16 +1,25 @@
 package com.service.Project.HealthCare.controller;
 
+import com.service.Project.HealthCare.bo.BOFactory;
+import com.service.Project.HealthCare.bo.custom.TheropistBO;
+import com.service.Project.HealthCare.dto.TM.TeropistTM;
+import com.service.Project.HealthCare.dto.TheropistDTO;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
-public class TherapistController {
+import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
+public class TherapistController implements Initializable {
+
+    @FXML
+    private TextField txtAge;
     @FXML
     private Button btnAdd;
 
@@ -24,25 +33,28 @@ public class TherapistController {
     private Button btnUpdate;
 
     @FXML
-    private TableColumn<?, ?> colEmail;
+    private TableColumn<TeropistTM, String> colEmail;
 
     @FXML
-    private TableColumn<?, ?> colExperience;
+    private TableColumn <TeropistTM, String>colAge;
 
     @FXML
-    private TableColumn<?, ?> colMobileNumber;
+    private TableColumn<TeropistTM, String> colExperience;
 
     @FXML
-    private TableColumn<?, ?> colName;
+    private TableColumn<TeropistTM, String> colMobileNumber;
 
     @FXML
-    private TableColumn<?, ?> colSpecialization;
+    private TableColumn<TeropistTM, String> colName;
 
     @FXML
-    private TableColumn<?, ?> colTherapistId;
+    private TableColumn<TeropistTM, String> colSpecialization;
 
     @FXML
-    private TableView<?> therapistTable;
+    private TableColumn<TeropistTM, String> colTherapistId;
+
+    @FXML
+    private TableView<TeropistTM> therapistTable;
 
     @FXML
     private TextField txtEmail;
@@ -62,9 +74,34 @@ public class TherapistController {
     @FXML
     private Label txtTherapistId;
 
+    TheropistBO theropistBO;
+
+    {
+        try {
+            theropistBO = (TheropistBO) BOFactory.getInstance().getBOType(BOFactory.BOType.Therapist);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @FXML
     void addTherapist(ActionEvent event) {
+        String tId = txtTherapistId.getText();
+        String email = txtEmail.getText();
+        String experience = txtExperience.getText();
+        String mobileNumber = txtMobileNumber.getText();
+        String name = txtName.getText();
+        String specialization = txtSpecialization.getText();
+        String gender = txtAge.getText();
 
+        boolean saved=theropistBO.save(new TheropistDTO(tId,name,gender,email,mobileNumber,specialization,experience));
+
+        if(saved){
+            new Alert(Alert.AlertType.INFORMATION,"Patient saved!!");
+            refreshPage();
+        }else {
+            new Alert(Alert.AlertType.ERROR,"Patient not saved!!");
+        }
     }
 
     @FXML
@@ -74,17 +111,68 @@ public class TherapistController {
 
     @FXML
     void deleteTherapist(ActionEvent event) {
+        boolean deleted=theropistBO.delete(txtTherapistId.getText());
 
+        if(deleted){
+            new Alert(Alert.AlertType.INFORMATION,"Therapist deleted!!");
+            refreshPage();
+        }else {
+            new Alert(Alert.AlertType.ERROR,"Therapist not deleted!!");
+        }
     }
 
     @FXML
     void resetFields(ActionEvent event) {
+        refreshPage();
 
     }
 
     @FXML
     void updateTherapist(ActionEvent event) {
+        String tId = txtTherapistId.getText();
+        String email = txtEmail.getText();
+        String experience = txtExperience.getText();
+        String mobileNumber = txtMobileNumber.getText();
+        String name = txtName.getText();
+        String specialization = txtSpecialization.getText();
+        String gender = txtAge.getText();
+
+        boolean saved=theropistBO.save(new TheropistDTO(tId,name,gender,email,mobileNumber,specialization,experience));
+
+        if(saved){
+            new Alert(Alert.AlertType.INFORMATION,"Patient saved!!");
+            refreshPage();
+        }else {
+            new Alert(Alert.AlertType.ERROR,"Patient not saved!!");
+        }
+    }
+    public void genarateID() {
+        txtTherapistId.setText(theropistBO.generateId());
+    }
+
+    public void refreshPage() {
+        genarateID();
+
+        txtEmail.setText("");
+        txtExperience.setText("");
+        txtMobileNumber.setText("");
+        txtName.setText("");
+        txtSpecialization.setText("");
+        txtAge.setText("");
 
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        genarateID();
+
+        colTherapistId.setCellValueFactory(new PropertyValueFactory<>("therapistId"));
+        colName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        colExperience.setCellValueFactory(new PropertyValueFactory<>("experience"));
+        colMobileNumber.setCellValueFactory(new PropertyValueFactory<>("mobileNumber"));
+        colSpecialization.setCellValueFactory(new PropertyValueFactory<>("specialization"));
+        colAge.setCellValueFactory(new PropertyValueFactory<>("age"));
+
+    }
 }

@@ -1,5 +1,6 @@
 package com.service.Project.HealthCare.bo;
 
+import com.service.Project.HealthCare.bo.custom.Impl.TheropistBOImpl;
 import com.service.Project.HealthCare.bo.custom.Impl.UserBOImpl;
 import com.service.Project.HealthCare.bo.custom.Impl.LoginPageBOImpl;
 import com.service.Project.HealthCare.bo.custom.Impl.PatientBOImpl;
@@ -19,7 +20,7 @@ public class BOFactory {
         return instance;
     }
     public enum BOType {
-        loginPage,admin,Patient
+        loginPage,admin,Patient, Therapist
     }
 
     public SuperBO getBOType(BOType type) throws IOException {
@@ -28,8 +29,10 @@ public class BOFactory {
                 return new LoginPageBOImpl();
                 case admin:
                     return new UserBOImpl();
-            case Patient:
-                return new PatientBOImpl();
+                    case Patient:
+                        return new PatientBOImpl();
+                        case Therapist:
+                            return new TheropistBOImpl();
                 default:
                     return null;
         }

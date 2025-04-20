@@ -9,10 +9,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class TeropistDTO{
+public class TheropistDTO {
     private String id;
     private String name;
-    private int age;
     private String gender;
     private String email;
     private String phone;

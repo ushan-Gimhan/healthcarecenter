@@ -29,8 +29,8 @@ public class Patient implements SuperEntity {
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
     private List<TherapySession> therapySessions;
 
-    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Payement> payements;
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL ,fetch = FetchType.LAZY)
+    private List<Payement> payementList;
 
     public Patient(String id, String name, String mobile, String email, String nic, String gender,int age) {
         this.id = id;

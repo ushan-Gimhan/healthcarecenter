@@ -1,9 +1,9 @@
 package com.service.Project.HealthCare.dao.custom.Impl;
 
 import com.service.Project.HealthCare.config.FactoryConfiguration;
-import com.service.Project.HealthCare.dao.custom.PatientDAO;
+import com.service.Project.HealthCare.dao.custom.TheropistDAO;
 import com.service.Project.HealthCare.entity.Patient;
-import com.service.Project.HealthCare.entity.User;
+import com.service.Project.HealthCare.entity.Theropist;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -11,7 +11,7 @@ import org.hibernate.query.Query;
 import java.io.IOException;
 import java.util.List;
 
-public class PatientDAOImpl implements PatientDAO {
+public class TheropistDAOImpl implements TheropistDAO {
     private final FactoryConfiguration config;
 
     {
@@ -23,19 +23,19 @@ public class PatientDAOImpl implements PatientDAO {
     }
 
     @Override
-    public List<Patient> findAll() {
+    public List<Theropist> findAll() {
         Session session=config.getSession();
-        Query<Patient> query = session.createQuery("FROM Patient ", Patient.class);
+        Query<Theropist> query = session.createQuery("FROM Theropist ", Theropist.class);
         return query.list();
     }
 
     @Override
-    public Patient find(String id) {
+    public Theropist find(String id) {
         return null;
     }
 
     @Override
-    public boolean save(Patient entity) {
+    public boolean save(Theropist entity) {
         Session session = config.getSession();
         Transaction tx = session.beginTransaction();
 
@@ -50,11 +50,12 @@ public class PatientDAOImpl implements PatientDAO {
     }
 
     @Override
-    public boolean update(Patient entity) {
+    public boolean update(Theropist entity) {
         Session session = config.getSession();
+
         Transaction tx = session.beginTransaction();
 
-        try{
+        try {
             session.merge(entity);
             tx.commit();
             return true;
@@ -67,10 +68,11 @@ public class PatientDAOImpl implements PatientDAO {
     @Override
     public boolean delete(String id) {
         Session session = config.getSession();
+
         Transaction tx = session.beginTransaction();
 
         try {
-            session.remove(session.get(Patient.class, id));
+            session.remove(session.get(Theropist.class, id));
             tx.commit();
             return true;
         }catch(Exception e){
@@ -81,11 +83,11 @@ public class PatientDAOImpl implements PatientDAO {
 
     @Override
     public String generateId() {
-        String newPatientId = "P001"; // Default ID if no records exist
+        String newTheropistId = "T001"; // Default ID if no records exist
 
         try (Session session = config.getSession()) {
             // Get the last patient ID
-            Query<String> query = session.createQuery("SELECT id FROM Patient p ORDER BY p.id DESC", String.class);
+            Query<String> query = session.createQuery("SELECT id FROM Theropist t ORDER BY t.id DESC", String.class);
             query.setMaxResults(1);
             String lastId = query.uniqueResult();
 
@@ -94,7 +96,7 @@ public class PatientDAOImpl implements PatientDAO {
                 String numericPart = lastId.substring(1);
                 try {
                     int lastNumericId = Integer.parseInt(numericPart);
-                    newPatientId = String.format("P%03d", lastNumericId + 1);
+                    newTheropistId = String.format("T%03d", lastNumericId + 1);
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                     // Optionally log the error or handle gracefully
@@ -103,6 +105,6 @@ public class PatientDAOImpl implements PatientDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return newPatientId;
+        return newTheropistId;
     }
 }

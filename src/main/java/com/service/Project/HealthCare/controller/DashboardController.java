@@ -51,7 +51,8 @@ public class DashboardController implements Initializable {
     private Button btnpayment;
 
     @FXML
-    private AnchorPane contentPane;
+    private
+    AnchorPane contentPane;
 
     @FXML
     private AnchorPane mainPane;

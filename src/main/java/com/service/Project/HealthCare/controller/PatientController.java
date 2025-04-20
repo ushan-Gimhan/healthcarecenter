@@ -134,6 +134,11 @@ public class PatientController implements Initializable {
 
     @FXML
     void deletePatient(ActionEvent event) {
+        String patientId = txtPatientId.getText();
+
+        patientBO.delete(patientId);
+
+        refreshPage();
     }
 
     @FXML

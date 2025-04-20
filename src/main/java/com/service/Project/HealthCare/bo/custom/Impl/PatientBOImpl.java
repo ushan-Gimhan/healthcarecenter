@@ -11,9 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PatientBOImpl implements PatientBO {
-    PatientDAO patientDAO = (PatientDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.Patient);
+    PatientDAO patientDAO;
 
-    public PatientBOImpl() throws IOException {
+    {
+        try {
+            patientDAO = (PatientDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.Patient);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
