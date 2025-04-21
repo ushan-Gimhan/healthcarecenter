@@ -3,6 +3,7 @@ package com.service.Project.HealthCare.controller;
 import com.service.Project.HealthCare.bo.BOFactory;
 import com.service.Project.HealthCare.bo.custom.TherapyProgramBO;
 import com.service.Project.HealthCare.bo.custom.TheropistBO;
+import com.service.Project.HealthCare.dto.TM.PatientTM;
 import com.service.Project.HealthCare.dto.TM.TherapyProgramTM;
 import com.service.Project.HealthCare.dto.TM.UserTM;
 import com.service.Project.HealthCare.dto.TherapyProgramDTO;
@@ -88,7 +89,6 @@ public class TherapyProgramController implements Initializable {
         }else {
             new Alert(Alert.AlertType.ERROR,"Patient not updated!!");
         }
-
     }
 
     @FXML
@@ -110,7 +110,14 @@ public class TherapyProgramController implements Initializable {
 
     @FXML
     void selectTherapy(MouseEvent event) {
+        TherapyProgramTM therapyProgramTM = therapyTable.getSelectionModel().getSelectedItem();
 
+        if(therapyProgramTM!=null){
+            txtTherapyId.setText(therapyProgramTM.getTId());
+            txtDuration.setText(therapyProgramTM.getDuration());
+            txtProgramName.setText(therapyProgramTM.getPName());
+            txtPrice.setText(therapyProgramTM.getPrice().toString());
+        }
     }
 
     @FXML

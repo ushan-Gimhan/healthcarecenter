@@ -12,7 +12,6 @@ import lombok.Setter;
 public class TeropistTM {
     private String id;
     private String name;
-    private int age;
     private String gender;
     private String email;
     private String phone;
