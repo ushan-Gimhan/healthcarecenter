@@ -4,8 +4,12 @@ import com.service.Project.HealthCare.bo.BOFactory;
 import com.service.Project.HealthCare.bo.custom.TherapyProgramBO;
 import com.service.Project.HealthCare.bo.custom.TheropistBO;
 import com.service.Project.HealthCare.dto.TM.TherapyProgramTM;
+import com.service.Project.HealthCare.dto.TM.UserTM;
 import com.service.Project.HealthCare.dto.TherapyProgramDTO;
+import com.service.Project.HealthCare.dto.UserDTO;
 import com.service.Project.HealthCare.entity.Programs;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -15,6 +19,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class TherapyProgramController implements Initializable {
@@ -127,6 +132,7 @@ public class TherapyProgramController implements Initializable {
 
     public void refreshPage() {
         genarateID();
+        loadTableData();
 
         txtProgramName.setText("");
         txtDuration.setText("");
@@ -139,12 +145,29 @@ public class TherapyProgramController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        genarateID();
 
-        colTId.setCellValueFactory(new PropertyValueFactory<TherapyProgramTM, String>("ID"));
-        colPName.setCellValueFactory(new PropertyValueFactory<TherapyProgramTM,String>("name"));
+        colTId.setCellValueFactory(new PropertyValueFactory<TherapyProgramTM, String>("tId"));
+        colPName.setCellValueFactory(new PropertyValueFactory<TherapyProgramTM,String>("pName"));
         colDuration.setCellValueFactory(new PropertyValueFactory<TherapyProgramTM,String>("duration"));
         colPrice.setCellValueFactory(new PropertyValueFactory<TherapyProgramTM,String>("price"));
 
+        genarateID();
+        loadTableData();
+
+    }
+    public void loadTableData(){
+        List<TherapyProgramDTO> allProgram = therapyProgramBO.findAll();
+        ObservableList<TherapyProgramTM> progamTMS = FXCollections.observableArrayList();
+
+        for(TherapyProgramDTO progam : allProgram) {
+            TherapyProgramTM therapyProgramTM = new TherapyProgramTM(
+                    progam.getTId(),
+                    progam.getPName(),
+                    progam.getDuration(),
+                    progam.getPrice()
+            );
+            progamTMS.add(therapyProgramTM);
+        }
+        therapyTable.setItems(progamTMS);
     }
 }
