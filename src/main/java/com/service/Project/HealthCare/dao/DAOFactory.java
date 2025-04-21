@@ -1,6 +1,7 @@
 package com.service.Project.HealthCare.dao;
 
 import com.service.Project.HealthCare.dao.custom.Impl.PatientDAOImpl;
+import com.service.Project.HealthCare.dao.custom.Impl.TherapyProgramDAOImpl;
 import com.service.Project.HealthCare.dao.custom.Impl.TheropistDAOImpl;
 import com.service.Project.HealthCare.dao.custom.Impl.UserDAOImpl;
 
@@ -20,7 +21,7 @@ public class DAOFactory {
     }
 
     public enum DAOType{
-        Admin,Patient, Therapist
+        Admin,Patient, Therapist , program
     }
 
     public SuperDAO getDAO(DAOType daoType) throws IOException {
@@ -31,6 +32,8 @@ public class DAOFactory {
                     return new PatientDAOImpl();
                     case Therapist:
                         return new TheropistDAOImpl();
+                        case program:
+                            return new TherapyProgramDAOImpl();
                 default:
                     return null;
         }
