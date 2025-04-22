@@ -83,8 +83,8 @@ public class LoginPageController {
             new Alert(Alert.AlertType.INFORMATION, "Invalid User Name!").show();
             usernameField.setStyle(usernameField.getStyle() + ";-fx-border-color: red;");
         }else{
-//          if (BCrypt.checkpw(password, user.getPassword())){
-            if (password.equals(user.getPassword())){
+          if (BCrypt.checkpw(password, user.getPassword())){
+//            if (password.equals(user.getPassword())){
                 ap=user.getRole();
                 navigate("/View/AdminDashboard.fxml");
             } else {

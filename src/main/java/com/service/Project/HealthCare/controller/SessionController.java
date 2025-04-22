@@ -20,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -83,20 +84,46 @@ public class SessionController implements Initializable {
     @FXML
     void addSession(ActionEvent event) {
         String id = lblSessionId.getId();
-        int count = Integer.parseInt(txtSessionCount.getText());
-        String date= String.valueOf(dpSessionDate.getValue());
-        String time = String.valueOf(Time.valueOf(txtSessionTime.getText()));
-        String status= cmbStatus.getItems().toString();
+        String countText = txtSessionCount.getText();
+        String timeText = txtSessionTime.getText();
+        LocalDate dateValue = dpSessionDate.getValue();
+        String status = cmbStatus.getValue();
 
-        boolean saved = sessionBO.save(new SessioonDTO(id, count, date,time, status));
+        String countPattern = "\\d+";                       // Only digits
+        String timePattern = "^([01]\\d|2[0-3]):[0-5]\\d$"; // Valid 24-hour time (HH:mm)
 
-        if(saved){
-            new Alert(Alert.AlertType.INFORMATION,"Session added!!");
-            refreshPage();
-        }else {
-            new Alert(Alert.AlertType.ERROR,"Session not added!!");
+        if (!countText.matches(countPattern)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid session count. Only numbers allowed.").show();
+            return;
         }
 
+        if (!timeText.matches(timePattern)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid time format. Use HH:mm (e.g., 14:30)").show();
+            return;
+        }
+
+        if (dateValue == null) {
+            new Alert(Alert.AlertType.ERROR, "Please select a date.").show();
+            return;
+        }
+
+        if (status == null || status.trim().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please select a session status.").show();
+            return;
+        }
+
+        int count = Integer.parseInt(countText);
+        String date = dateValue.toString();
+        String time = Time.valueOf(timeText + ":00").toString();
+
+        boolean saved = sessionBO.save(new SessioonDTO(id, count, date, time, status));
+
+        if (saved) {
+            new Alert(Alert.AlertType.INFORMATION, "Session added!").show();
+            refreshPage();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Session not added!").show();
+        }
     }
 
     @FXML
@@ -131,18 +158,45 @@ public class SessionController implements Initializable {
     @FXML
     void updateSession(ActionEvent event) {
         String id = lblSessionId.getId();
-        int count = Integer.parseInt(txtSessionCount.getText());
-        String date= String.valueOf(dpSessionDate.getValue());
-        String time = String.valueOf(Time.valueOf(txtSessionTime.getText()));
-        String status= cmbStatus.getItems().toString();
+        String countText = txtSessionCount.getText();
+        String timeText = txtSessionTime.getText();
+        LocalDate dateValue = dpSessionDate.getValue();
+        String status = cmbStatus.getValue(); // ✅ get selected value
 
-        boolean saved = sessionBO.save(new SessioonDTO(id, count,date, time, status));
+        String countPattern = "\\d+";
+        String timePattern = "^([01]\\d|2[0-3]):[0-5]\\d$";
 
-        if(saved){
-            new Alert(Alert.AlertType.INFORMATION,"Session Updated!!");
+        if (!countText.matches(countPattern)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid session count. Only numbers allowed.").show();
+            return;
+        }
+
+        if (!timeText.matches(timePattern)) {
+            new Alert(Alert.AlertType.ERROR, "Invalid time format. Use HH:mm (e.g., 09:30)").show();
+            return;
+        }
+
+        if (dateValue == null) {
+            new Alert(Alert.AlertType.ERROR, "Please select a date.").show();
+            return;
+        }
+
+        if (status == null || status.trim().isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please select a session status.").show();
+            return;
+        }
+
+        int count = Integer.parseInt(countText);
+        String date = dateValue.toString();
+        String time = Time.valueOf(timeText + ":00").toString(); // convert to full "HH:mm:ss"
+
+        boolean saved = sessionBO.save(new SessioonDTO(id, count, date, time, status));
+
+        if (saved) {
+            new Alert(Alert.AlertType.INFORMATION, "Session Updated!").show();
             refreshPage();
-        }else {
-            new Alert(Alert.AlertType.ERROR,"Session not Updated!!");
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Session not Updated!").show();
         }
     }
 

@@ -25,5 +25,4 @@ public class User implements SuperEntity{
     private String userName;
     private String role;
 
-
 }

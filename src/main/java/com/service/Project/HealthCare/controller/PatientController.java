@@ -84,39 +84,72 @@ public class PatientController implements Initializable {
         String name = txtName.getText();
         String email = txtEmail.getText();
         String mobileNumber = txtMobileNumber.getText();
-        int age = Integer.parseInt(txtAge.getText());
-        String gender = cmbGender.getSelectionModel().getSelectedItem().toString();
-        String NIC = txtnic.getText();
+        String ageText = txtAge.getText();
+        String gender = cmbGender.getValue();
+        String nic = txtnic.getText();
 
-        txtName.setStyle(txtName.getStyle() + "-fx-text-fill: blue;");
-        txtnic.setStyle(txtnic.getStyle() + "-fx-text-fill: blue;");
-        txtEmail.setStyle(txtEmail.getStyle() + "-fx-text-fill: blue;");
-        txtMobileNumber.setStyle(txtMobileNumber.getStyle() + "-fx-text-fill: blue;");
+        txtName.setStyle("-fx-text-fill: black;");
+        txtnic.setStyle("-fx-text-fill: black;");
+        txtEmail.setStyle("-fx-text-fill: black;");
+        txtMobileNumber.setStyle("-fx-text-fill: black;");
 
         String namePattern = "^[A-Za-z ]+$";
-        String nicPattern = "^\\d{9}[VX]$";
-        String emailPattern = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
-        String phonePattern = "^(\\d+)||((\\d+\\.)(\\d){2})$";
+        String nicPattern = "^\\d{9}[VXvx]$"; // NIC ending with V/X
+        String emailPattern = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
+        String phonePattern = "^(07\\d{8})$"; // SL format
 
-        boolean isValidName= name.matches(namePattern);
-        boolean isValidNic = NIC.matches(nicPattern);
+        if (name.isEmpty() || email.isEmpty() || mobileNumber.isEmpty() || ageText.isEmpty() || gender == null || nic.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please fill in all fields.").show();
+            return;
+        }
+
+        boolean isValidName = name.matches(namePattern);
+        boolean isValidNic = nic.matches(nicPattern);
         boolean isValidEmail = email.matches(emailPattern);
         boolean isValidMobileNumber = mobileNumber.matches(phonePattern);
 
-
-        if (isValidEmail && isValidMobileNumber && isValidName) {
-            PatientDTO patientDTO = new PatientDTO(patientId,name,email,NIC,mobileNumber,gender,age);
-
-            boolean saved = patientBO.save(patientDTO);
-
-            if(saved){
-                new Alert(Alert.AlertType.INFORMATION,"Patient saved!!");
-                refreshPage();
-            }else {
-                new Alert(Alert.AlertType.ERROR,"Patient not saved!!");
-            }
+        if (!isValidName) {
+            txtName.setStyle("-fx-text-fill: red;");
+            new Alert(Alert.AlertType.ERROR, "Invalid name. Only letters and spaces allowed.").show();
+            return;
         }
 
+        if (!isValidNic) {
+            txtnic.setStyle("-fx-text-fill: red;");
+            new Alert(Alert.AlertType.ERROR, "Invalid NIC. Must be 9 digits followed by 'V' or 'X'.").show();
+            return;
+        }
+
+        if (!isValidEmail) {
+            txtEmail.setStyle("-fx-text-fill: red;");
+            new Alert(Alert.AlertType.ERROR, "Invalid email address.").show();
+            return;
+        }
+
+        if (!isValidMobileNumber) {
+            txtMobileNumber.setStyle("-fx-text-fill: red;");
+            new Alert(Alert.AlertType.ERROR, "Invalid phone number. Format should be 07XXXXXXXX.").show();
+            return;
+        }
+
+        int age;
+        try {
+            age = Integer.parseInt(ageText);
+        } catch (NumberFormatException e) {
+            new Alert(Alert.AlertType.ERROR, "Invalid age. Must be a number.").show();
+            return;
+        }
+
+        // Save operation
+        PatientDTO patientDTO = new PatientDTO(patientId, name, email, nic, mobileNumber, gender, age);
+        boolean saved = patientBO.save(patientDTO);
+
+        if (saved) {
+            new Alert(Alert.AlertType.INFORMATION, "Patient saved!!").show();
+            refreshPage();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Patient not saved!!").show();
+        }
     }
 
     @FXML
@@ -152,35 +185,65 @@ public class PatientController implements Initializable {
         String name = txtName.getText();
         String email = txtEmail.getText();
         String mobileNumber = txtMobileNumber.getText();
-        int age = Integer.parseInt(txtAge.getText());
-        String gender = cmbGender.getSelectionModel().getSelectedItem().toString();
-        String NIC = txtnic.getText();
+        String ageText = txtAge.getText();
+        String gender = cmbGender.getValue();
+        String nic = txtnic.getText();
 
-        txtName.setStyle(txtName.getStyle() + "-fx-text-fill: blue;");
-        txtnic.setStyle(txtnic.getStyle() + "-fx-text-fill: blue;");
-        txtEmail.setStyle(txtEmail.getStyle() + "-fx-text-fill: blue;");
-        txtMobileNumber.setStyle(txtMobileNumber.getStyle() + "-fx-text-fill: blue;");
+        txtName.setStyle("-fx-text-fill: black;");
+        txtnic.setStyle("-fx-text-fill: black;");
+        txtEmail.setStyle("-fx-text-fill: black;");
+        txtMobileNumber.setStyle("-fx-text-fill: black;");
 
         String namePattern = "^[A-Za-z ]+$";
-        String nicPattern = "^\\d{9}[VX]$";
-        String emailPattern = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
-        String phonePattern = "^(\\d+)||((\\d+\\.)(\\d){2})$";
+        String nicPattern = "^\\d{9}[VXvx]$"; // NIC ends with V or X (case-insensitive)
+        String emailPattern = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
+        String phonePattern = "^(07\\d{8})$"; // SL mobile numbers e.g. 0712345678
 
-        boolean isValidName= name.matches(namePattern);
-        boolean isValidNic = NIC.matches(nicPattern);
-        boolean isValidEmail = email.matches(emailPattern);
-        boolean isValidMobileNumber = mobileNumber.matches(phonePattern);
+        if (name.isEmpty() || email.isEmpty() || mobileNumber.isEmpty() || nic.isEmpty() || ageText.isEmpty() || gender == null) {
+            new Alert(Alert.AlertType.ERROR, "All fields must be filled.").show();
+            return;
+        }
 
-        if (isValidEmail && isValidNic && isValidName && isValidMobileNumber){
-            PatientDTO patientDTO = new PatientDTO(patientId,name,email,NIC,mobileNumber,gender,age);
+        if (!name.matches(namePattern)) {
+            txtName.setStyle("-fx-text-fill: red;");
+            new Alert(Alert.AlertType.ERROR, "Invalid name. Only letters and spaces allowed.").show();
+            return;
+        }
 
-            boolean updated = patientBO.update(patientDTO);
-            if(updated){
-                new Alert(Alert.AlertType.INFORMATION,"Patient updated!!");
-                refreshPage();
-            }else {
-                new Alert(Alert.AlertType.ERROR,"Patient not updated!!");
-            }
+        if (!nic.matches(nicPattern)) {
+            txtnic.setStyle("-fx-text-fill: red;");
+            new Alert(Alert.AlertType.ERROR, "Invalid NIC. Must be 9 digits followed by 'V' or 'X'.").show();
+            return;
+        }
+
+        if (!email.matches(emailPattern)) {
+            txtEmail.setStyle("-fx-text-fill: red;");
+            new Alert(Alert.AlertType.ERROR, "Invalid email address.").show();
+            return;
+        }
+
+        if (!mobileNumber.matches(phonePattern)) {
+            txtMobileNumber.setStyle("-fx-text-fill: red;");
+            new Alert(Alert.AlertType.ERROR, "Invalid phone number. Format: 07XXXXXXXX").show();
+            return;
+        }
+
+        int age;
+        try {
+            age = Integer.parseInt(ageText);
+        } catch (NumberFormatException e) {
+            new Alert(Alert.AlertType.ERROR, "Invalid age. Must be a number.").show();
+            return;
+        }
+
+        PatientDTO patientDTO = new PatientDTO(patientId, name, email, nic, mobileNumber, gender, age);
+
+        boolean updated = patientBO.update(patientDTO);
+        if (updated) {
+            new Alert(Alert.AlertType.INFORMATION, "Patient updated!!").show();
+            refreshPage();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Patient not updated!!").show();
         }
     }
 

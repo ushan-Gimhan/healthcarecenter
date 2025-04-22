@@ -21,7 +21,15 @@ import java.util.ResourceBundle;
 
 public class UserController implements Initializable {
 
-    UserBO userBO = (UserBO) BOFactory.getInstance().getBOType(BOFactory.BOType.admin);
+    UserBO userBO;
+
+    {
+        try {
+            userBO = (UserBO) BOFactory.getInstance().getBOType(BOFactory.BOType.admin);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @FXML
     private Button GenarateReport;
@@ -92,8 +100,6 @@ public class UserController implements Initializable {
     @FXML
     public TableColumn<UserTM,String> colRole;
 
-    public UserController() throws IOException {
-    }
 
     @FXML
     void addAdmin(ActionEvent event) {

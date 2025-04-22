@@ -22,7 +22,7 @@ public class AppInitializer extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        Parent load = FXMLLoader.load(getClass().getResource("/View/sessionManage.fxml"));
+        Parent load = FXMLLoader.load(getClass().getResource("/View/AdminDashboard.fxml"));
 
         Image image = new Image(getClass().getResource("/images/healthicon2.png").toExternalForm());
 
