@@ -13,4 +13,5 @@ public interface TherapyProgramBO extends SuperBO {
     public boolean update(TherapyProgramDTO program);
     public boolean delete(String id);
     public String generateId();
+    public List<String> getAllPrograms();
 }

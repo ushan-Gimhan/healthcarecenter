@@ -1,25 +1,37 @@
 package com.service.Project.HealthCare.controller;
 
 import com.service.Project.HealthCare.bo.BOFactory;
+import com.service.Project.HealthCare.bo.custom.PatientBO;
 import com.service.Project.HealthCare.bo.custom.RegistrationBO;
+import com.service.Project.HealthCare.bo.custom.TherapyProgramBO;
 import com.service.Project.HealthCare.dto.RegitrationDTO;
 import com.service.Project.HealthCare.dto.TM.RegistrationTM;
-import com.service.Project.HealthCare.entity.Registration;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.ResourceBundle;
 
-public class RegistrationController {
+public class RegistrationController implements Initializable {
 
     RegistrationBO registrationBO;
+    PatientBO pationBO;
+    TherapyProgramBO programBO;
 
     {
         try {
             registrationBO = (RegistrationBO) BOFactory.getInstance().getBOType(BOFactory.BOType.registration);
+            pationBO = (PatientBO) BOFactory.getInstance().getBOType(BOFactory.BOType.Patient);
+            programBO = (TherapyProgramBO) BOFactory.getInstance().getBOType(BOFactory.BOType.Program);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -200,4 +212,39 @@ public class RegistrationController {
         txtPayment.setStyle("-fx-text-fill: black;");
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        colRegId.setCellValueFactory(new PropertyValueFactory<>("regId"));
+        colPatient.setCellValueFactory(new PropertyValueFactory<>("patient"));
+        colProgram.setCellValueFactory(new PropertyValueFactory<>("program"));
+        colPayment.setCellValueFactory(new PropertyValueFactory<>("payment"));
+        colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+        loadPatients();
+        loadPrograms();
+
+        loadTableData();
+    }
+    public void loadPatients(){
+        List<String> patientIds = pationBO.getAllPatientIds();
+        cmbPatient.getItems().setAll(patientIds);
+    }
+    public void loadPrograms(){
+        List<String> programs = programBO.getAllPrograms();
+        cmbProgram.getItems().setAll(programs);
+    }
+    public void loadTableData(){
+        List<RegitrationDTO> all= registrationBO.findAll();
+        ObservableList<RegistrationTM> data = FXCollections.observableArrayList();
+
+        for(RegitrationDTO regitrationDTO : all ){
+            RegistrationTM registrationTM = new RegistrationTM(regitrationDTO.getRegId(),
+//                    regitrationDTO.getPatient(),
+//                    regitrationDTO.getProgram(),
+                    regitrationDTO.getPayment(),
+                    regitrationDTO.getDate());
+            data.add(registrationTM);
+        }
+        registrationTable.setItems(data);
+    }
 }

@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PatientDAOImpl implements PatientDAO {
@@ -104,5 +105,28 @@ public class PatientDAOImpl implements PatientDAO {
             e.printStackTrace();
         }
         return newPatientId;
+    }
+    public List<String> getAllPatientIds(){
+        List<String> patientIds = new ArrayList<>();
+        Session session = config.getSession();
+
+        try {
+            session.beginTransaction();
+
+            List<String> results = session.createQuery("SELECT p.id FROM Patient p", String.class).getResultList();
+            patientIds.addAll(results);
+
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return patientIds;
+
     }
 }

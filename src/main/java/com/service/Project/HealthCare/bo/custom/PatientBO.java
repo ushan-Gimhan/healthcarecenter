@@ -14,4 +14,6 @@ public interface PatientBO extends SuperBO {
     public boolean update(PatientDTO patient);
     public boolean delete(String id);
     public String generateId();
+    public List<String> getAllPatientIds();
+
 }

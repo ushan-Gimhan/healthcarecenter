@@ -2,7 +2,9 @@ package com.service.Project.HealthCare.bo.custom.Impl;
 
 import com.service.Project.HealthCare.bo.custom.RegistrationBO;
 import com.service.Project.HealthCare.dao.DAOFactory;
+import com.service.Project.HealthCare.dao.custom.PatientDAO;
 import com.service.Project.HealthCare.dao.custom.RegistrationDAO;
+import com.service.Project.HealthCare.dao.custom.TherapyProgramDAO;
 import com.service.Project.HealthCare.dto.PatientDTO;
 import com.service.Project.HealthCare.dto.RegitrationDTO;
 import com.service.Project.HealthCare.entity.Patient;
@@ -14,10 +16,14 @@ import java.util.List;
 
 public class RegistrationBOImpl implements RegistrationBO {
    RegistrationDAO dao;
+   PatientDAO pdao;
+   TherapyProgramDAO therapyProgramDAO;
 
     {
         try {
             dao = (RegistrationDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.Registration);
+            pdao = (PatientDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.Patient);
+            therapyProgramDAO= (TherapyProgramDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOType.program);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -57,5 +63,15 @@ public class RegistrationBOImpl implements RegistrationBO {
     @Override
     public String generateId() {
         return  dao.generateId();
+    }
+
+    @Override
+    public List<String> getAllPatientIds() {
+        return pdao.getAllPatientIds();
+    }
+
+    @Override
+    public List<String> getAllPrograms() {
+        return therapyProgramDAO.getAllPrograms();
     }
 }

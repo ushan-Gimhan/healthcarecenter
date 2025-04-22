@@ -56,8 +56,4 @@ public class TherapyProgramBOImpl implements TherapyProgramBO {
         return therapyProgramDAO.delete(id);
     }
 
-    @Override
-    public String generateId() {
-        return therapyProgramDAO.generateId();
-    }
 }

@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TherapyProgramDAOImpl implements TherapyProgramDAO {
@@ -106,5 +107,27 @@ public class TherapyProgramDAOImpl implements TherapyProgramDAO {
         }
 
         return newTheropyProgramId;
+    }
+
+    public List<String> getAllPrograms(){
+        List<String> programList = new ArrayList<>();
+        Session session = config.getSession();
+
+        try {
+            session.beginTransaction();
+
+            List<String> results = session.createQuery("SELECT p.pName FROM Therapy_Program p", String.class).getResultList();
+            programList.addAll(results);
+
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+        return programList;
     }
 }

@@ -10,6 +10,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class RegistrationDAOImpl implements RegistrationDAO {
@@ -110,5 +111,6 @@ public class RegistrationDAOImpl implements RegistrationDAO {
         }
         return newPaymentId;
     }
+
 }
 
