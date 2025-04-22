@@ -84,10 +84,11 @@ public class SessionController implements Initializable {
     void addSession(ActionEvent event) {
         String id = lblSessionId.getId();
         int count = Integer.parseInt(txtSessionCount.getText());
+        String date= String.valueOf(dpSessionDate.getValue());
         String time = String.valueOf(Time.valueOf(txtSessionTime.getText()));
         String status= cmbStatus.getItems().toString();
 
-        boolean saved = sessionBO.save(new SessioonDTO(id, count, time, status));
+        boolean saved = sessionBO.save(new SessioonDTO(id, count, date,time, status));
 
         if(saved){
             new Alert(Alert.AlertType.INFORMATION,"Session added!!");
@@ -131,10 +132,11 @@ public class SessionController implements Initializable {
     void updateSession(ActionEvent event) {
         String id = lblSessionId.getId();
         int count = Integer.parseInt(txtSessionCount.getText());
+        String date= String.valueOf(dpSessionDate.getValue());
         String time = String.valueOf(Time.valueOf(txtSessionTime.getText()));
         String status= cmbStatus.getItems().toString();
 
-        boolean saved = sessionBO.save(new SessioonDTO(id, count, time, status));
+        boolean saved = sessionBO.save(new SessioonDTO(id, count,date, time, status));
 
         if(saved){
             new Alert(Alert.AlertType.INFORMATION,"Session Updated!!");
@@ -150,6 +152,7 @@ public class SessionController implements Initializable {
         txtSessionCount.setText("");
         txtSessionTime.setText("");
         cmbStatus.getItems().clear();
+        dpSessionDate.setValue(null);
 
     }
     public void loadTableData(){
@@ -166,12 +169,13 @@ public class SessionController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        cmbStatus.setItems(FXCollections.observableArrayList("Available","Unavailable"));
         colSessionId.setCellValueFactory(new PropertyValueFactory<>("sId"));
         colSessionCount.setCellValueFactory(new PropertyValueFactory<>("count"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("time"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         colTime.setCellValueFactory(new PropertyValueFactory<>("time"));
+        colDate.setCellValueFactory(new PropertyValueFactory<>("Date"));
 
         lblSessionId.setText(sessionBO.generateId());
         loadTableData();

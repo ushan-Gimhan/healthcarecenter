@@ -19,6 +19,6 @@ public class SessioonDTO {
     private Date date;
     private String status;
 
-    public SessioonDTO(String id, int count, String time, String status) {
+    public SessioonDTO(String id, int count, String date, String time, String status) {
     }
 }
