@@ -17,4 +17,7 @@ public class TheropistDTO {
     private String phone;
     private String specialization;
     private String experience;
+
+    public TheropistDTO(String tId, String name, String email, String mobileNumber, String specialization, String experience) {
+    }
 }

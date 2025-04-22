@@ -92,20 +92,65 @@ public class TherapistController implements Initializable {
     @FXML
     void addTherapist(ActionEvent event) {
         String tId = txtTherapistId.getText();
-        String email = txtEmail.getText();
-        String experience = txtExperience.getText();
-        String mobileNumber = txtMobileNumber.getText();
         String name = txtName.getText();
+        String email = txtEmail.getText();
+        String mobileNumber = txtMobileNumber.getText();
         String specialization = txtSpecialization.getText();
-        String gender = txtAge.getText();
+        String experience = txtExperience.getText();
 
-        boolean saved=theropistBO.save(new TheropistDTO(tId,name,gender,email,mobileNumber,specialization,experience));
+        txtName.setStyle("-fx-text-fill: black;");
+        txtEmail.setStyle("-fx-text-fill: black;");
+        txtMobileNumber.setStyle("-fx-text-fill: black;");
+        txtSpecialization.setStyle("-fx-text-fill: black;");
+        txtExperience.setStyle("-fx-text-fill: black;");
 
-        if(saved){
-            new Alert(Alert.AlertType.INFORMATION,"Patient saved!!");
+        String namePattern = "^[A-Za-z ]+$";
+        String emailPattern = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
+        String phonePattern = "^(07\\d{8})$";
+        String expPattern = "^\\d{1,2}(\\s?(years|Months|months|Years))?$";
+
+        if (tId.isEmpty() || name.isEmpty() || email.isEmpty() || mobileNumber.isEmpty() || specialization.isEmpty() || experience.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please fill in all fields.").show();
+            return;
+        }
+
+        boolean isValidName = name.matches(namePattern);
+        boolean isValidEmail = email.matches(emailPattern);
+        boolean isValidMobile = mobileNumber.matches(phonePattern);
+        boolean isValidExp = experience.matches(expPattern);
+
+        if (!isValidName) {
+            txtName.setStyle("-fx-text-fill: red;");
+            new Alert(Alert.AlertType.ERROR, "Invalid name. Only letters and spaces allowed.").show();
+            return;
+        }
+
+        if (!isValidEmail) {
+            txtEmail.setStyle("-fx-text-fill: red;");
+            new Alert(Alert.AlertType.ERROR, "Invalid email format.").show();
+            return;
+        }
+
+        if (!isValidMobile) {
+            txtMobileNumber.setStyle("-fx-text-fill: red;");
+            new Alert(Alert.AlertType.ERROR, "Invalid mobile number. Use 07XXXXXXXX format.").show();
+            return;
+        }
+
+        if (!isValidExp) {
+            txtExperience.setStyle("-fx-text-fill: red;");
+            new Alert(Alert.AlertType.ERROR, "Invalid experience. Use numeric values like '5 years'.").show();
+            return;
+        }
+
+        TheropistDTO therapistDTO = new TheropistDTO(tId, name, email, mobileNumber, specialization, experience);
+        boolean saved = theropistBO.save(therapistDTO);
+
+        if (saved) {
+            new Alert(Alert.AlertType.INFORMATION, "Therapist saved!!").show();
             refreshPage();
-        }else {
-            new Alert(Alert.AlertType.ERROR,"Patient not saved!!");
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Therapist not saved!!").show();
         }
     }
 
@@ -144,20 +189,65 @@ public class TherapistController implements Initializable {
     @FXML
     void updateTherapist(ActionEvent event) {
         String tId = txtTherapistId.getText();
-        String email = txtEmail.getText();
-        String experience = txtExperience.getText();
-        String mobileNumber = txtMobileNumber.getText();
         String name = txtName.getText();
+        String email = txtEmail.getText();
+        String mobileNumber = txtMobileNumber.getText();
         String specialization = txtSpecialization.getText();
-        String gender = txtAge.getText();
+        String experience = txtExperience.getText();
 
-        boolean saved=theropistBO.save(new TheropistDTO(tId,name,gender,email,mobileNumber,specialization,experience));
+        txtName.setStyle("-fx-text-fill: black;");
+        txtEmail.setStyle("-fx-text-fill: black;");
+        txtMobileNumber.setStyle("-fx-text-fill: black;");
+        txtSpecialization.setStyle("-fx-text-fill: black;");
+        txtExperience.setStyle("-fx-text-fill: black;");
 
-        if(saved){
-            new Alert(Alert.AlertType.INFORMATION,"Patient saved!!");
+        String namePattern = "^[A-Za-z ]+$";
+        String emailPattern = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
+        String phonePattern = "^(07\\d{8})$";
+        String expPattern = "^\\d{1,2}(\\s?(years|Months|months|Years))?$";
+
+        if (tId.isEmpty() || name.isEmpty() || email.isEmpty() || mobileNumber.isEmpty() || specialization.isEmpty() || experience.isEmpty()) {
+            new Alert(Alert.AlertType.ERROR, "Please fill in all fields.").show();
+            return;
+        }
+
+        boolean isValidName = name.matches(namePattern);
+        boolean isValidEmail = email.matches(emailPattern);
+        boolean isValidMobile = mobileNumber.matches(phonePattern);
+        boolean isValidExp = experience.matches(expPattern);
+
+        if (!isValidName) {
+            txtName.setStyle("-fx-text-fill: red;");
+            new Alert(Alert.AlertType.ERROR, "Invalid name. Only letters and spaces allowed.").show();
+            return;
+        }
+
+        if (!isValidEmail) {
+            txtEmail.setStyle("-fx-text-fill: red;");
+            new Alert(Alert.AlertType.ERROR, "Invalid email format.").show();
+            return;
+        }
+
+        if (!isValidMobile) {
+            txtMobileNumber.setStyle("-fx-text-fill: red;");
+            new Alert(Alert.AlertType.ERROR, "Invalid mobile number. Use 07XXXXXXXX format.").show();
+            return;
+        }
+
+        if (!isValidExp) {
+            txtExperience.setStyle("-fx-text-fill: red;");
+            new Alert(Alert.AlertType.ERROR, "Invalid experience. Use numeric values like '5 years'.").show();
+            return;
+        }
+
+        TheropistDTO therapistDTO = new TheropistDTO(tId, name, email, mobileNumber, specialization, experience);
+        boolean saved = theropistBO.update(therapistDTO);
+
+        if (saved) {
+            new Alert(Alert.AlertType.INFORMATION, "Therapist updated!!").show();
             refreshPage();
-        }else {
-            new Alert(Alert.AlertType.ERROR,"Patient not saved!!");
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Therapist not updated!!").show();
         }
     }
     public void genarateID() {

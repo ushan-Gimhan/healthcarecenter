@@ -138,10 +138,9 @@ public class DashboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if (ap.equals("Receptionist")){
-            btnTheropyPrograms.setDisable(true);
-            btnAdmin.setDisable(true);
-        }
-
+//        if (ap.equals("Receptionist")){
+//            btnTheropyPrograms.setDisable(true);
+//            btnAdmin.setDisable(true);
+//        }
     }
 }
