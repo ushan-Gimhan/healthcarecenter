@@ -120,8 +120,8 @@ public class DashboardController implements Initializable {
     }
 
     @FXML
-    void clickedTheraryPrograms(ActionEvent event) {
-
+    void clickedTheraryPrograms(ActionEvent event) throws IOException {
+        navigation("View/thropyPrograme.fxml");
     }
 
     public void navigation(String path) throws IOException {

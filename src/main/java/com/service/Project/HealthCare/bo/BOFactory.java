@@ -17,7 +17,7 @@ public class BOFactory {
         return instance;
     }
     public enum BOType {
-        loginPage,admin,Patient, Therapist, Program
+        loginPage,admin,Patient, Therapist, Program ,Session
     }
 
     public SuperBO getBOType(BOType type) throws IOException {
@@ -32,6 +32,8 @@ public class BOFactory {
                             return new TheropistBOImpl();
                             case Program:
                                 return new TherapyProgramBOImpl();
+                                case Session:
+                                    return new SessionBOImpl();
                 default:
                     return null;
         }
