@@ -18,7 +18,7 @@ public class DAOFactory {
     }
 
     public enum DAOType{
-        Admin,Patient, Therapist , program,session
+        Admin,Patient, Therapist , program,session , Registration
     }
 
     public SuperDAO getDAO(DAOType daoType) throws IOException {
@@ -33,6 +33,8 @@ public class DAOFactory {
                             return new TherapyProgramDAOImpl();
                             case session:
                                 return new SessionDAOImpl();
+            case Registration:
+                return new RegistrationDAOImpl();
                 default:
                     return null;
         }

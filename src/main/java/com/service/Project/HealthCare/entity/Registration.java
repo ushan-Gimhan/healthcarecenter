@@ -26,4 +26,7 @@ public class Registration implements SuperEntity{
 
     @ManyToOne
     private Programs programs;
+
+    public Registration(String regId, Double payment, Date date) {
+    }
 }
