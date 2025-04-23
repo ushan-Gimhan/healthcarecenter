@@ -66,4 +66,9 @@ public class PatientBOImpl implements PatientBO {
     public Patient getPationByID(String id) {
         return patientDAO.getPatientById(id);
     }
+
+    @Override
+    public Patient getPationByName(String name) {
+        return patientDAO.getPationByName(name);
+    }
 }

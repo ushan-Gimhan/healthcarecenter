@@ -31,6 +31,12 @@ public class TherapySession implements SuperEntity{
     private Theropist theropist;
 
     public TherapySession(String sId, int sessionCount, Time time, Date date, String status) {
+        this.sId = sId;
+        this.SessionCount = sessionCount;
+        this.time = time;
+        this.date = date;
+        this.status = status;
+
     }
 
 }

@@ -3,6 +3,7 @@ package com.service.Project.HealthCare.dao.custom.Impl;
 import com.service.Project.HealthCare.config.FactoryConfiguration;
 import com.service.Project.HealthCare.dao.custom.TherapyProgramDAO;
 import com.service.Project.HealthCare.entity.Programs;
+import com.service.Project.HealthCare.entity.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
@@ -36,33 +37,49 @@ public class TherapyProgramDAOImpl implements TherapyProgramDAO {
 
     @Override
     public boolean save(Programs entity) {
-        Session session = config.getSession();
-
-        Transaction tx = session.beginTransaction();
-
+        Session session=config.getSession();
+        Transaction tx=session.beginTransaction();
         try {
-            session.persist(entity);
+            session = config.getSession(); // or sessionFactory.openSession()
+            tx = session.beginTransaction();
+
+            // Your DB operations here
+            session.persist(entity); // or update, remove, etc.
+
             tx.commit();
             return true;
-        }catch (Exception e) {
-            tx.rollback();
+
+        } catch (Exception e) {
+            if (tx != null && tx.isActive()) tx.rollback();
+            e.printStackTrace();
             return false;
+
+        } finally {
+            if (session != null && session.isOpen()) session.close();
         }
     }
 
     @Override
     public boolean update(Programs entity) {
         Session session = config.getSession();
-
         Transaction tx = session.beginTransaction();
-
         try {
-            session.merge(entity);
+            session = config.getSession(); // or sessionFactory.openSession()
+            tx = session.beginTransaction();
+
+            // Your DB operations here
+            session.merge(entity); // or update, remove, etc.
+
             tx.commit();
             return true;
-        }catch (Exception e) {
-            tx.rollback();
+
+        } catch (Exception e) {
+            if (tx != null && tx.isActive()) tx.rollback();
+            e.printStackTrace();
             return false;
+
+        } finally {
+            if (session != null && session.isOpen()) session.close();
         }
     }
 
@@ -133,18 +150,8 @@ public class TherapyProgramDAOImpl implements TherapyProgramDAO {
     @Override
     public Programs getProgramByName(String name) {
         Session session = config.getSession();
-        Programs programs = null;
-
-        try {
-            session = config.getSession();
-            programs = session.get(Programs.class, name);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (session != null) {
-                session.close();
-            }
-        }
-        return programs;
+        Query<Programs> query = session.createQuery("FROM Therapy_Program a WHERE a.pName = :name", Programs.class);
+        query.setParameter("name", name);
+        return query.uniqueResult();
     }
 }

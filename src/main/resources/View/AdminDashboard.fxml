@@ -23,7 +23,7 @@
                         <Insets bottom="30.0" />
                     </VBox.margin>
                 </Label>
-   
+
                 <VBox spacing="8">
                     <!-- Dashboard Button -->
                     <Button fx:id="btnDashboard" mnemonicParsing="false" onAction="#clickedDashboard" prefHeight="66.0" prefWidth="180.0" styleClass="nav-button" text="Dashboard">
@@ -35,7 +35,7 @@
                             </ImageView>
                         </graphic>
                     </Button>
-   
+
                     <Button fx:id="btnPatients" mnemonicParsing="false" onAction="#clickedPatients" styleClass="nav-button" text="Patients">
                         <graphic>
                             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" visible="true">
@@ -45,8 +45,8 @@
                             </ImageView>
                         </graphic>
                     </Button>
-   
-                    <Button fx:id="btnAppointments" mnemonicParsing="false" onAction="#clickedAppointments" styleClass="nav-button" text="Appointments">
+
+                    <Button fx:id="btnAppointments" mnemonicParsing="false" onAction="#clickedAppointments" styleClass="nav-button" text="Registration">
                         <graphic>
                             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" visible="true">
                                 <image>
@@ -64,7 +64,7 @@
                             </ImageView>
                         </graphic>
                     </Button>
-   
+
                     <Button fx:id="btnSessions" mnemonicParsing="false" onAction="#clickedSessions" styleClass="nav-button" text="Therapy Sessions">
                         <graphic>
                             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" visible="true">
@@ -74,7 +74,7 @@
                             </ImageView>
                         </graphic>
                     </Button>
-   
+
                     <Button fx:id="btnpayment" mnemonicParsing="false" onAction="#clickedPayment" styleClass="nav-button" text="Payemnt">
                         <graphic>
                             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" visible="true">
@@ -84,7 +84,7 @@
                             </ImageView>
                         </graphic>
                     </Button>
-   
+
                     <Button fx:id="btnTherapists" mnemonicParsing="false" onAction="#clickedTherapists" styleClass="nav-button" text="Manage Therapists">
                         <graphic>
                             <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" visible="true">
@@ -105,9 +105,9 @@
                   </graphic>
                </Button>
                 </VBox>
-   
+
                 <VBox VBox.vgrow="ALWAYS" />
-   
+
                 <Button fx:id="btnLogout" mnemonicParsing="false" onAction="#clickedLogOut" styleClass="logout-button" text="Log Out">
                     <graphic>
                         <Label style="-fx-text-fill: white;" text="🚪" />

@@ -87,11 +87,11 @@ public class RegistrationDAOImpl implements RegistrationDAO {
 
     @Override
     public String generateId() {
-        String newPaymentId = "P001"; // Default ID if no records exist
+        String newPaymentId = "R001"; // Default ID if no records exist
 
         try (Session session = config.getSession()) {
             // Get the last patient ID
-            Query<String> query = session.createQuery("SELECT id FROM TherapySession  s ORDER BY s.id DESC", String.class);
+            Query<String> query = session.createQuery("SELECT id FROM Registration  s ORDER BY s.id DESC", String.class);
             query.setMaxResults(1);
             String lastId = query.uniqueResult();
 
@@ -100,7 +100,7 @@ public class RegistrationDAOImpl implements RegistrationDAO {
                 String numericPart = lastId.substring(1);
                 try {
                     int lastNumericId = Integer.parseInt(numericPart);
-                    newPaymentId = String.format("P%03d", lastNumericId + 1);
+                    newPaymentId = String.format("R%03d", lastNumericId + 1);
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                     // Optionally log the error or handle gracefully

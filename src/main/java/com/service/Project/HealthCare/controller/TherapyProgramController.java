@@ -74,25 +74,38 @@ public class TherapyProgramController implements Initializable {
     private TextField txtTherapyId;
 
     @FXML
-    void addTherapy(ActionEvent event) {
-
+    void Add(ActionEvent event) {
         String id = txtTherapyId.getText();
         String duration = txtDuration.getText();
         String programName = txtProgramName.getText();
-        Double price = Double.valueOf(txtPrice.getText());
+        Double price = Double.parseDouble(txtPrice.getText());
 
-        boolean saved = therapyProgramBO.save(new TherapyProgramDTO(id,programName,duration,price));
-
-        if(saved){
-            new Alert(Alert.AlertType.INFORMATION,"Patient updated!!");
-            refreshPage();
-        }else {
-            new Alert(Alert.AlertType.ERROR,"Patient not updated!!");
+        if (id.isEmpty() || programName.isEmpty() || duration.isEmpty() || price.isNaN()) {
+            new Alert(Alert.AlertType.WARNING, "Please fill in all fields!").show();
+            return;
         }
+
+        try {
+            Double.parseDouble(String.valueOf(price));
+        } catch (NumberFormatException e) {
+            new Alert(Alert.AlertType.ERROR, "Price must be a valid number!").show();
+            return;
+        }
+
+        boolean saved = therapyProgramBO.save(new TherapyProgramDTO(id, programName, duration, price));
+        System.out.println(saved);
+
+        if (saved) {
+            new Alert(Alert.AlertType.INFORMATION, "Therapy program saved successfully!").show();
+            refreshPage();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Failed to save therapy program!").show();
+        }
+
     }
 
     @FXML
-    void deleteTherapy(ActionEvent event) {
+    void Delete(ActionEvent event) {
         boolean deleted=therapyProgramBO.delete(txtTherapyId.getText());
 
         if(deleted){
@@ -104,7 +117,7 @@ public class TherapyProgramController implements Initializable {
     }
 
     @FXML
-    void resetTherapyFields(ActionEvent event) {
+    void Reset(ActionEvent event) {
         refreshPage();
     }
 
@@ -121,19 +134,33 @@ public class TherapyProgramController implements Initializable {
     }
 
     @FXML
-    void updateTherapy(ActionEvent event) {
-        String id = txtTherapyId.getText();
-        String duration = txtDuration.getText();
-        String programName = txtProgramName.getText();
-        Double price = Double.valueOf(txtPrice.getText());
+    void Update(ActionEvent event) {
+        String id = txtTherapyId.getText().trim();
+        String duration = txtDuration.getText().trim();
+        String programName = txtProgramName.getText().trim();
+        Double priceText= Double.valueOf(txtPrice.getText());
 
-        boolean updated = therapyProgramBO.save(new TherapyProgramDTO(id,programName,duration,price));
-
-        if(updated){
-            new Alert(Alert.AlertType.INFORMATION,"Therapy Program updated!!");
+        if (id.isEmpty() || duration.isEmpty() || programName.isEmpty() || priceText.isNaN()) {
+            new Alert(Alert.AlertType.WARNING, "Please fill in all fields!").show();
+            return;
+        }
+        double price;
+        try {
+            price = Double.parseDouble(String.valueOf(priceText));
+            if (price < 0) {
+                new Alert(Alert.AlertType.WARNING, "Price cannot be negative!").show();
+                return;
+            }
+        } catch (NumberFormatException e) {
+            new Alert(Alert.AlertType.ERROR, "Invalid price format! Please enter a valid number.").show();
+            return;
+        }
+        boolean updated = therapyProgramBO.update(new TherapyProgramDTO(id, programName, duration, price));
+        if (updated) {
+            new Alert(Alert.AlertType.INFORMATION, "Therapy Program updated!").show();
             refreshPage();
-        }else {
-            new Alert(Alert.AlertType.ERROR,"Therapy Program not updated!!");
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Therapy Program not updated!").show();
         }
     }
 

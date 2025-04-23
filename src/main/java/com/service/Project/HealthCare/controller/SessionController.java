@@ -26,6 +26,9 @@ import java.util.ResourceBundle;
 
 public class SessionController implements Initializable {
 
+    public TableColumn colTherapist;
+    public TableColumn colTherapyProgram;
+    public Label lblSessionCount;
     SessionBO sessionBO;
 
     {
@@ -77,6 +80,15 @@ public class SessionController implements Initializable {
 
     @FXML
     private TextField txtSessionCount;
+
+    @FXML
+    public ComboBox<String> cmbTherapistSelect;
+
+    @FXML
+    public Label lblTherapistName;
+
+    @FXML
+    public ComboBox<String> cmbTherapyProgram;
 
     @FXML
     private TextField txtSessionTime;
@@ -225,7 +237,7 @@ public class SessionController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cmbStatus.setItems(FXCollections.observableArrayList("Available","Unavailable"));
         colSessionId.setCellValueFactory(new PropertyValueFactory<>("sId"));
-        colSessionCount.setCellValueFactory(new PropertyValueFactory<>("count"));
+//        colSessionCount.setCellValueFactory(new PropertyValueFactory<>("SessionCount"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("time"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         colTime.setCellValueFactory(new PropertyValueFactory<>("time"));
@@ -233,6 +245,14 @@ public class SessionController implements Initializable {
 
         lblSessionId.setText(sessionBO.generateId());
         loadTableData();
+
+    }
+
+    public void selectTherapist(ActionEvent event) {
+
+    }
+
+    public void selectPatient(ActionEvent event) {
 
     }
 }

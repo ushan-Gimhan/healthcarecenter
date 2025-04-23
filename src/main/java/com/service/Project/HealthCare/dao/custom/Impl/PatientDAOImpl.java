@@ -147,4 +147,22 @@ public class PatientDAOImpl implements PatientDAO {
         }
         return patient;
     }
+
+    @Override
+    public Patient getPationByName(String name) {
+        Session session = config.getSession();
+        Patient patient = null;
+
+        try {
+            session = config.getSession(); // Your Hibernate session provider
+            patient = session.get(Patient.class, name); // Fetch by primary key
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return patient;
+    }
 }

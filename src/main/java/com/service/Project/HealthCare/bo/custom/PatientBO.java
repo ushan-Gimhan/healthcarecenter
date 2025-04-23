@@ -17,4 +17,5 @@ public interface PatientBO extends SuperBO {
     public List<String> getAllPatientIds();
 
     public Patient getPationByID(String id);
+    public Patient getPationByName(String name);
 }

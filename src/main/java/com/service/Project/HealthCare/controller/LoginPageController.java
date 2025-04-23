@@ -1,5 +1,6 @@
 package com.service.Project.HealthCare.controller;
 
+import com.service.Project.HealthCare.Exceptions.LoginException;
 import com.service.Project.HealthCare.bo.BOFactory;
 import com.service.Project.HealthCare.bo.custom.LoginPageBO;
 import com.service.Project.HealthCare.entity.User;
@@ -84,12 +85,11 @@ public class LoginPageController {
             usernameField.setStyle(usernameField.getStyle() + ";-fx-border-color: red;");
         }else{
           if (BCrypt.checkpw(password, user.getPassword())){
-//            if (password.equals(user.getPassword())){
                 ap=user.getRole();
                 navigate("/View/AdminDashboard.fxml");
             } else {
                 passwordField.setStyle(passwordField.getStyle() + ";-fx-border-color: red;");
-                new Alert(Alert.AlertType.INFORMATION, "Invalid Password").show();
+                throw new LoginException("Username, password, or role cannot be empty.");
             }
         }
     }

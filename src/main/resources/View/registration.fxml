@@ -82,13 +82,12 @@
                         </GridPane>
 
                         <Label style="-fx-padding: 10 0 0 0;" styleClass="section-header" text="Program Information" />
-                        <GridPane hgap="15" styleClass="grid-pane" vgap="10">
+                        <GridPane hgap="15" prefHeight="86.0" prefWidth="353.0" styleClass="grid-pane" vgap="10">
                             <columnConstraints>
                                 <ColumnConstraints minWidth="120.0" prefWidth="140.0" />
                                 <ColumnConstraints hgrow="ALWAYS" />
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints vgrow="NEVER" />
                                 <RowConstraints vgrow="NEVER" />
                                 <RowConstraints vgrow="NEVER" />
                             </rowConstraints>
@@ -98,9 +97,6 @@
 
                                 <Label text="Selected Program:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                                 <Label fx:id="lblSelectedProgram" prefHeight="18.0" prefWidth="153.0" styleClass="info-label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-                                <Label text="Price:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                                <Label fx:id="lblProgramPrice" prefHeight="18.0" prefWidth="153.0" styleClass="info-label" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                             </children>
                         </GridPane>
 

@@ -4,14 +4,20 @@ import com.service.Project.HealthCare.bo.BOFactory;
 import com.service.Project.HealthCare.bo.custom.PatientBO;
 import com.service.Project.HealthCare.dto.PatientDTO;
 import com.service.Project.HealthCare.dto.TM.PatientTM;
+import com.service.Project.HealthCare.entity.Patient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -19,6 +25,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class PatientController implements Initializable {
+    public TextField txtSearch;
     PatientBO patientBO;
 
     {
@@ -293,10 +300,25 @@ public class PatientController implements Initializable {
         ObservableList<PatientTM> data = FXCollections.observableArrayList();
 
         for (PatientDTO patientDTO : all) {
-            PatientTM patientTM = new PatientTM(patientDTO.getId(),patientDTO.getName(),patientDTO.getMobile(),patientDTO.getEmail(),patientDTO.getNIC(),patientDTO.getGender(),patientDTO.getAge());
-
+            PatientTM patientTM = new PatientTM(patientDTO.getId(),patientDTO.getName(),patientDTO.getMobile(),patientDTO.getNIC(),patientDTO.getEmail(),patientDTO.getGender(),patientDTO.getAge());
             data.add(patientTM);
         }
         patientTable.setItems(data);
+    }
+
+    public void clikedSerch(ActionEvent event) throws IOException {
+        String name=txtSearch.getText();
+
+        Patient patient=patientBO.getPationByName(name);
+
+        if (patient==null) {
+            new Alert(Alert.AlertType.ERROR, "Patient not found.").show();
+        }else{
+            Parent load = FXMLLoader.load(getClass().getResource("/View/AdminDashboard.fxml"));
+            Stage stage = new Stage();
+            Scene scene = new Scene(load);
+            stage.setScene(scene);
+            stage.show();
+        }
     }
 }

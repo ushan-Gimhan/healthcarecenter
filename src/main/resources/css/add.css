@@ -127,3 +127,7 @@
     -fx-hgap: 10;
     -fx-padding: 10;
 }
+
+.btn-search {
+    -fx-background-color: lightBlue;
+}

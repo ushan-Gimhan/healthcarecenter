@@ -105,6 +105,8 @@ public class RegistrationController implements Initializable {
         Programs programs = programBO.getProgramByName(program);
         String program_id = programs.getTId();
 
+        Patient patient = pationBO.getPationByID(patientValue);
+
         txtRegId.setStyle("-fx-text-fill: black;");
         txtPayment.setStyle("-fx-text-fill: black;");
 
@@ -128,7 +130,7 @@ public class RegistrationController implements Initializable {
             return;
         }
 
-        RegitrationDTO regitrationDTO = new RegitrationDTO(id, payment,date, patientValue, program_id);
+        RegitrationDTO regitrationDTO = new RegitrationDTO(id, payment,date, patient, programs);
         boolean saved = registrationBO.save(regitrationDTO);
 
         if (saved) {
@@ -146,7 +148,7 @@ public class RegistrationController implements Initializable {
         if (selected != null) {
             txtRegId.setText(selected.getRegId());
             txtPayment.setText(String.valueOf(selected.getPayment()));
-            datePicker.setValue(LocalDate.parse((CharSequence) selected.getDate())); // assumes date is saved in "yyyy-MM-dd" format
+            datePicker.setValue(LocalDate.parse((CharSequence) selected.getDate()));
         }
     }
 
@@ -184,7 +186,8 @@ public class RegistrationController implements Initializable {
         String program = cmbProgram.getValue();
 
         Programs programs = programBO.getProgramByName(program);
-        String program_id = programs.getTId();
+        Patient patient=pationBO.getPationByID(patientValue);
+
 
         txtRegId.setStyle("-fx-text-fill: black;");
         txtPayment.setStyle("-fx-text-fill: black;");
@@ -210,7 +213,7 @@ public class RegistrationController implements Initializable {
             return;
         }
 
-        RegitrationDTO regitrationDTO = new RegitrationDTO(id, payment,date,patientValue, program_id);
+        RegitrationDTO regitrationDTO = new RegitrationDTO(id, payment,date, patient, programs);
         boolean updated = registrationBO.update(regitrationDTO);
 
         if (updated) {
@@ -234,13 +237,14 @@ public class RegistrationController implements Initializable {
         txtRegId.setStyle("-fx-text-fill: black;");
         txtPayment.setStyle("-fx-text-fill: black;");
         registrationBO.generateId();
+        loadTableData();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colRegId.setCellValueFactory(new PropertyValueFactory<>("regId"));
         colPatient.setCellValueFactory(new PropertyValueFactory<>("patient"));
-        colProgram.setCellValueFactory(new PropertyValueFactory<>("program"));
+        colProgram.setCellValueFactory(new PropertyValueFactory<>("programs"));
         colPayment.setCellValueFactory(new PropertyValueFactory<>("payment"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
 
@@ -285,7 +289,13 @@ public class RegistrationController implements Initializable {
         String program = cmbProgram.getValue();
 
         Programs programs = programBO.getProgramByName(program);
-        lblProgramPrice.setText(programs.getPrice().toString());
+        System.out.println(programs);
+
+        if (programs != null && programs.getPrice() != null) {
+            lblSelectedProgram.setText(programs.getPrice().toString());
+        } else {
+            lblSelectedProgram.setText("N/A"); // or any default message you'd like
+        }
     }
 
     public void genarateID(){

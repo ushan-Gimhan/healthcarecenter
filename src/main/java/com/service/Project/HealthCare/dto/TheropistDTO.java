@@ -19,5 +19,12 @@ public class TheropistDTO {
     private String experience;
 
     public TheropistDTO(String tId, String name, String email, String mobileNumber, String specialization, String experience) {
+        this.id = tId;
+        this.name = name;
+        this.email = email;
+        this.phone = mobileNumber;
+        this.specialization = specialization;
+        this.experience = experience;
     }
+
 }

@@ -47,12 +47,12 @@ public class RegistrationBOImpl implements RegistrationBO {
 
     @Override
     public boolean save(RegitrationDTO patient) {
-        return dao.save(new Registration(patient.getRegId(), patient.getPayment(), patient.getDate()));
+        return dao.save(new Registration(patient.getRegId(), patient.getPayment(), patient.getDate(),patient.getPatient(),patient.getProgram()));
     }
 
     @Override
     public boolean update(RegitrationDTO patient) {
-        return  dao.update(new Registration(patient.getRegId(), patient.getPayment(), patient.getDate()));
+        return  dao.update(new Registration(patient.getRegId(), patient.getPayment(), patient.getDate(),patient.getPatient(),patient.getProgram()));
     }
 
     @Override

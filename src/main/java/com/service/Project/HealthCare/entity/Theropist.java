@@ -29,5 +29,12 @@ public class Theropist implements SuperEntity {
     private List<TherapySession> therapySessions;
 
     public Theropist(String id, String name, String gender, String email, String phone, String specialization, String experience) {
+        this.id = id;
+        this.name = name;
+        this.gender = gender;
+        this.email = email;
+        this.phone = phone;
+        this.specialization = specialization;
+        this.experience = experience;
     }
 }

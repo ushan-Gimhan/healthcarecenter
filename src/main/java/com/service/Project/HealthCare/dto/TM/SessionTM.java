@@ -20,5 +20,9 @@ public class SessionTM {
     private String status;
 
     public SessionTM(String sId, int sessionCount, Time time, String status) {
+        this.sId = sId;
+        this.SessionCount = sessionCount;
+        this.time = time;
+        this.status = status;
     }
 }

@@ -27,6 +27,9 @@ public class Programs implements SuperEntity {
     private Payement payement;
 
     public Programs(String tId, String pName, String duration, Double price) {
+        this.tId = tId;
+        this.pName = pName;
+        this.duration = duration;
+        this.price = price;
     }
-
 }
