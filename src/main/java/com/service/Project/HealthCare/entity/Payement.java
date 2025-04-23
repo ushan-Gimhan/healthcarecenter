@@ -19,6 +19,8 @@ public class Payement implements SuperEntity{
     private String payMethod;
     private Double amount;
     private Date date;
+    private Double availabalAmout;
+
 
     @ManyToOne
     private Patient patient;

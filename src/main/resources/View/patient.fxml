@@ -62,8 +62,8 @@
                                 <Label text="Name:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
                                 <TextField fx:id="txtName" promptText="Full name" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                                <Label text="NIC Number:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                                <TextField fx:id="txtnic" promptText="National ID" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                <Label text="Mobile Number" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                <TextField fx:id="txtMobileNumber" promptText="National ID" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
                                 <Label text="Age:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                                 <TextField fx:id="txtAge" promptText="Age in years" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="3" />
@@ -71,11 +71,11 @@
                                 <Label text="Gender:" GridPane.columnIndex="0" GridPane.rowIndex="4" />
                                 <ComboBox fx:id="cmbGender" promptText="Select gender" styleClass="combo-box" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-                                <Label text="Mobile:" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-                                <TextField fx:id="txtMobileNumber" promptText="Contact number" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                <Label text="Email" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                                <TextField fx:id="txtEmail" promptText="Contact number" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="5" />
 
-                                <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-                                <TextField fx:id="txtEmail" promptText="Email address" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                <Label text="NIC" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                                <TextField fx:id="txtnic" promptText="Email address" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="6" />
                             </children>
                         </GridPane>
 

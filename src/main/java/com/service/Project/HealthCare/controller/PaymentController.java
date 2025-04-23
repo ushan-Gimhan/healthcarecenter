@@ -102,5 +102,6 @@ public class PaymentController {
     }
 
     public void clearFilter(ActionEvent event) {
+
     }
 }

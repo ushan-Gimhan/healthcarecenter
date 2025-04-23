@@ -19,7 +19,15 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class PatientController implements Initializable {
-    PatientBO patientBO = (PatientBO) BOFactory.getInstance().getBOType(BOFactory.BOType.Patient);
+    PatientBO patientBO;
+
+    {
+        try {
+            patientBO = (PatientBO) BOFactory.getInstance().getBOType(BOFactory.BOType.Patient);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @FXML
     private Button btnAdd;
@@ -74,9 +82,6 @@ public class PatientController implements Initializable {
 
     @FXML
     private TextField txtnic;
-
-    public PatientController() throws IOException {
-    }
 
     @FXML
     void addPatient(ActionEvent event) {
@@ -156,11 +161,12 @@ public class PatientController implements Initializable {
     void clicked(MouseEvent event) {
         PatientTM patientTM=patientTable.getSelectionModel().getSelectedItem();
         if(patientTM!=null){
+            txtPatientId.setText(patientTM.getId());
             txtName.setText(patientTM.getName());
+            txtnic.setText(patientTM.getNIC());
             txtEmail.setText(patientTM.getEmail());
             txtMobileNumber.setText(patientTM.getMobile());
             txtAge.setText(String.valueOf(patientTM.getAge()));
-            txtnic.setText(patientTM.getNIC());
             cmbGender.getSelectionModel().select(patientTM.getGender());
         }
     }
@@ -169,9 +175,14 @@ public class PatientController implements Initializable {
     void deletePatient(ActionEvent event) {
         String patientId = txtPatientId.getText();
 
-        patientBO.delete(patientId);
+        boolean isDeleted = patientBO.delete(patientId);
 
-        refreshPage();
+        if (isDeleted) {
+            new Alert(Alert.AlertType.INFORMATION, "Patient deleted successfully").showAndWait();
+            refreshPage();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Failed to delete patient").showAndWait();
+        }
     }
 
     @FXML
@@ -267,6 +278,7 @@ public class PatientController implements Initializable {
     }
     public void refreshPage(){
         genarateId();
+        loadTableData();
 
         txtName.setText("");
         txtEmail.setText("");
