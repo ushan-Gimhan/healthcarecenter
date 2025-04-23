@@ -1,11 +1,14 @@
 package com.service.Project.HealthCare.dto;
 
+import com.service.Project.HealthCare.entity.Patient;
+import com.service.Project.HealthCare.entity.Programs;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -15,7 +18,12 @@ public class RegitrationDTO {
     private String regId;
     private Double payment;
     private Date date;
+    private Patient patient;
+    private Programs program;
 
-    public RegitrationDTO(String id, String payment, String patientValue, String program) {
+    public RegitrationDTO(String id, String payment, LocalDate date, String patientValue, String programId) {
+    }
+
+    public RegitrationDTO(String regId, Double payment, Date date) {
     }
 }

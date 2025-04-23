@@ -2,7 +2,6 @@ package com.service.Project.HealthCare.dao.custom.Impl;
 
 import com.service.Project.HealthCare.config.FactoryConfiguration;
 import com.service.Project.HealthCare.dao.custom.TherapyProgramDAO;
-import com.service.Project.HealthCare.entity.Patient;
 import com.service.Project.HealthCare.entity.Programs;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -129,5 +128,23 @@ public class TherapyProgramDAOImpl implements TherapyProgramDAO {
             session.close();
         }
         return programList;
+    }
+
+    @Override
+    public Programs getProgramByName(String name) {
+        Session session = config.getSession();
+        Programs programs = null;
+
+        try {
+            session = config.getSession();
+            programs = session.get(Programs.class, name);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return programs;
     }
 }

@@ -33,6 +33,4 @@ public class TherapySession implements SuperEntity{
     public TherapySession(String sId, int sessionCount, Time time, Date date, String status) {
     }
 
-    public TherapySession(String id, int count, Time time, String status) {
-    }
 }

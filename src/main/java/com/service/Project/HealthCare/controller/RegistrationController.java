@@ -6,6 +6,8 @@ import com.service.Project.HealthCare.bo.custom.RegistrationBO;
 import com.service.Project.HealthCare.bo.custom.TherapyProgramBO;
 import com.service.Project.HealthCare.dto.RegitrationDTO;
 import com.service.Project.HealthCare.dto.TM.RegistrationTM;
+import com.service.Project.HealthCare.entity.Patient;
+import com.service.Project.HealthCare.entity.Programs;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,6 +20,7 @@ import javafx.scene.input.MouseEvent;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -36,6 +39,15 @@ public class RegistrationController implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
+    @FXML
+    private Label lblSelectedPatient;
+
+    @FXML
+    private Label lblSelectedProgram;
+
+    @FXML
+    public Label lblProgramPrice;
 
     @FXML
     private Button btnAdd;
@@ -86,8 +98,12 @@ public class RegistrationController implements Initializable {
     void addRegistration(ActionEvent event) {
         String id = txtRegId.getText();
         String payment = txtPayment.getText();
+        LocalDate date = datePicker.getValue();
         String patientValue = cmbPatient.getValue();
         String program = cmbProgram.getValue();
+
+        Programs programs = programBO.getProgramByName(program);
+        String program_id = programs.getTId();
 
         txtRegId.setStyle("-fx-text-fill: black;");
         txtPayment.setStyle("-fx-text-fill: black;");
@@ -95,7 +111,7 @@ public class RegistrationController implements Initializable {
         String idPattern = "^[A-Za-z0-9]{4,10}$";
         String paymentPattern = "^\\d+(\\.\\d{1,2})?$";
 
-        if (id.isEmpty() || payment.isEmpty() || patientValue == null || program == null) {
+        if (id.isEmpty() || payment.isEmpty() ||date == null|| patientValue == null || program == null) {
             new Alert(Alert.AlertType.ERROR, "All fields must be filled.").show();
             return;
         }
@@ -112,7 +128,7 @@ public class RegistrationController implements Initializable {
             return;
         }
 
-        RegitrationDTO regitrationDTO = new RegitrationDTO(id, payment, patientValue, program);
+        RegitrationDTO regitrationDTO = new RegitrationDTO(id, payment,date, patientValue, program_id);
         boolean saved = registrationBO.save(regitrationDTO);
 
         if (saved) {
@@ -163,8 +179,12 @@ public class RegistrationController implements Initializable {
     void updateRegistration(ActionEvent event) {
         String id = txtRegId.getText();
         String payment = txtPayment.getText();
+        LocalDate date = datePicker.getValue();
         String patientValue = cmbPatient.getValue();
         String program = cmbProgram.getValue();
+
+        Programs programs = programBO.getProgramByName(program);
+        String program_id = programs.getTId();
 
         txtRegId.setStyle("-fx-text-fill: black;");
         txtPayment.setStyle("-fx-text-fill: black;");
@@ -173,7 +193,7 @@ public class RegistrationController implements Initializable {
         String idPattern = "^[A-Za-z0-9]{4,10}$"; // 4-10 alphanumeric characters
         String paymentPattern = "^\\d+(\\.\\d{1,2})?$"; // Valid decimal number
 
-        if (id.isEmpty() || payment.isEmpty() || patientValue == null || program == null) {
+        if (id.isEmpty() || payment.isEmpty() || date==null || patientValue == null || program == null) {
             new Alert(Alert.AlertType.ERROR, "All fields must be filled.").show();
             return;
         }
@@ -190,7 +210,7 @@ public class RegistrationController implements Initializable {
             return;
         }
 
-        RegitrationDTO regitrationDTO = new RegitrationDTO(id, payment, patientValue, program);
+        RegitrationDTO regitrationDTO = new RegitrationDTO(id, payment,date,patientValue, program_id);
         boolean updated = registrationBO.update(regitrationDTO);
 
         if (updated) {
@@ -207,9 +227,13 @@ public class RegistrationController implements Initializable {
         cmbPatient.setValue(null);
         cmbProgram.setValue(null);
         datePicker.setValue(null);
+        lblProgramPrice.setText("");
+        lblSelectedPatient.setText("");
+        lblSelectedProgram.setText("");
 
         txtRegId.setStyle("-fx-text-fill: black;");
         txtPayment.setStyle("-fx-text-fill: black;");
+        registrationBO.generateId();
     }
 
     @Override
@@ -222,6 +246,7 @@ public class RegistrationController implements Initializable {
 
         loadPatients();
         loadPrograms();
+        genarateID();
 
         loadTableData();
     }
@@ -238,13 +263,32 @@ public class RegistrationController implements Initializable {
         ObservableList<RegistrationTM> data = FXCollections.observableArrayList();
 
         for(RegitrationDTO regitrationDTO : all ){
-            RegistrationTM registrationTM = new RegistrationTM(regitrationDTO.getRegId(),
-//                    regitrationDTO.getPatient(),
-//                    regitrationDTO.getProgram(),
+            RegistrationTM registrationTM = new RegistrationTM(
+                    regitrationDTO.getRegId(),
                     regitrationDTO.getPayment(),
-                    regitrationDTO.getDate());
+                    regitrationDTO.getDate(),
+                    regitrationDTO.getPatient(),
+                    regitrationDTO.getProgram());
             data.add(registrationTM);
         }
         registrationTable.setItems(data);
+    }
+
+    public void onPatientSelected(ActionEvent event) {
+        String patientValue = cmbPatient.getValue();
+
+        Patient patient=pationBO.getPationByID(patientValue);
+        lblSelectedPatient.setText(patient.getName());
+    }
+
+    public void onProgramSelected(ActionEvent event) {
+        String program = cmbProgram.getValue();
+
+        Programs programs = programBO.getProgramByName(program);
+        lblProgramPrice.setText(programs.getPrice().toString());
+    }
+
+    public void genarateID(){
+        txtRegId.setText(registrationBO.generateId());
     }
 }

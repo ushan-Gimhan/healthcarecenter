@@ -66,4 +66,8 @@ public class TherapyProgramBOImpl implements TherapyProgramBO {
         return therapyProgramDAO.getAllPrograms();
     }
 
+    @Override
+    public Programs getProgramByName(String name) {
+        return therapyProgramDAO.getProgramByName(name);
+    }
 }
