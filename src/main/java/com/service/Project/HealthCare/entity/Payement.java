@@ -27,4 +27,12 @@ public class Payement implements SuperEntity{
 
     @OneToOne
     private Programs programs;
+
+    public Payement(String payId, String payMethod, Double amount, Date date, Double availabalAmout) {
+        this.payId = payId;
+        this.payMethod = payMethod;
+        this.amount = amount;
+        this.date = date;
+        this.availabalAmout = availabalAmout;
+    }
 }

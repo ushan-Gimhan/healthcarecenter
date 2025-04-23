@@ -1,162 +1,166 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.input.KeyCode?>
-<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="650.0" prefWidth="850.0" stylesheets="@../css/add.css"
-            xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.service.Project.HealthCare.controller.PaymentController">
+<AnchorPane prefHeight="650.0" prefWidth="850.0" stylesheets="@../css/add.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.service.Project.HealthCare.controller.PaymentController">
     <children>
-        <VBox layoutX="15.0" layoutY="16.0" prefHeight="620.0" prefWidth="820.0" spacing="15.0"
-              styleClass="vbox-container"
-              AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0"
-              AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+        <VBox layoutX="15.0" layoutY="16.0" prefHeight="620.0" prefWidth="820.0" spacing="15.0" styleClass="vbox-container" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
             <padding>
-                <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
             </padding>
             <children>
-                <Label alignment="CENTER" maxWidth="Infinity" styleClass="header-label"
-                       text="Payment Management System"/>
+                <Label alignment="CENTER" maxWidth="Infinity" styleClass="header-label" text="Payment Management System" />
 
                 <HBox spacing="20.0">
                     <!-- Left side - Patient and Payment Overview -->
-                    <VBox spacing="10.0" styleClass="section-container" prefWidth="380.0">
-                        <Label text="Patient Information" styleClass="section-header"/>
+                    <VBox prefWidth="380.0" spacing="10.0" styleClass="section-container">
+                        <Label styleClass="section-header" text="Patient Information" />
 
                         <!-- Search Patient Section -->
-                        <HBox spacing="5.0" alignment="CENTER_LEFT">
+                        <HBox alignment="CENTER_LEFT" spacing="5.0">
                             <TextField fx:id="txtSearchPatient" promptText="Search patient by name or ID" HBox.hgrow="ALWAYS">
                                 <tooltip>
-                                    <Tooltip text="Enter patient name or ID to search"/>
+                                    <Tooltip text="Enter patient name or ID to search" />
                                 </tooltip>
                             </TextField>
-                            <Button fx:id="btnSearch" onAction="#searchPatient" text="Search" styleClass="button, btn-search">
+                            <Button fx:id="btnSearch" onAction="#searchPatient" styleClass="button, btn-search" text="Search">
                                 <tooltip>
-                                    <Tooltip text="Search for patient"/>
+                                    <Tooltip text="Search for patient" />
                                 </tooltip>
                             </Button>
                         </HBox>
 
-                        <GridPane hgap="10" vgap="10" styleClass="grid-pane">
+                        <GridPane hgap="10" styleClass="grid-pane" vgap="10">
                             <columnConstraints>
-                                <ColumnConstraints prefWidth="150.0" minWidth="120.0"/>
-                                <ColumnConstraints hgrow="ALWAYS"/>
+                                <ColumnConstraints minWidth="120.0" prefWidth="150.0" />
+                                <ColumnConstraints hgrow="ALWAYS" />
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints vgrow="NEVER"/>
-                                <RowConstraints vgrow="NEVER"/>
+                                <RowConstraints vgrow="NEVER" />
+                                <RowConstraints vgrow="NEVER" />
                             </rowConstraints>
                             <children>
-                                <Label text="Patient:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                                <ComboBox fx:id="cmbPatient" styleClass="combo-box" promptText="Select patient" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                                <Label text="Patient:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                <ComboBox fx:id="cmbPatient" onAction="#ClickedPation" promptText="Select patient" styleClass="combo-box" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                                <Label text="Payment ID:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                                <Label fx:id="txtPaymentId" prefHeight="25.0" styleClass="info-label" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                <Label text="Payment ID:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                <Label fx:id="txtPaymentId" prefHeight="25.0" styleClass="info-label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                             </children>
                         </GridPane>
 
-                        <Label text="Payment Overview" styleClass="section-header"/>
-                        <GridPane hgap="10" vgap="10" styleClass="grid-pane">
+                        <Label styleClass="section-header" text="Payment Overview" />
+                        <GridPane hgap="10" styleClass="grid-pane" vgap="10">
                             <columnConstraints>
-                                <ColumnConstraints prefWidth="150.0" minWidth="120.0"/>
-                                <ColumnConstraints hgrow="ALWAYS"/>
+                                <ColumnConstraints minWidth="120.0" prefWidth="150.0" />
+                                <ColumnConstraints hgrow="ALWAYS" />
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints vgrow="NEVER"/>
-                                <RowConstraints vgrow="NEVER"/>
-                                <RowConstraints vgrow="NEVER"/>
+                                <RowConstraints vgrow="NEVER" />
+                                <RowConstraints vgrow="NEVER" />
+                                <RowConstraints vgrow="NEVER" />
                             </rowConstraints>
                             <children>
-                                <Label text="All Payment:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                                <TextField fx:id="txtAllPayment" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                                <Label text="All Payment:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                <TextField fx:id="txtAllPayment" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                                <Label text="Available Payment:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                                <TextField fx:id="txtAvailablePayment" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                <Label text="Available Payment:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                <TextField fx:id="txtAvailablePayment" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                                <Label text="Payment:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                                <TextField fx:id="txtPayment" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                <Label text="Payment:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                <TextField fx:id="txtPayment" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                             </children>
                         </GridPane>
                     </VBox>
 
                     <!-- Right side - Payment Details -->
                     <VBox spacing="10.0" styleClass="section-container" HBox.hgrow="ALWAYS">
-                        <Label text="Payment Details" styleClass="section-header"/>
-                        <GridPane hgap="10" vgap="10" styleClass="grid-pane">
+                        <Label styleClass="section-header" text="Payment Details" />
+                        <GridPane hgap="10" styleClass="grid-pane" vgap="10">
                             <columnConstraints>
-                                <ColumnConstraints prefWidth="140.0" minWidth="120.0"/>
-                                <ColumnConstraints hgrow="ALWAYS"/>
+                                <ColumnConstraints minWidth="120.0" prefWidth="140.0" />
+                                <ColumnConstraints hgrow="ALWAYS" />
                             </columnConstraints>
                             <rowConstraints>
-                                <RowConstraints vgrow="NEVER"/>
-                                <RowConstraints vgrow="NEVER"/>
-                                <RowConstraints vgrow="NEVER"/>
-                                <RowConstraints vgrow="NEVER"/>
+                                <RowConstraints vgrow="NEVER" />
+                                <RowConstraints vgrow="NEVER" />
+                                <RowConstraints vgrow="NEVER" />
+                                <RowConstraints vgrow="NEVER" />
                             </rowConstraints>
                             <children>
-                                <Label text="Amount (LKR):" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
-                                <TextField fx:id="txtAmount" styleClass="text-field" promptText="Enter amount" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                                <Label text="Amount (LKR):" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+                                <TextField fx:id="txtAmount" promptText="Enter amount" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-                                <Label text="Payment Method:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
-                                <ComboBox fx:id="cmbPaymentMethod" styleClass="combo-box" promptText="Select method" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                                <Label text="Payment Method:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+                                <ComboBox fx:id="cmbPaymentMethod" promptText="Select method" styleClass="combo-box" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-                                <Label text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="2"/>
-                                <DatePicker fx:id="datePicker" styleClass="date-picker" promptText="Select date" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                                <Label text="Date:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+                                <DatePicker fx:id="datePicker" promptText="Select date" styleClass="date-picker" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                             </children>
                         </GridPane>
 
                         <HBox alignment="CENTER_RIGHT" spacing="10" style="-fx-padding: 10 0 5 0;">
-                            <Button fx:id="btnAdd" onAction="#addPayment" styleClass="button, btn-primary" text="Add Payment"/>
-                            <Button fx:id="btnUpdate" onAction="#updatePayment" styleClass="button, btn-update" text="Update"/>
-                            <Button fx:id="btnDelete" onAction="#deletePayment" styleClass="button, btn-delete" text="Delete"/>
-                            <Button fx:id="btnReset" onAction="#resetFields" styleClass="button, btn-secondary" text="Reset"/>
+                            <Button fx:id="btnAdd" onAction="#addPayment" styleClass="button, btn-primary" text="Add Payment" />
+                            <Button fx:id="btnUpdate" onAction="#updatePayment" styleClass="button, btn-update" text="Update" />
+                            <Button fx:id="btnDelete" onAction="#deletePayment" styleClass="button, btn-delete" text="Delete" />
+                            <Button fx:id="btnReset" onAction="#resetFields" styleClass="button, btn-secondary" text="Reset" />
                         </HBox>
                     </VBox>
                 </HBox>
 
                 <!-- Payment Records with Search Filter Options -->
-                <VBox VBox.vgrow="ALWAYS" spacing="5">
+                <VBox spacing="5" VBox.vgrow="ALWAYS">
                     <HBox alignment="CENTER_LEFT" spacing="10">
-                        <Label text="Payment Records" styleClass="section-header"/>
+                        <Label styleClass="section-header" text="Payment Records" />
                         <Region HBox.hgrow="ALWAYS" />
                         <Label text="Filter by:" />
-                        <ComboBox fx:id="cmbFilterField" promptText="Field" prefWidth="120">
+                        <ComboBox fx:id="cmbFilterField" prefWidth="120" promptText="Field">
                             <tooltip>
-                                <Tooltip text="Select field to filter by"/>
+                                <Tooltip text="Select field to filter by" />
                             </tooltip>
                         </ComboBox>
-                        <TextField fx:id="txtFilterValue" promptText="Filter value" prefWidth="200">
+                        <TextField fx:id="txtFilterValue" prefWidth="200" promptText="Filter value">
                             <tooltip>
-                                <Tooltip text="Enter value to filter"/>
+                                <Tooltip text="Enter value to filter" />
                             </tooltip>
                         </TextField>
-                        <Button fx:id="btnClearFilter" text="Clear" styleClass="button, btn-secondary" onAction="#clearFilter">
+                        <Button fx:id="btnClearFilter" onAction="#clearFilter" styleClass="button, btn-secondary" text="Clear">
                             <tooltip>
-                                <Tooltip text="Clear filters"/>
+                                <Tooltip text="Clear filters" />
                             </tooltip>
                         </Button>
                     </HBox>
 
-                    <TableView fx:id="paymentTable" onMouseClicked="#clicked"
-                               styleClass="table-view" VBox.vgrow="ALWAYS">
+                    <TableView fx:id="paymentTable" onMouseClicked="#clicked" styleClass="table-view" VBox.vgrow="ALWAYS">
                         <columns>
-                            <TableColumn fx:id="colPaymentId" prefWidth="90.0" text="Payment ID"/>
-                            <TableColumn fx:id="colPatient" prefWidth="150.0" text="Patient"/>
-                            <TableColumn fx:id="colAmount" prefWidth="110.0" text="Amount"/>
-                            <TableColumn fx:id="colDate" prefWidth="120.0" text="Date"/>
-                            <TableColumn fx:id="colPaymentMethod" prefWidth="140.0" text="Payment Method"/>
+                            <TableColumn fx:id="colPaymentId" prefWidth="90.0" text="Payment ID" />
+                            <TableColumn fx:id="colPatient" prefWidth="150.0" text="Patient" />
+                            <TableColumn fx:id="colAmount" prefWidth="110.0" text="Amount" />
+                            <TableColumn fx:id="colDate" prefWidth="120.0" text="Date" />
+                            <TableColumn fx:id="colPaymentMethod" prefWidth="140.0" text="Payment Method" />
                         </columns>
                         <columnResizePolicy>
-                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                         </columnResizePolicy>
                     </TableView>
                 </VBox>
 
                 <!-- Status Bar -->
-                <HBox styleClass="status-bar" alignment="CENTER_LEFT">
+                <HBox alignment="CENTER_LEFT" styleClass="status-bar">
                     <Label fx:id="lblStatus" text="Ready" />
                     <Region HBox.hgrow="ALWAYS" />
                     <Label fx:id="lblRecordCount" text="Total Records: 0" />
