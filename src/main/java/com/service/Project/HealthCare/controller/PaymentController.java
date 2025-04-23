@@ -50,13 +50,28 @@ public class PaymentController {
     private DatePicker datePicker;
 
     @FXML
+    private Label lblStatus;
+
+    @FXML
     private TableView<?> paymentTable;
+
+    @FXML
+    private TextField txtAllPayment;
 
     @FXML
     private TextField txtAmount;
 
     @FXML
+    private TextField txtAvailablePayment;
+
+    @FXML
+    private TextField txtPayment;
+
+    @FXML
     private Label txtPaymentId;
+
+    @FXML
+    private TextField txtSearch;
 
     @FXML
     void addPayment(ActionEvent event) {
@@ -83,4 +98,9 @@ public class PaymentController {
 
     }
 
+    public void searchPatient(ActionEvent event) {
+    }
+
+    public void clearFilter(ActionEvent event) {
+    }
 }

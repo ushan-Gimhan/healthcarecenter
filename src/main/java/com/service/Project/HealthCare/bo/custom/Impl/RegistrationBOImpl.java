@@ -64,14 +64,4 @@ public class RegistrationBOImpl implements RegistrationBO {
     public String generateId() {
         return  dao.generateId();
     }
-
-    @Override
-    public List<String> getAllPatientIds() {
-        return pdao.getAllPatientIds();
-    }
-
-    @Override
-    public List<String> getAllPrograms() {
-        return therapyProgramDAO.getAllPrograms();
-    }
 }

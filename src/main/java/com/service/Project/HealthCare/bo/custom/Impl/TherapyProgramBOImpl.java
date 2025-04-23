@@ -56,4 +56,14 @@ public class TherapyProgramBOImpl implements TherapyProgramBO {
         return therapyProgramDAO.delete(id);
     }
 
+    @Override
+    public String generateId() {
+        return therapyProgramDAO.generateId();
+    }
+
+    @Override
+    public List<String> getAllPrograms() {
+        return therapyProgramDAO.getAllPrograms();
+    }
+
 }
