@@ -33,7 +33,7 @@ public class PaymentBOImpl implements PaymentBO {
         List<Payement> allPayments = paymentDAO.findAll();
         List<PaymentDTO> paymentDTOs = new ArrayList<>();
         for (Payement payment : allPayments) {
-            PaymentDTO paymentDTO = new PaymentDTO(payment.getPayId(),payment.getPayMethod(),payment.getAmount(),payment.getDate(),payment.getAvailabalAmout());
+            PaymentDTO paymentDTO = new PaymentDTO(payment.getPayId(),payment.getPayMethod(),payment.getAmount(), payment.getDate().toLocalDate(),payment.getAvailabalAmout());
             paymentDTOs.add(paymentDTO);
         }
         return paymentDTOs;

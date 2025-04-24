@@ -39,12 +39,12 @@ public class PatientBOImpl implements PatientBO {
 
     @Override
     public boolean save(PatientDTO patient) {
-        return patientDAO.save(new Patient(patient.getId(),patient.getName(),patient.getMobile(), patient.getEmail(),patient.getNIC(), patient.getGender(),patient.getAge()));
+        return patientDAO.save(new Patient(patient.getId(),patient.getName(),patient.getMobile(), patient.getNIC(),patient.getEmail(), patient.getGender(),patient.getAge()));
     }
 
     @Override
     public boolean update(PatientDTO patient){
-        return patientDAO.update(new Patient(patient.getId(),patient.getName(),patient.getMobile(), patient.getEmail(),patient.getNIC(), patient.getGender(),patient.getAge()));
+        return patientDAO.update(new Patient(patient.getId(),patient.getName(),patient.getMobile(), patient.getNIC(),patient.getEmail(), patient.getGender(),patient.getAge()));
     }
 
     @Override

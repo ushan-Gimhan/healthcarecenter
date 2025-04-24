@@ -35,12 +35,12 @@ public class UserBOImpl implements UserBO {
 
     @Override
     public boolean save(UserDTO entity) {
-        return userDAO.save(new User(entity.getId(),entity.getName(),entity.getPhone(),entity.getPassword(),entity.getEmail(),entity.getUserNAme(),entity.getRole()));
+        return userDAO.save(new User(entity.getId(),entity.getName(),entity.getPassword(),entity.getEmail(),entity.getPhone(),entity.getUserNAme(),entity.getRole()));
     }
 
     @Override
     public boolean update(UserDTO entity){
-        return userDAO.update(new User(entity.getId(),entity.getName(),entity.getPhone(),entity.getPassword(),entity.getEmail(),entity.getUserNAme(),entity.getRole()));
+        return userDAO.update(new User(entity.getId(),entity.getName(),entity.getPassword(),entity.getEmail(),entity.getPhone(),entity.getUserNAme(),entity.getRole()));
     }
 
     @Override

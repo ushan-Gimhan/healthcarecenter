@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
@@ -138,9 +139,11 @@ public class DashboardController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        if (ap.equals("Receptionist")){
-//            btnTheropyPrograms.setDisable(true);
-//            btnAdmin.setDisable(true);
-//        }
+        if (ap.equals("Receptionist")){
+            btnTheropyPrograms.setDisable(true);
+            btnAdmin.setDisable(true);
+        }else {
+            new Alert(Alert.AlertType.ERROR, "Patient not found.").show();
+        }
     }
 }

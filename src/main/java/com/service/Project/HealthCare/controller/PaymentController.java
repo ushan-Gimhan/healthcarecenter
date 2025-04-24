@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
@@ -235,7 +236,9 @@ public class PaymentController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        txtPaymentId.setText(paymentBO.generateId());
         cmbPaymentMethod.setItems(FXCollections.observableArrayList("Cash", "Card","Mobile Transfer"));
+        colAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
     }
 
     public void ClickedPation(ActionEvent event) {

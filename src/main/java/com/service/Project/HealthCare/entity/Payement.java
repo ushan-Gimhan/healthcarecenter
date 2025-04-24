@@ -7,6 +7,7 @@ import jakarta.persistence.OneToOne;
 import lombok.*;
 
 import java.sql.Date;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -33,6 +34,14 @@ public class Payement implements SuperEntity{
         this.payMethod = payMethod;
         this.amount = amount;
         this.date = date;
+        this.availabalAmout = availabalAmout;
+    }
+
+    public Payement(String payId, String payMethod, Double amount, LocalDate date, Double availabalAmout) {
+        this.payId = payId;
+        this.payMethod = payMethod;
+        this.amount = amount;
+        this.date = Date.valueOf(date);
         this.availabalAmout = availabalAmout;
     }
 }

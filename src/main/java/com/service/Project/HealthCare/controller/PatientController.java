@@ -153,7 +153,7 @@ public class PatientController implements Initializable {
         }
 
         // Save operation
-        PatientDTO patientDTO = new PatientDTO(patientId, name, email, nic, mobileNumber, gender, age);
+        PatientDTO patientDTO = new PatientDTO(patientId, name, mobileNumber, email,nic, gender, age);
         boolean saved = patientBO.save(patientDTO);
 
         if (saved) {
@@ -254,7 +254,7 @@ public class PatientController implements Initializable {
             return;
         }
 
-        PatientDTO patientDTO = new PatientDTO(patientId, name, email, nic, mobileNumber, gender, age);
+        PatientDTO patientDTO = new PatientDTO(patientId, name, mobileNumber, email,nic, gender, age);
 
         boolean updated = patientBO.update(patientDTO);
         if (updated) {

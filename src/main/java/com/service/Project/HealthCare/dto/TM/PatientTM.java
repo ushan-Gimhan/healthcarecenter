@@ -13,8 +13,8 @@ public class PatientTM {
     private String id;
     private String name;
     private String mobile;
-    private String NIC;
     private String email;
+    private String NIC;
     private String gender;
     private int age;
 }
