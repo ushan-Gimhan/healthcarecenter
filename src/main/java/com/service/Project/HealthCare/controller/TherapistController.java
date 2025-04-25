@@ -24,6 +24,16 @@ import java.util.ResourceBundle;
 public class TherapistController implements Initializable {
 
     @FXML
+    private TableColumn <TeropistTM, String>colGender;
+    @FXML
+    private TableColumn <TeropistTM, String>colStatus;
+    @FXML
+    private ComboBox<String> cmbGender;
+    @FXML
+    private ComboBox<String>cmbStatus;
+    @FXML
+    private ComboBox<String> cmbSpecialization;
+    @FXML
     private TextField txtAge;
     @FXML
     private Button btnAdd;
@@ -95,21 +105,31 @@ public class TherapistController implements Initializable {
         String name = txtName.getText();
         String email = txtEmail.getText();
         String mobileNumber = txtMobileNumber.getText();
-        String specialization = txtSpecialization.getText();
+        String specialization = cmbSpecialization.getValue();
         String experience = txtExperience.getText();
+        String gender = cmbGender.getValue();
+        String status = cmbStatus.getValue();
+        int age = -1;
+
+        try {
+            age = Integer.parseInt(txtAge.getText());
+        } catch (NumberFormatException e) {
+            new Alert(Alert.AlertType.ERROR, "Invalid age. Please enter a valid number.").show();
+            return;
+        }
 
         txtName.setStyle("-fx-text-fill: black;");
         txtEmail.setStyle("-fx-text-fill: black;");
         txtMobileNumber.setStyle("-fx-text-fill: black;");
-        txtSpecialization.setStyle("-fx-text-fill: black;");
         txtExperience.setStyle("-fx-text-fill: black;");
+        txtAge.setStyle("-fx-text-fill: black;");
 
         String namePattern = "^[A-Za-z ]+$";
         String emailPattern = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
         String phonePattern = "^(07\\d{8})$";
         String expPattern = "^\\d{1,2}(\\s?(years|Months|months|Years))?$";
 
-        if (tId.isEmpty() || name.isEmpty() || email.isEmpty() || mobileNumber.isEmpty() || specialization.isEmpty() || experience.isEmpty()) {
+        if (tId.isEmpty() || name.isEmpty() || email.isEmpty() || mobileNumber.isEmpty() || specialization == null || experience.isEmpty() || gender == null || status == null || age <= 0) {
             new Alert(Alert.AlertType.ERROR, "Please fill in all fields.").show();
             return;
         }
@@ -143,7 +163,8 @@ public class TherapistController implements Initializable {
             return;
         }
 
-        TheropistDTO therapistDTO = new TheropistDTO(tId, name, email, mobileNumber, specialization, experience);
+        TheropistDTO therapistDTO = new TheropistDTO(tId, name, gender, email, mobileNumber, specialization, experience, age, status);
+
         boolean saved = theropistBO.save(therapistDTO);
 
         if (saved) {
@@ -152,6 +173,7 @@ public class TherapistController implements Initializable {
         } else {
             new Alert(Alert.AlertType.ERROR, "Therapist not saved!!").show();
         }
+
     }
 
     @FXML
@@ -163,7 +185,6 @@ public class TherapistController implements Initializable {
             txtExperience.setText(teropistTM.getExperience());
             txtName.setText(teropistTM.getName());
             txtTherapistId.setText(teropistTM.getId());
-            txtSpecialization.setText(teropistTM.getSpecialization());
             txtEmail.setText(teropistTM.getEmail());
         }
     }
@@ -192,21 +213,31 @@ public class TherapistController implements Initializable {
         String name = txtName.getText();
         String email = txtEmail.getText();
         String mobileNumber = txtMobileNumber.getText();
-        String specialization = txtSpecialization.getText();
+        String specialization = cmbSpecialization.getValue();
         String experience = txtExperience.getText();
+        String gender = cmbGender.getValue();
+        String status = cmbStatus.getValue();
+        int age = -1;
+
+        try {
+            age = Integer.parseInt(txtAge.getText());
+        } catch (NumberFormatException e) {
+            new Alert(Alert.AlertType.ERROR, "Invalid age. Please enter a valid number.").show();
+            return;
+        }
 
         txtName.setStyle("-fx-text-fill: black;");
         txtEmail.setStyle("-fx-text-fill: black;");
         txtMobileNumber.setStyle("-fx-text-fill: black;");
-        txtSpecialization.setStyle("-fx-text-fill: black;");
         txtExperience.setStyle("-fx-text-fill: black;");
+        txtAge.setStyle("-fx-text-fill: black;");
 
         String namePattern = "^[A-Za-z ]+$";
         String emailPattern = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
         String phonePattern = "^(07\\d{8})$";
         String expPattern = "^\\d{1,2}(\\s?(years|Months|months|Years))?$";
 
-        if (tId.isEmpty() || name.isEmpty() || email.isEmpty() || mobileNumber.isEmpty() || specialization.isEmpty() || experience.isEmpty()) {
+        if (tId.isEmpty() || name.isEmpty() || email.isEmpty() || mobileNumber.isEmpty() || specialization == null || experience.isEmpty() || gender == null || status == null || age <= 0) {
             new Alert(Alert.AlertType.ERROR, "Please fill in all fields.").show();
             return;
         }
@@ -240,15 +271,17 @@ public class TherapistController implements Initializable {
             return;
         }
 
-        TheropistDTO therapistDTO = new TheropistDTO(tId, name, email, mobileNumber, specialization, experience);
+        TheropistDTO therapistDTO = new TheropistDTO(tId, name, gender, email, mobileNumber, specialization, experience, age, status);
+
         boolean saved = theropistBO.update(therapistDTO);
 
         if (saved) {
             new Alert(Alert.AlertType.INFORMATION, "Therapist updated!!").show();
             refreshPage();
         } else {
-            new Alert(Alert.AlertType.ERROR, "Therapist not updated!!").show();
+            new Alert(Alert.AlertType.ERROR, "Therapist not update!!").show();
         }
+
     }
     public void genarateID() {
         txtTherapistId.setText(theropistBO.generateId());
@@ -261,8 +294,10 @@ public class TherapistController implements Initializable {
         txtExperience.setText("");
         txtMobileNumber.setText("");
         txtName.setText("");
-        txtSpecialization.setText("");
         txtAge.setText("");
+        cmbSpecialization.setValue("");
+        cmbStatus.setValue("");
+        loadTableData();
 
     }
 
@@ -271,12 +306,14 @@ public class TherapistController implements Initializable {
         genarateID();
         loadTableData();
 
-        colTherapistId.setCellValueFactory(new PropertyValueFactory<>("therapistId"));
+        colTherapistId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colName.setCellValueFactory(new PropertyValueFactory<>("name"));
         colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colExperience.setCellValueFactory(new PropertyValueFactory<>("experience"));
-        colMobileNumber.setCellValueFactory(new PropertyValueFactory<>("mobileNumber"));
+        colMobileNumber.setCellValueFactory(new PropertyValueFactory<>("phone"));
         colSpecialization.setCellValueFactory(new PropertyValueFactory<>("specialization"));
+        colGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         colAge.setCellValueFactory(new PropertyValueFactory<>("age"));
 
     }
@@ -293,7 +330,9 @@ public class TherapistController implements Initializable {
                     theropistDTO.getPhone(),
                     theropistDTO.getSpecialization(),
                     theropistDTO.getEmail(),
-                    theropistDTO.getGender()
+                    theropistDTO.getGender(),
+                    theropistDTO.getStaus(),
+                    theropistDTO.getAge()
             );
             theropistTMS.add(theropistTM);
         }

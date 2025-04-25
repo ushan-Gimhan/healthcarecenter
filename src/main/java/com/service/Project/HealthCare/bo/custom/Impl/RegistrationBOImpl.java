@@ -8,6 +8,7 @@ import com.service.Project.HealthCare.dao.custom.TherapyProgramDAO;
 import com.service.Project.HealthCare.dto.PatientDTO;
 import com.service.Project.HealthCare.dto.RegitrationDTO;
 import com.service.Project.HealthCare.entity.Patient;
+import com.service.Project.HealthCare.entity.Programs;
 import com.service.Project.HealthCare.entity.Registration;
 
 import java.io.IOException;
@@ -34,7 +35,11 @@ public class RegistrationBOImpl implements RegistrationBO {
         List<Registration> all =  dao.findAll();
         List<RegitrationDTO> regitrationDTOS = new ArrayList<>();
         for (Registration registration : all) {
-            regitrationDTOS.add(new RegitrationDTO(registration.getRegId(),registration.getPayment(),registration.getDate()));
+            Patient patient = registration.getPatient();
+            String patient_id = patient.getId();
+            Programs programs = registration.getPrograms();
+            String program_id = programs.getPName();
+            regitrationDTOS.add(new RegitrationDTO(registration.getRegId(),registration.getPayment(),registration.getDate(),patient_id,program_id));
         }
         return regitrationDTOS;
 

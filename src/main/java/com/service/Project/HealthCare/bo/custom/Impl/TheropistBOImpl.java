@@ -26,7 +26,7 @@ public class TheropistBOImpl implements TheropistBO {
         List<Theropist> all = theropistDAO.findAll();
         List<TheropistDTO> theropistDTOS = new ArrayList<TheropistDTO>();
         for (Theropist theropist : all) {
-            TheropistDTO theropistDTO = new TheropistDTO(theropist.getId(),theropist.getName(),theropist.getGender(),theropist.getEmail(),theropist.getPhone(),theropist.getSpecialization(),theropist.getExperience());
+            TheropistDTO theropistDTO = new TheropistDTO(theropist.getId(),theropist.getName(),theropist.getGender(),theropist.getEmail(),theropist.getPhone(),theropist.getSpecialization(),theropist.getExperience(),theropist.getAge(),theropist.getStatus());
             theropistDTOS.add(theropistDTO);
         }
         return theropistDTOS;
@@ -39,12 +39,12 @@ public class TheropistBOImpl implements TheropistBO {
 
     @Override
     public boolean save(TheropistDTO theropistDTO) {
-        return theropistDAO.save(new Theropist(theropistDTO.getId(),theropistDTO.getName(),theropistDTO.getGender(),theropistDTO.getEmail(),theropistDTO.getPhone(),theropistDTO.getSpecialization(),theropistDTO.getExperience()));
+        return theropistDAO.save(new Theropist(theropistDTO.getId(),theropistDTO.getName(),theropistDTO.getAge(),theropistDTO.getGender(),theropistDTO.getEmail(),theropistDTO.getPhone(),theropistDTO.getSpecialization(),theropistDTO.getExperience(),theropistDTO.getStaus()));
     }
 
     @Override
     public boolean update(TheropistDTO theropistDTO) {
-        return theropistDAO.update(new Theropist(theropistDTO.getId(),theropistDTO.getName(),theropistDTO.getGender(),theropistDTO.getEmail(),theropistDTO.getPhone(),theropistDTO.getSpecialization(),theropistDTO.getExperience()));
+        return theropistDAO.update(new Theropist(theropistDTO.getId(),theropistDTO.getName(),theropistDTO.getAge(),theropistDTO.getGender(),theropistDTO.getEmail(),theropistDTO.getPhone(),theropistDTO.getSpecialization(),theropistDTO.getExperience(),theropistDTO.getStaus()));
     }
 
     @Override
@@ -55,5 +55,10 @@ public class TheropistBOImpl implements TheropistBO {
     @Override
     public String generateId() {
         return theropistDAO.generateId();
+    }
+
+    @Override
+    public List<String> getAllId() {
+        return theropistDAO.getAllId();
     }
 }

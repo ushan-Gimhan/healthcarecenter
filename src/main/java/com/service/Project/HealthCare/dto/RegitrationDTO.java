@@ -20,20 +20,22 @@ public class RegitrationDTO {
     private Date date;
     private Patient patient;
     private Programs program;
+    private String patienId;
+    private String progId;
 
-    public RegitrationDTO(String regId, Double payment, Date date) {
+    public RegitrationDTO(String id, String payment, LocalDate date, Patient patient, Programs programs) {
+        this.regId = id;
+        this.payment = Double.parseDouble(payment);
+        this.patient= patient;
+        this.program = programs;
+        this.date= Date.valueOf(date);
+    }
+
+    public RegitrationDTO(String regId, Double payment, Date date, String patientId, String programId) {
         this.regId = regId;
         this.payment = payment;
         this.date = date;
-    }
-
-
-    public RegitrationDTO(String id, String payment, LocalDate date, Patient patient, Programs programs) {
-        this.regId=id;
-        this.payment= Double.valueOf(payment);
-        this.date= Date.valueOf(date);
-        this.patient=patient;
-        this.program=programs;
-
+        this.patienId = patientId;
+        this.progId = programId;
     }
 }

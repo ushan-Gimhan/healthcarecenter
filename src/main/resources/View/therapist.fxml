@@ -13,6 +13,8 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <AnchorPane prefHeight="600.0" prefWidth="800.0" stylesheets="@../css/add.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.service.Project.HealthCare.controller.TherapistController">
     <children>
         <VBox layoutX="15.2" layoutY="16.8" prefHeight="565.0" prefWidth="770.0" spacing="10.0" styleClass="vbox-container" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="17.0">
@@ -46,14 +48,48 @@
                         <Label text="Mobile Number" GridPane.columnIndex="0" GridPane.rowIndex="3" />
                         <TextField fx:id="txtMobileNumber" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
+                        <!-- Specialization Changed to ComboBox -->
                         <Label text="Specialization" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                        <TextField fx:id="txtSpecialization" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <ComboBox fx:id="cmbSpecialization" styleClass="combo-box" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Cardiology" />
+                                    <String fx:value="Neurology" />
+                                    <String fx:value="Pediatrics" />
+                                    <String fx:value="Orthopedics" />
+                                    <String fx:value="Dermatology" />
+                                </FXCollections>
+                            </items>
+                        </ComboBox>
 
-                        <Label text="Experience (Years)" GridPane.columnIndex="0" GridPane.rowIndex="5" />
-                        <TextField fx:id="txtExperience" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                        <!-- Gender ComboBox -->
+                        <Label text="Gender" GridPane.columnIndex="0" GridPane.rowIndex="5" />
+                        <ComboBox fx:id="cmbGender" styleClass="combo-box" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Male" />
+                                    <String fx:value="Female" />
+                                    <String fx:value="Other" />
+                                </FXCollections>
+                            </items>
+                        </ComboBox>
 
-                        <Label text="Age (Years)" GridPane.columnIndex="0" GridPane.rowIndex="6" />
-                        <TextField fx:id="txtAge" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                        <!-- Status ComboBox -->
+                        <Label text="Status" GridPane.columnIndex="0" GridPane.rowIndex="6" />
+                        <ComboBox fx:id="cmbStatus" styleClass="combo-box" GridPane.columnIndex="1" GridPane.rowIndex="6">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Active" />
+                                    <String fx:value="Inactive" />
+                                </FXCollections>
+                            </items>
+                        </ComboBox>
+
+                        <Label text="Experience (Years)" GridPane.columnIndex="0" GridPane.rowIndex="7" />
+                        <TextField fx:id="txtExperience" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+
+                        <Label text="Age (Years)" GridPane.columnIndex="0" GridPane.rowIndex="8" />
+                        <TextField fx:id="txtAge" styleClass="text-field" GridPane.columnIndex="1" GridPane.rowIndex="8" />
                     </children>
                 </GridPane>
 
@@ -71,6 +107,8 @@
                         <TableColumn fx:id="colEmail" prefWidth="132.0" text="Email" />
                         <TableColumn fx:id="colMobileNumber" prefWidth="152.8" text="Mobile Number" />
                         <TableColumn fx:id="colSpecialization" prefWidth="130.0" text="Specialization" />
+                        <TableColumn fx:id="colGender" prefWidth="100.0" text="Gender" />
+                        <TableColumn fx:id="colStatus" prefWidth="100.0" text="Status" />
                         <TableColumn fx:id="colExperience" prefWidth="100.0" text="Experience (Years)" />
                         <TableColumn fx:id="colAge" prefWidth="100.0" text="Age(Years)" />
                     </columns>

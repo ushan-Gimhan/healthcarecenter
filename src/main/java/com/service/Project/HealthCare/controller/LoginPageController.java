@@ -89,7 +89,7 @@ public class LoginPageController {
                 navigate("/View/AdminDashboard.fxml");
             } else {
                 passwordField.setStyle(passwordField.getStyle() + ";-fx-border-color: red;");
-                throw new LoginException("Username, password, or role cannot be empty.");
+              new Alert(Alert.AlertType.INFORMATION, "Enter you Password").show();
             }
         }
     }

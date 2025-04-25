@@ -14,4 +14,6 @@ public interface TheropistBO extends SuperBO {
     public boolean update(TheropistDTO theropistDTO);
     public boolean delete(String id);
     public String generateId();
+
+    public List<String> getAllId();
 }

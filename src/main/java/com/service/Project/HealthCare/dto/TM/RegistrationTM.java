@@ -19,7 +19,14 @@ public class RegistrationTM {
     private Date date;
     private Patient patient;
     private Programs program;
+    private String patient_Id;
+    private String program_Id;
 
-    public RegistrationTM(String regId, Date date, Patient patient, Object o, Double payment, Programs program) {
+    public RegistrationTM(String regId, Double payment, Date date, String id, String tId) {
+        this.regId = regId;
+        this.payment = payment;
+        this.date = date;
+        this.patient_Id = id;
+        this.program_Id = tId;
     }
 }

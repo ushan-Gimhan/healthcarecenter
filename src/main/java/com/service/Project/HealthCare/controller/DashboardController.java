@@ -142,8 +142,6 @@ public class DashboardController implements Initializable {
         if (ap.equals("Receptionist")){
             btnTheropyPrograms.setDisable(true);
             btnAdmin.setDisable(true);
-        }else {
-            new Alert(Alert.AlertType.ERROR, "Patient not found.").show();
         }
     }
 }

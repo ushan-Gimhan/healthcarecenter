@@ -28,7 +28,7 @@ public class Theropist implements SuperEntity {
     @OneToMany(mappedBy = "theropist", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<TherapySession> therapySessions;
 
-    public Theropist(String id, String name, String gender, String email, String phone, String specialization, String experience) {
+    public Theropist(String id, String name, int age, String gender, String email, String phone, String specialization, String experience, String staus) {
         this.id = id;
         this.name = name;
         this.gender = gender;
@@ -36,5 +36,7 @@ public class Theropist implements SuperEntity {
         this.phone = phone;
         this.specialization = specialization;
         this.experience = experience;
+        this.status = staus;
+        this.age = age;
     }
 }

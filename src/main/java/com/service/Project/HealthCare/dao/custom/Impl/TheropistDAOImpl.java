@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TheropistDAOImpl implements TheropistDAO {
@@ -106,5 +107,29 @@ public class TheropistDAOImpl implements TheropistDAO {
             e.printStackTrace();
         }
         return newTheropistId;
+    }
+
+    @Override
+    public List<String> getAllId() {
+        List<String> theroPists = new ArrayList<>();
+        Session session = config.getSession();
+
+        try {
+            session.beginTransaction();
+
+            List<String> results = session.createQuery("SELECT p.id FROM Theropist p", String.class).getResultList();
+            theroPists.addAll(results);
+
+            session.getTransaction().commit();
+        } catch (Exception e) {
+            if (session.getTransaction() != null) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            session.close();
+        }
+
+        return theroPists;
     }
 }

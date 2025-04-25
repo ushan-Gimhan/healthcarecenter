@@ -1,13 +1,14 @@
 package com.service.Project.HealthCare.controller;
 
 import com.service.Project.HealthCare.bo.BOFactory;
+import com.service.Project.HealthCare.bo.custom.PatientBO;
 import com.service.Project.HealthCare.bo.custom.SessionBO;
-import com.service.Project.HealthCare.bo.custom.TherapyProgramBO;
-import com.service.Project.HealthCare.dto.PatientDTO;
+import com.service.Project.HealthCare.bo.custom.TheropistBO;
 import com.service.Project.HealthCare.dto.SessioonDTO;
-import com.service.Project.HealthCare.dto.TM.PatientTM;
 import com.service.Project.HealthCare.dto.TM.SessionTM;
-import com.service.Project.HealthCare.entity.TherapySession;
+import com.service.Project.HealthCare.dto.TheropistDTO;
+import com.service.Project.HealthCare.entity.Patient;
+import com.service.Project.HealthCare.entity.Theropist;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,19 +22,37 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Time;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class SessionController implements Initializable {
 
-    public TableColumn colTherapist;
-    public TableColumn colTherapyProgram;
+    @FXML
+    private Label lblFilteredCount;
+    @FXML
+    public TextField txtSessions;
+    @FXML
+    public Label lblPatientName;
+    @FXML
+    public ComboBox<String> cmbPatientSelect;
+    @FXML
+    private TableColumn<SessionTM, String> colTherapist;
+    @FXML
+    private TableColumn<SessionTM, String> colTherapyProgram;
+    @FXML
     public Label lblSessionCount;
     SessionBO sessionBO;
+    PatientBO patientBO;
+    TheropistBO theropist;
 
     {
         try {
             sessionBO = (SessionBO) BOFactory.getInstance().getBOType(BOFactory.BOType.Session);
+            patientBO = (PatientBO) BOFactory.getInstance().getBOType(BOFactory.BOType.Patient);
+            theropist= (TheropistBO) BOFactory.getInstance().getBOType(BOFactory.BOType.Therapist);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -237,7 +256,7 @@ public class SessionController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         cmbStatus.setItems(FXCollections.observableArrayList("Available","Unavailable"));
         colSessionId.setCellValueFactory(new PropertyValueFactory<>("sId"));
-//        colSessionCount.setCellValueFactory(new PropertyValueFactory<>("SessionCount"));
+        colSessionCount.setCellValueFactory(new PropertyValueFactory<>("SessionCount"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("time"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         colTime.setCellValueFactory(new PropertyValueFactory<>("time"));
@@ -245,14 +264,42 @@ public class SessionController implements Initializable {
 
         lblSessionId.setText(sessionBO.generateId());
         loadTableData();
+        loadPatients();
+        loadTheropists();
 
     }
 
     public void selectTherapist(ActionEvent event) {
-
     }
 
     public void selectPatient(ActionEvent event) {
+        String patientValue = cmbPatientSelect.getValue();
 
+        Patient patient= patientBO.getPationByID(patientValue);
+        if (patient != null &&patient.getName() != null) {
+            lblPatientName.setText(patient.getName());
+//            cmbTherapyProgram.setValue(th);
+        } else {
+            lblPatientName.setText(""); // or any default message you'd like
+        }
+    }
+
+    public void searchSession(ActionEvent event) {
+    }
+    public void loadPatients(){
+        List<String> patientIds = patientBO.getAllPatientIds();
+        cmbPatientSelect.getItems().setAll(patientIds);
+    }
+    public void loadTheropists(){
+        List<TheropistDTO> availableTherapistIds = theropist.findAll();
+        List<String> allAvalableIds = new ArrayList<>();
+
+        for (TheropistDTO t : availableTherapistIds){
+            String status = t.getStaus();
+            if (status.equals("Active")){
+                allAvalableIds.add(t.getId());
+            }
+        }
+        cmbTherapistSelect.getItems().setAll(allAvalableIds);
     }
 }

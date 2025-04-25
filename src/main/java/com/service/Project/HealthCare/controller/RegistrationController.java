@@ -102,10 +102,8 @@ public class RegistrationController implements Initializable {
         String patientValue = cmbPatient.getValue();
         String program = cmbProgram.getValue();
 
-        Programs programs = programBO.getProgramByName(program);
-        String program_id = programs.getTId();
-
         Patient patient = pationBO.getPationByID(patientValue);
+        Programs programs = programBO.getProgramByName(program);
 
         txtRegId.setStyle("-fx-text-fill: black;");
         txtPayment.setStyle("-fx-text-fill: black;");
@@ -147,8 +145,10 @@ public class RegistrationController implements Initializable {
         RegistrationTM selected = registrationTable.getSelectionModel().getSelectedItem();
         if (selected != null) {
             txtRegId.setText(selected.getRegId());
-            txtPayment.setText(String.valueOf(selected.getPayment()));
-            datePicker.setValue(LocalDate.parse((CharSequence) selected.getDate()));
+            datePicker.setValue(selected.getDate().toLocalDate());
+            cmbProgram.setValue(selected.getProgram_Id());
+            cmbPatient.setValue(selected.getPatient_Id());
+            txtPayment.setText(selected.getPayment().toString());
         }
     }
 
@@ -225,12 +225,10 @@ public class RegistrationController implements Initializable {
     }
 
     public void refreshPage() {
-        txtRegId.setText("");
         txtPayment.setText("");
         cmbPatient.setValue(null);
         cmbProgram.setValue(null);
         datePicker.setValue(null);
-        lblProgramPrice.setText("");
         lblSelectedPatient.setText("");
         lblSelectedProgram.setText("");
 
@@ -238,13 +236,14 @@ public class RegistrationController implements Initializable {
         txtPayment.setStyle("-fx-text-fill: black;");
         registrationBO.generateId();
         loadTableData();
+        txtRegId.setText(registrationBO.generateId());
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         colRegId.setCellValueFactory(new PropertyValueFactory<>("regId"));
-        colPatient.setCellValueFactory(new PropertyValueFactory<>("patient"));
-        colProgram.setCellValueFactory(new PropertyValueFactory<>("programs"));
+        colPatient.setCellValueFactory(new PropertyValueFactory<>("patient_Id"));
+        colProgram.setCellValueFactory(new PropertyValueFactory<>("program_Id"));
         colPayment.setCellValueFactory(new PropertyValueFactory<>("payment"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
 
@@ -271,8 +270,8 @@ public class RegistrationController implements Initializable {
                     regitrationDTO.getRegId(),
                     regitrationDTO.getPayment(),
                     regitrationDTO.getDate(),
-                    regitrationDTO.getPatient(),
-                    regitrationDTO.getProgram());
+                    regitrationDTO.getPatienId(),
+                    regitrationDTO.getProgId());
             data.add(registrationTM);
         }
         registrationTable.setItems(data);
@@ -282,7 +281,11 @@ public class RegistrationController implements Initializable {
         String patientValue = cmbPatient.getValue();
 
         Patient patient=pationBO.getPationByID(patientValue);
-        lblSelectedPatient.setText(patient.getName());
+        if (patient != null &&patient.getName() != null) {
+            lblSelectedPatient.setText(patient.getName());
+        } else {
+            lblSelectedPatient.setText(""); // or any default message you'd like
+        }
     }
 
     public void onProgramSelected(ActionEvent event) {
@@ -294,7 +297,7 @@ public class RegistrationController implements Initializable {
         if (programs != null && programs.getPrice() != null) {
             lblSelectedProgram.setText(programs.getPrice().toString());
         } else {
-            lblSelectedProgram.setText("N/A"); // or any default message you'd like
+            lblSelectedProgram.setText("0.00"); // or any default message you'd like
         }
     }
 
