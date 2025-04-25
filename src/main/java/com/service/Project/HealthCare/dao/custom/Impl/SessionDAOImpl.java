@@ -2,6 +2,7 @@ package com.service.Project.HealthCare.dao.custom.Impl;
 
 import com.service.Project.HealthCare.config.FactoryConfiguration;
 import com.service.Project.HealthCare.dao.custom.SessionDAO;
+import com.service.Project.HealthCare.entity.Patient;
 import com.service.Project.HealthCare.entity.TherapySession;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -23,7 +24,9 @@ public class SessionDAOImpl implements SessionDAO {
 
     @Override
     public List<TherapySession> findAll() {
-        return List.of();
+        Session session=config.getSession();
+        Query<TherapySession> query = session.createQuery("FROM TherapySession ", TherapySession.class);
+        return query.list();
     }
 
     @Override

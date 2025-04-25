@@ -2,6 +2,7 @@ package com.service.Project.HealthCare.dao.custom.Impl;
 
 import com.service.Project.HealthCare.config.FactoryConfiguration;
 import com.service.Project.HealthCare.dao.custom.RegistrationDAO;
+import com.service.Project.HealthCare.entity.Patient;
 import com.service.Project.HealthCare.entity.Payement;
 import com.service.Project.HealthCare.entity.Programs;
 import com.service.Project.HealthCare.entity.Registration;
@@ -112,5 +113,26 @@ public class RegistrationDAOImpl implements RegistrationDAO {
         return newPaymentId;
     }
 
+    @Override
+    public Registration getPegistrationById(String id) {
+        Session session = config.getSession();
+        Registration registration = null;
+
+        try {
+            session = config.getSession(); // Your Hibernate session provider
+            String hql = "FROM Registration r WHERE r.patient.id = :patientId";
+            registration = session.createQuery(hql, Registration.class)
+                    .setParameter("patientId", id)
+                    .uniqueResult();// Fetch by primary key
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return registration;
+
+    }
 }
 

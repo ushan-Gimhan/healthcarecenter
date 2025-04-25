@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -30,11 +31,11 @@ public class TherapySession implements SuperEntity{
     @ManyToOne
     private Theropist theropist;
 
-    public TherapySession(String sId, int sessionCount, Time time, Date date, String status) {
+    public TherapySession(String sId, int sessionCount, Time time, LocalDate date, String status) {
         this.sId = sId;
         this.SessionCount = sessionCount;
         this.time = time;
-        this.date = date;
+        this.date = Date.valueOf(date);
         this.status = status;
 
     }

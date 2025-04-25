@@ -30,6 +30,7 @@ public class SessionBOImpl implements SessionBO {
         List<SessioonDTO> sessions = new ArrayList<SessioonDTO>();
         for(TherapySession session : all) {
             SessioonDTO sessionDTO = new SessioonDTO(session.getSId(),session.getSessionCount(), session.getTime(), session.getDate(),session.getStatus());
+            sessions.add(sessionDTO);
         }
         return sessions;
     }

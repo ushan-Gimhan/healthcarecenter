@@ -61,4 +61,9 @@ public class TheropistBOImpl implements TheropistBO {
     public List<String> getAllId() {
         return theropistDAO.getAllId();
     }
+
+    @Override
+    public Theropist getTheropistNameByID(String id) {
+        return theropistDAO.getTheopistNameByid(id);
+    }
 }

@@ -1,5 +1,7 @@
 package com.service.Project.HealthCare.dto;
 
+import com.service.Project.HealthCare.entity.Patient;
+import com.service.Project.HealthCare.entity.Theropist;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,6 +9,7 @@ import lombok.Setter;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
 
 @Setter
 @Getter
@@ -16,14 +19,17 @@ public class SessioonDTO {
     private String sId;
     private int SessionCount;
     private Time time;
-    private Date date;
+    private LocalDate date;
     private String status;
+    private Patient patient;
+    private Theropist id;
 
-    public SessioonDTO(String id, int count, String date, String time, String status) {
-        this.sId = id;
-        this.SessionCount = count;
-        this.date = Date.valueOf(date);
-        this.time = Time.valueOf(time);
+
+    public SessioonDTO(String sId, int sessionCount, Time time, Date date, String status) {
+        this.sId = sId;
+        this.SessionCount = sessionCount;
+        this.date = Date.valueOf(date.toLocalDate()).toLocalDate();
+        this.time = Time.valueOf(time.toLocalTime());
         this.status = status;
     }
 }

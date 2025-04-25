@@ -132,4 +132,22 @@ public class TheropistDAOImpl implements TheropistDAO {
 
         return theroPists;
     }
+
+    @Override
+    public Theropist getTheopistNameByid(String id) {
+        Session session = config.getSession();
+        Theropist theropist = null;
+
+        try {
+            session = config.getSession(); // Your Hibernate session provider
+            theropist = session.get(Theropist.class, id); // Fetch by primary key
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return theropist;
+    }
 }

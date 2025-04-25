@@ -16,4 +16,6 @@ public interface TheropistBO extends SuperBO {
     public String generateId();
 
     public List<String> getAllId();
+
+    Theropist getTheropistNameByID(String id);
 }
