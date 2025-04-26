@@ -71,4 +71,14 @@ public class PatientBOImpl implements PatientBO {
     public Patient getPationByName(String name) {
         return patientDAO.getPationByName(name);
     }
+
+    @Override
+    public List<Patient> getPationByNic(String nic) {
+        return patientDAO.getPatientByNic(nic);
+    }
+
+    @Override
+    public List<Patient> getPationBYMobile(String mobile) {
+        return patientDAO.getPatientsByMobile(mobile);
+    }
 }

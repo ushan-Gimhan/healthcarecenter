@@ -13,4 +13,6 @@ public interface PaymentBO extends SuperBO {
     public boolean update(PaymentDTO payment);
     public boolean delete(String id);
     public String generateId();
+
+    Double getAllPaymentByPatientId(String patient);
 }

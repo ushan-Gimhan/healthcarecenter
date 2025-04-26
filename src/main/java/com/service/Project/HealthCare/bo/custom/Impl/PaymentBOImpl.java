@@ -2,16 +2,10 @@ package com.service.Project.HealthCare.bo.custom.Impl;
 
 import com.service.Project.HealthCare.bo.custom.PaymentBO;
 import com.service.Project.HealthCare.dao.DAOFactory;
-import com.service.Project.HealthCare.dao.custom.Impl.PatientDAOImpl;
-import com.service.Project.HealthCare.dao.custom.Impl.PaymentDAOImpl;
-import com.service.Project.HealthCare.dao.custom.PatientDAO;
 import com.service.Project.HealthCare.dao.custom.PaymentDAO;
 import com.service.Project.HealthCare.dto.PaymentDTO;
-import com.service.Project.HealthCare.dto.RegitrationDTO;
 import com.service.Project.HealthCare.dto.SessioonDTO;
-import com.service.Project.HealthCare.entity.Patient;
 import com.service.Project.HealthCare.entity.Payement;
-import com.service.Project.HealthCare.entity.Registration;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,5 +56,19 @@ public class PaymentBOImpl implements PaymentBO {
     @Override
     public String generateId() {
         return paymentDAO.generateId();
+    }
+
+    @Override
+    public Double getAllPaymentByPatientId(String patient) {
+        List<Payement> all = paymentDAO.findAll();
+        List<Double> payments = new ArrayList<>();
+        double total=0;
+        for (Payement payment : all) {
+            if (payment.getPayId().equals(patient)) {
+                Double amount = payment.getAmount();
+                total =+ amount;
+            }
+        }
+        return total;
     }
 }

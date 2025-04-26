@@ -10,4 +10,8 @@ public interface PatientDAO extends CrudDAO<Patient,String> {
     public Patient getPatientById(String id);
 
     Patient getPationByName(String name);
+
+    List<Patient> getPatientByNic(String nic);
+
+    List<Patient> getPatientsByMobile(String mobile);
 }

@@ -36,10 +36,10 @@
                 </GridPane>
 
                 <HBox alignment="CENTER" spacing="10">
-                    <Button fx:id="btnAddTherapy" onAction="#Add" styleClass="button" text="Add" />
-                    <Button fx:id="btnUpdateTherapy" onAction="#Update" styleClass="button" text="Update" />
-                    <Button fx:id="btnDeleteTherapy" onAction="#Delete" styleClass="button" text="Delete" />
-                    <Button fx:id="btnResetTherapy" onAction="#Reset" styleClass="button" text="Reset" />
+                    <Button fx:id="btnAddTherapy" onAction="#Add" styleClass="button, btn-primary" text="Add" />
+                    <Button fx:id="btnUpdateTherapy" onAction="#Update" styleClass="button, btn-update" text="Update" />
+                    <Button fx:id="btnDeleteTherapy" onAction="#Delete" styleClass="button,btn-primary" text="Delete" />
+                    <Button fx:id="btnResetTherapy" onAction="#Reset" styleClass="button,btn-primary" text="Reset" />
                 </HBox>
 
                 <TableView fx:id="therapyTable" onMouseClicked="#selectTherapy" styleClass="table-view" VBox.vgrow="ALWAYS">

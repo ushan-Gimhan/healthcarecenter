@@ -2,12 +2,14 @@ package com.service.Project.HealthCare.dao.custom.Impl;
 
 import com.service.Project.HealthCare.config.FactoryConfiguration;
 import com.service.Project.HealthCare.dao.custom.PaymentDAO;
+import com.service.Project.HealthCare.entity.Patient;
 import com.service.Project.HealthCare.entity.Payement;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class PaymentDAOImpl implements PaymentDAO {

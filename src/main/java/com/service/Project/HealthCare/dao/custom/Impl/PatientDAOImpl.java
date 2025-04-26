@@ -165,4 +165,20 @@ public class PatientDAOImpl implements PatientDAO {
         }
         return patient;
     }
+
+    @Override
+    public List<Patient> getPatientByNic(String nic) {
+        Session session = config.getSession();
+        Query<Patient> query = session.createQuery("FROM Patient WHERE NIC = :nic", Patient.class);
+        query.setParameter("nic", nic); // pass the NIC value here
+        return query.list();
+    }
+
+    @Override
+    public List<Patient> getPatientsByMobile(String mobile) {
+        Session session = config.getSession();
+        Query<Patient> query = session.createQuery("FROM Patient WHERE mobile = :mobile", Patient.class);
+        query.setParameter("nic", mobile); // pass the NIC value here
+        return query.list();
+    }
 }
