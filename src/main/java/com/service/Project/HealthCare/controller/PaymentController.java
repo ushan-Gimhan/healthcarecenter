@@ -35,6 +35,7 @@ import static com.service.Project.HealthCare.controller.DashboardController.serc
 import static com.service.Project.HealthCare.controller.DashboardController.serchNic;
 
 public class PaymentController implements Initializable {
+    static PaymentTM paymentTM;
     public TextField txtSearchPatient;
     PaymentBO paymentBO;
     PatientBO pationBO;
@@ -392,6 +393,7 @@ public class PaymentController implements Initializable {
     }
 
     public void generateInvoice(ActionEvent event) throws IOException {
+        paymentTM = paymentTable.getSelectionModel().getSelectedItem();
         Parent load = FXMLLoader.load(getClass().getResource("/Invoice/theropyInvoice.fxml"));
         Scene scene = new Scene(load);
         Stage stage = new Stage();
