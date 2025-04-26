@@ -21,8 +21,12 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+
+import static com.service.Project.HealthCare.controller.DashboardController.serchMobile;
+import static com.service.Project.HealthCare.controller.DashboardController.serchNic;
 
 public class PatientController implements Initializable {
     public TextField txtSearch;
@@ -309,23 +313,36 @@ public class PatientController implements Initializable {
     }
 
     public void clikedSerch(ActionEvent event) throws IOException {
-        String name=txtSearch.getText();
+        serchNic = txtSearch.getText();
+        serchMobile=null;
+        List<Patient> pationByNic= new ArrayList<>();
+        List<Patient> pationBYMobile = new ArrayList<>();
+        if (serchNic==null){
+            serchMobile= txtSearch.getText();
+            if  (serchMobile==null){
+                new Alert(Alert.AlertType.ERROR, "Enter Nic or Mobile Number!!!").showAndWait();
+            }
+            else {
+                pationBYMobile= patientBO.getPationBYMobile( serchMobile);
+            }
+        }else {
+            pationByNic= patientBO.getPationByNic(serchNic);
+        }
 
-        Patient patient=patientBO.getPationByName(name);
-
-        if (patient==null) {
-            new Alert(Alert.AlertType.ERROR, "Patient not found.").show();
-        }else{
-            Parent load = FXMLLoader.load(getClass().getResource("/View/serchCustomer.fxml"));
-            Stage stage = new Stage();
+        if (pationByNic.size()==0 && pationBYMobile.size()==0){
+            new Alert(Alert.AlertType.ERROR, "No patient found").showAndWait();
+        }else {
+            Parent load = FXMLLoader.load(getClass().getResource("/View/patientSerch.fxml"));
             Scene scene = new Scene(load);
+            Stage stage = new Stage();
             stage.setScene(scene);
+            stage.setTitle("Search Patient");
             stage.show();
         }
     }
 
     public void generateReports(ActionEvent event) throws IOException {
-        Parent load = FXMLLoader.load(getClass().getResource("/View/patientSerch.fxml"));
+        Parent load = FXMLLoader.load(getClass().getResource("/Reports/serchCustomer.fxml"));
         Stage stage = new Stage();
         Scene scene = new Scene(load);
         stage.setScene(scene);

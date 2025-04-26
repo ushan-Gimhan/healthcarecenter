@@ -31,9 +31,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import static com.service.Project.HealthCare.controller.DashboardController.serchMobile;
+import static com.service.Project.HealthCare.controller.DashboardController.serchNic;
+
 public class PaymentController implements Initializable {
-    static String serchNic;
-    static String serchMobile;
     public TextField txtSearchPatient;
     PaymentBO paymentBO;
     PatientBO pationBO;
@@ -323,14 +324,9 @@ public class PaymentController implements Initializable {
         String patient = cmbPatient.getValue();
         Registration registration = registrationBO.getRegistrationByPatientId(patient);
 
-        if (registration==null){
-            cmbPatient.setValue("Click This");
-        }
         if (registration != null) {
             Double payment = registration.getPayment();
             Double allPaymentByPatientId = paymentBO.getAllPaymentByPatientId(patient);
-            System.out.println(allPaymentByPatientId);
-
             if (payment == 0) {
                 txtPayment.setText("");
             } else if (payment > allPaymentByPatientId) {
@@ -356,6 +352,7 @@ public class PaymentController implements Initializable {
             txtPayment.setText("");
             txtAllPayment.setText("0.0");
             txtAvailablePayment.setText("0.0");
+            new Alert(Alert.AlertType.ERROR, "Register Patient First!!!").showAndWait();
         }
     }
     public void refreshPage() {

@@ -20,6 +20,8 @@ import java.util.ResourceBundle;
 import static com.service.Project.HealthCare.controller.LoginPageController.ap;
 
 public class DashboardController implements Initializable {
+    static String serchNic;
+    static String serchMobile;
 
     @FXML
     private Button btnAdmin;

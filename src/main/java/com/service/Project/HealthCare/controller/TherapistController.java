@@ -189,8 +189,9 @@ public class TherapistController implements Initializable {
             txtMobileNumber.setText(teropistTM.getPhone());
             txtExperience.setText(teropistTM.getExperience());
             cmbSpecialization.setValue(teropistTM.getSpecialization());
-            cmbStatus.setValue(teropistTM.getStatus());
+            cmbStatus.setValue(teropistTM.getStaus());
             cmbGender.setValue(teropistTM.getGender());
+            txtAge.setText(String.valueOf(teropistTM.getAge()));
 
         }
         btnAdd.setDisable(true);
@@ -322,7 +323,7 @@ public class TherapistController implements Initializable {
         colMobileNumber.setCellValueFactory(new PropertyValueFactory<>("phone"));
         colSpecialization.setCellValueFactory(new PropertyValueFactory<>("specialization"));
         colGender.setCellValueFactory(new PropertyValueFactory<>("gender"));
-        colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+        colStatus.setCellValueFactory(new PropertyValueFactory<>("staus"));
         colAge.setCellValueFactory(new PropertyValueFactory<>("age"));
 
     }
@@ -335,13 +336,13 @@ public class TherapistController implements Initializable {
             TeropistTM theropistTM = new TeropistTM(
                     theropistDTO.getId(),
                     theropistDTO.getName(),
-                    theropistDTO.getExperience(),
+                    theropistDTO.getGender(),
+                    theropistDTO.getEmail(),
                     theropistDTO.getPhone(),
                     theropistDTO.getSpecialization(),
-                    theropistDTO.getEmail(),
-                    theropistDTO.getGender(),
-                    theropistDTO.getStaus(),
-                    theropistDTO.getAge()
+                    theropistDTO.getExperience(),
+                    theropistDTO.getAge(),
+                    theropistDTO.getStaus()
             );
             theropistTMS.add(theropistTM);
         }

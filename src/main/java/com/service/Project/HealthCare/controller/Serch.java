@@ -15,12 +15,12 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import static com.service.Project.HealthCare.controller.PaymentController.serchMobile;
-import static com.service.Project.HealthCare.controller.PaymentController.serchNic;
+import static com.service.Project.HealthCare.controller.DashboardController.serchMobile;
+import static com.service.Project.HealthCare.controller.DashboardController.serchNic;
+
 
 public class Serch implements Initializable {
 

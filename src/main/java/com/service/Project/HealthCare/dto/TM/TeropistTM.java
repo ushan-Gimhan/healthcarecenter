@@ -13,10 +13,10 @@ public class TeropistTM {
     private String id;
     private String name;
     private String gender;
+    private String email;
     private String phone;
     private String specialization;
-    private String email;
-    private String status;
     private String experience;
     private int age;
+    private String staus;
 }
