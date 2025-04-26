@@ -78,10 +78,11 @@
                         </GridPane>
 
                         <HBox alignment="CENTER" spacing="15">
-                          <Button fx:id="btnAdd" onAction="#addPatient" styleClass="button, btn-primary" text="Add Patient" />
+                            <Button fx:id="btnAdd" onAction="#addPatient" styleClass="button, btn-primary" text="Add Patient" />
                             <Button fx:id="btnUpdate" onAction="#updatePatient" styleClass="button, btn-update" text="Update" />
                             <Button fx:id="btnDelete" onAction="#deletePatient" styleClass="button, btn-delete" text="Delete" />
-                          <Button fx:id="btnReset" onAction="#resetFields" styleClass="button, btn-secondary" text="Reset" />
+                            <Button fx:id="btnReset" onAction="#resetFields" styleClass="button, btn-secondary" text="Reset" />
+                            <Button fx:id="btnGenerateReports" onAction="#generateReports" styleClass="button, btn-report" text="Generate Reports" />
                         </HBox>
                     </VBox>
 

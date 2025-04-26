@@ -5,6 +5,7 @@ import com.service.Project.HealthCare.dao.DAOFactory;
 import com.service.Project.HealthCare.dao.custom.PaymentDAO;
 import com.service.Project.HealthCare.dto.PaymentDTO;
 import com.service.Project.HealthCare.dto.SessioonDTO;
+import com.service.Project.HealthCare.entity.Patient;
 import com.service.Project.HealthCare.entity.Payement;
 
 import java.io.IOException;
@@ -27,7 +28,7 @@ public class PaymentBOImpl implements PaymentBO {
         List<Payement> allPayments = paymentDAO.findAll();
         List<PaymentDTO> paymentDTOs = new ArrayList<>();
         for (Payement payment : allPayments) {
-            PaymentDTO paymentDTO = new PaymentDTO(payment.getPayId(),payment.getPayMethod(),payment.getAmount(), payment.getDate().toLocalDate(),payment.getAvailabalAmout());
+            PaymentDTO paymentDTO = new PaymentDTO(payment.getPayId(),payment.getPayMethod(),payment.getAmount(), payment.getDate().toLocalDate(),payment.getAvailabalAmout(),payment.getPatient(),payment.getPrograms());
             paymentDTOs.add(paymentDTO);
         }
         return paymentDTOs;
@@ -61,12 +62,12 @@ public class PaymentBOImpl implements PaymentBO {
     @Override
     public Double getAllPaymentByPatientId(String patient) {
         List<Payement> all = paymentDAO.findAll();
-        List<Double> payments = new ArrayList<>();
-        double total=0;
-        for (Payement payment : all) {
-            if (payment.getPayId().equals(patient)) {
-                Double amount = payment.getAmount();
-                total =+ amount;
+        Double total = 0.0;
+        for (Payement payement : all){
+            Patient patient1 = payement.getPatient();
+            String id = patient1.getId();
+            if(id.equals(patient)){
+                total = total + payement.getAmount();
             }
         }
         return total;

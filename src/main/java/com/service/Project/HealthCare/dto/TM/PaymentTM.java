@@ -21,13 +21,14 @@ public class PaymentTM {
     private Date date;
     private Double availabalAmout;
     private Patient patient;
+    private String patientId;
 
-    public PaymentTM(String payId, String payMethod, Double amount, LocalDate date, Double availabalAmout, Patient patient) {
+    public PaymentTM(String payId, String payMethod, Double amount, LocalDate date, Double availabalAmout, String id) {
         this.payId = payId;
         this.payMethod = payMethod;
         this.amount = amount;
         this.date= Date.valueOf(date);
         this.availabalAmout=availabalAmout;
-        this.patient=patient;
+        this.patientId=id;
     }
 }

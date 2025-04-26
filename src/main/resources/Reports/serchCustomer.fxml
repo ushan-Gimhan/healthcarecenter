@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1"
+      spacing="10.0" fx:controller="com.service.Project.HealthCare.controller.RepprtController">
+
+    <Label styleClass="section-header" text="Patient Records" />
+
+    <TableView fx:id="patientTable" prefHeight="400.0" prefWidth="800.0"
+               onMouseClicked="#clicked" styleClass="table-view" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colPatientId" prefWidth="80.0" text="ID" />
+            <TableColumn fx:id="colName" prefWidth="150.0" text="Name" />
+            <TableColumn fx:id="colEmail" prefWidth="120.0" text="NIC" />
+            <TableColumn fx:id="colAge" prefWidth="60.0" text="Age" />
+            <TableColumn fx:id="colGender" prefWidth="70.0" text="Gender" />
+            <TableColumn fx:id="colMobileNumber" prefWidth="120.0" text="Mobile" />
+        </columns>
+    </TableView>
+</VBox>

@@ -186,7 +186,14 @@ public class TherapistController implements Initializable {
             txtName.setText(teropistTM.getName());
             txtTherapistId.setText(teropistTM.getId());
             txtEmail.setText(teropistTM.getEmail());
+            txtMobileNumber.setText(teropistTM.getPhone());
+            txtExperience.setText(teropistTM.getExperience());
+            cmbSpecialization.setValue(teropistTM.getSpecialization());
+            cmbStatus.setValue(teropistTM.getStatus());
+            cmbGender.setValue(teropistTM.getGender());
+
         }
+        btnAdd.setDisable(true);
     }
 
     @FXML
@@ -203,6 +210,7 @@ public class TherapistController implements Initializable {
 
     @FXML
     void resetFields(ActionEvent event) {
+        btnAdd.setDisable(false);
         refreshPage();
 
     }
@@ -297,6 +305,7 @@ public class TherapistController implements Initializable {
         txtAge.setText("");
         cmbSpecialization.setValue("");
         cmbStatus.setValue("");
+        cmbGender.setValue("");
         loadTableData();
 
     }

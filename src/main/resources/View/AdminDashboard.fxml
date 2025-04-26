@@ -10,9 +10,10 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="611.0" prefWidth="900.0" stylesheets="@../css/DashBoard.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.service.Project.HealthCare.controller.DashboardController">
+<AnchorPane fx:id="mainPane" prefHeight="611.0" prefWidth="900.0" stylesheets="@../css/DashBoard.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.service.Project.HealthCare.controller.DashboardController">
     <children>
         <HBox spacing="0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+
             <!-- Left Navigation Panel -->
             <VBox prefHeight="605.0" prefWidth="220.0" spacing="10" style="-fx-background-color: #5D8AA8; -fx-padding: 20;" HBox.hgrow="ALWAYS">
                 <Label prefHeight="17.0" prefWidth="175.0" styleClass="dashboard-title" text="Serenity Therapy" textFill="WHITE">
@@ -25,10 +26,9 @@
                 </Label>
 
                 <VBox spacing="8">
-                    <!-- Dashboard Button -->
                     <Button fx:id="btnDashboard" mnemonicParsing="false" onAction="#clickedDashboard" prefHeight="66.0" prefWidth="180.0" styleClass="nav-button" text="Dashboard">
                         <graphic>
-                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" visible="true">
+                            <ImageView fitHeight="20.0" fitWidth="20.0" preserveRatio="true">
                                 <image>
                                     <Image url="@../images/DashBoard/home.png" />
                                 </image>
@@ -38,7 +38,7 @@
 
                     <Button fx:id="btnPatients" mnemonicParsing="false" onAction="#clickedPatients" styleClass="nav-button" text="Patients">
                         <graphic>
-                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" visible="true">
+                            <ImageView fitHeight="20.0" fitWidth="20.0" preserveRatio="true">
                                 <image>
                                     <Image url="@../images/DashBoard/customer.png" />
                                 </image>
@@ -48,16 +48,17 @@
 
                     <Button fx:id="btnAppointments" mnemonicParsing="false" onAction="#clickedAppointments" styleClass="nav-button" text="Registration">
                         <graphic>
-                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" visible="true">
+                            <ImageView fitHeight="20.0" fitWidth="20.0" preserveRatio="true">
                                 <image>
                                     <Image url="@../images/DashBoard/reservation.png" />
                                 </image>
                             </ImageView>
                         </graphic>
                     </Button>
-                    <Button fx:id="btnTheropyPrograms" layoutX="10.0" layoutY="104.0" mnemonicParsing="false" onAction="#clickedTheraryPrograms" styleClass="nav-button" text="Therapy Programs">
+
+                    <Button fx:id="btnTheropyPrograms" mnemonicParsing="false" onAction="#clickedTheraryPrograms" styleClass="nav-button" text="Therapy Programs">
                         <graphic>
-                            <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" visible="true">
+                            <ImageView fitHeight="25.0" fitWidth="25.0" preserveRatio="true">
                                 <image>
                                     <Image url="@../images/DashBoard/proframs.png" />
                                 </image>
@@ -67,7 +68,7 @@
 
                     <Button fx:id="btnSessions" mnemonicParsing="false" onAction="#clickedSessions" styleClass="nav-button" text="Therapy Sessions">
                         <graphic>
-                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" visible="true">
+                            <ImageView fitHeight="20.0" fitWidth="20.0" preserveRatio="true">
                                 <image>
                                     <Image url="@../images/DashBoard/sessions.png" />
                                 </image>
@@ -75,9 +76,9 @@
                         </graphic>
                     </Button>
 
-                    <Button fx:id="btnpayment" mnemonicParsing="false" onAction="#clickedPayment" styleClass="nav-button" text="Payemnt">
+                    <Button fx:id="btnpayment" mnemonicParsing="false" onAction="#clickedPayment" styleClass="nav-button" text="Payment">
                         <graphic>
-                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" visible="true">
+                            <ImageView fitHeight="20.0" fitWidth="20.0" preserveRatio="true">
                                 <image>
                                     <Image url="@../images/DashBoard/payment.png" />
                                 </image>
@@ -87,7 +88,7 @@
 
                     <Button fx:id="btnTherapists" mnemonicParsing="false" onAction="#clickedTherapists" styleClass="nav-button" text="Manage Therapists">
                         <graphic>
-                            <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true" visible="true">
+                            <ImageView fitHeight="20.0" fitWidth="20.0" preserveRatio="true">
                                 <image>
                                     <Image url="@../images/DashBoard/doctor.png" />
                                 </image>
@@ -95,18 +96,18 @@
                         </graphic>
                     </Button>
 
-               <Button fx:id="btnAdmin" layoutX="10.0" layoutY="340.0" mnemonicParsing="false" onAction="#clickedAdmin" styleClass="nav-button" text="Manage User">
-                  <graphic>
-                      <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true" visible="true">
-                          <image>
-                              <Image url="@../images/DashBoard/admin.png" />
-                          </image>
-                      </ImageView>
-                  </graphic>
-               </Button>
+                    <Button fx:id="btnAdmin" mnemonicParsing="false" onAction="#clickedAdmin" styleClass="nav-button" text="Manage User">
+                        <graphic>
+                            <ImageView fitHeight="25.0" fitWidth="25.0" preserveRatio="true">
+                                <image>
+                                    <Image url="@../images/DashBoard/admin.png" />
+                                </image>
+                            </ImageView>
+                        </graphic>
+                    </Button>
                 </VBox>
 
-                <VBox VBox.vgrow="ALWAYS" />
+                <VBox VBox.vgrow="ALWAYS"/>
 
                 <Button fx:id="btnLogout" mnemonicParsing="false" onAction="#clickedLogOut" styleClass="logout-button" text="Log Out">
                     <graphic>
@@ -117,59 +118,54 @@
 
             <!-- Main Content Area -->
             <AnchorPane fx:id="contentPane" style="-fx-background-color: #f5f6fa;" HBox.hgrow="ALWAYS">
-                <VBox alignment="TOP_CENTER" prefHeight="647.0" prefWidth="680.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <VBox alignment="TOP_CENTER" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                     <padding>
-                        <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
+                        <Insets top="30" left="30" right="30" bottom="30"/>
                     </padding>
-                    <Label styleClass="welcome-text" text="Welcome to Serenity Mental Health Therapy Center">
+
+                    <!-- Welcome Text -->
+                    <Label text="Welcome to Serenity Mental Health Therapy Center" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333;">
                         <font>
-                            <Font name="System Bold" size="24.0" />
+                            <Font size="24.0" />
                         </font>
                     </Label>
 
-                    <!-- Dashboard Content Summary Cards -->
+                    <!-- Dashboard Summary Cards -->
                     <HBox alignment="CENTER" spacing="20">
-                        <VBox prefHeight="120" prefWidth="200" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);" styleClass="summary-card">
+                        <!-- Today's Appointments -->
+                        <VBox prefHeight="120" prefWidth="200" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);" spacing="8">
                             <padding>
-                                <Insets bottom="15" left="15" right="15" top="15" />
+                                <Insets top="15" bottom="15" left="15" right="15"/>
                             </padding>
-                            <Label styleClass="card-title" text="🗓️ Today's Appointments" />
-                            <Label styleClass="card-value" text="12">
-                                <font>
-                                    <Font size="28.0" />
-                                </font>
-                            </Label>
-                            <Label styleClass="card-subtitle" text="2 pending confirmations" />
+                            <Label text="🗓️ Today's Appointments" style="-fx-font-size: 14px; -fx-text-fill: #333;"/>
+                            <Label text="12" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #222;"/>
+                            <Label text="2 pending confirmations" style="-fx-font-size: 12px; -fx-text-fill: #666;"/>
                         </VBox>
 
-                        <VBox prefHeight="120" prefWidth="200" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);" styleClass="summary-card">
+                        <!-- Active Patients -->
+                        <VBox prefHeight="120" prefWidth="200" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);" spacing="8">
                             <padding>
-                                <Insets bottom="15" left="15" right="15" top="15" />
+                                <Insets top="15" bottom="15" left="15" right="15"/>
                             </padding>
-                            <Label styleClass="card-title" text="👥 Active Patients" />
-                            <Label styleClass="card-value" text="87">
-                                <font>
-                                    <Font size="28.0" />
-                                </font>
-                            </Label>
-                            <Label styleClass="card-subtitle" text="5 new this week" />
+                            <Label text="👥 Active Patients" style="-fx-font-size: 14px; -fx-text-fill: #333;"/>
+                            <Label text="87" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #222;"/>
+                            <Label text="5 new this week" style="-fx-font-size: 12px; -fx-text-fill: #666;"/>
                         </VBox>
 
-                        <VBox prefHeight="120" prefWidth="200" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);" styleClass="summary-card">
+                        <!-- Revenue This Month -->
+                        <VBox prefHeight="120" prefWidth="200" style="-fx-background-color: white; -fx-background-radius: 10; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 10);" spacing="8">
                             <padding>
-                                <Insets bottom="15" left="15" right="15" top="15" />
+                                <Insets top="15" bottom="15" left="15" right="15"/>
                             </padding>
-                            <Label styleClass="card-title" text="💰 Revenue This Month" />
-                            <Label styleClass="card-value" text="">
-                                <font>
-                                    <Font size="28.0" />
-                                </font>
-                            </Label>
-                            <Label styleClass="card-subtitle" text="↑ 8% from last month" />
+                            <Label text="💰 Revenue This Month" style="-fx-font-size: 14px; -fx-text-fill: #333;"/>
+                            <Label text="Rs. 320,000" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: #222;"/>
+                            <Label text="↑ 8% from last month" style="-fx-font-size: 12px; -fx-text-fill: #666;"/>
                         </VBox>
                     </HBox>
+
                 </VBox>
             </AnchorPane>
+
         </HBox>
     </children>
 </AnchorPane>

@@ -35,16 +35,16 @@ public class TherapyProgramController implements Initializable {
     }
 
     @FXML
-    private Button btnAddTherapy;
+    private Button btnAdd;
 
     @FXML
-    private Button btnDeleteTherapy;
+    private Button btnDelete;
 
     @FXML
-    private Button btnResetTherapy;
+    private Button btnReset;
 
     @FXML
-    private Button btnUpdateTherapy;
+    private Button btnUpdate;
 
     @FXML
     private TableColumn<TherapyProgramTM, String> colDuration;
@@ -119,6 +119,7 @@ public class TherapyProgramController implements Initializable {
     @FXML
     void Reset(ActionEvent event) {
         refreshPage();
+        btnAdd.setDisable(false);
     }
 
     @FXML
@@ -131,6 +132,7 @@ public class TherapyProgramController implements Initializable {
             txtProgramName.setText(therapyProgramTM.getPName());
             txtPrice.setText(therapyProgramTM.getPrice().toString());
         }
+        btnAdd.setDisable(true);
     }
 
     @FXML

@@ -173,6 +173,7 @@ public class UserController implements Initializable {
     void resetFields(ActionEvent event) {
         refreshPage();
         loadTableData();
+        btnAdd.setDisable(false);
     }
 
     @FXML

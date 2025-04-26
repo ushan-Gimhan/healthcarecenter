@@ -216,6 +216,7 @@ public class SessionController implements Initializable {
             lblSessionId.setText(selectedItem.getSId());
             cmbTherapistSelect.setValue(selectedItem.getProgram_id());
         }
+        btnAdd.setDisable(true);
     }
 
     @FXML
@@ -292,6 +293,7 @@ public class SessionController implements Initializable {
         lblTherapistName.setText("");
         sessionBO.generateId();
         loadTableData();
+        btnAdd.setDisable(false);
 
     }
     public void loadTableData(){

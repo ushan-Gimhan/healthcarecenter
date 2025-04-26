@@ -120,4 +120,26 @@ public class PaymentDAOImpl implements PaymentDAO {
         }
         return newPaymentId;
     }
+
+    @Override
+    public List<Payement> findByPatientId(String patient) {
+        Session session = null;
+        List<Payement> payments = new ArrayList<>();
+
+        try {
+            session = config.getSession();
+            String hql = "FROM Payement p WHERE p.patient = :patient";
+            payments = session.createQuery(hql, Payement.class)
+                    .setParameter("patientId", patient)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+
+        return payments;
+    }
 }

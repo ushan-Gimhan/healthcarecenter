@@ -176,6 +176,7 @@ public class PatientController implements Initializable {
             txtAge.setText(String.valueOf(patientTM.getAge()));
             cmbGender.getSelectionModel().select(patientTM.getGender());
         }
+        btnAdd.setDisable(true);
     }
 
     @FXML
@@ -293,6 +294,7 @@ public class PatientController implements Initializable {
         txtAge.setText("");
         txtnic.setText("");
         cmbGender.getSelectionModel().clearSelection();
+        btnAdd.setDisable(false);
     }
     public void loadTableData(){
         List<PatientDTO> all = patientBO.findAll();
@@ -314,11 +316,19 @@ public class PatientController implements Initializable {
         if (patient==null) {
             new Alert(Alert.AlertType.ERROR, "Patient not found.").show();
         }else{
-            Parent load = FXMLLoader.load(getClass().getResource("/View/AdminDashboard.fxml"));
+            Parent load = FXMLLoader.load(getClass().getResource("/View/serchCustomer.fxml"));
             Stage stage = new Stage();
             Scene scene = new Scene(load);
             stage.setScene(scene);
             stage.show();
         }
+    }
+
+    public void generateReports(ActionEvent event) throws IOException {
+        Parent load = FXMLLoader.load(getClass().getResource("/View/patientSerch.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(load);
+        stage.setScene(scene);
+        stage.show();
     }
 }

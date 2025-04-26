@@ -150,6 +150,7 @@ public class RegistrationController implements Initializable {
             cmbPatient.setValue(selected.getPatient_Id());
             txtPayment.setText(selected.getPayment().toString());
         }
+        btnAdd.setDisable(true);
     }
 
     @FXML
@@ -237,6 +238,7 @@ public class RegistrationController implements Initializable {
         registrationBO.generateId();
         loadTableData();
         txtRegId.setText(registrationBO.generateId());
+        btnAdd.setDisable(false);
     }
 
     @Override

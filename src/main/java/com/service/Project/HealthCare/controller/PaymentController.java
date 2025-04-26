@@ -179,10 +179,13 @@ public class PaymentController implements Initializable {
         PaymentTM paymentTM = paymentTable.getSelectionModel().getSelectedItem();
         if (paymentTM!=null){
             txtPaymentId.setText(paymentTM.getPayId());
-            txtPayment.setText(paymentTM.getPayMethod());
-            txtAmount.setText(paymentTM.getAmount().toString());
-            txtAllPayment.setText(paymentTM.getAmount().toString());
+            cmbPatient.setValue(paymentTM.getPatientId());
+            cmbPaymentMethod.setValue(paymentTM.getPayMethod());
+            datePicker.setValue(paymentTM.getDate().toLocalDate());
+            txtAmount.setText(Double.toString(paymentTM.getAmount()));
+
         }
+        btnAdd.setDisable(true);
     }
 
     @FXML
@@ -307,7 +310,7 @@ public class PaymentController implements Initializable {
         txtPaymentId.setText(paymentBO.generateId());
         cmbPaymentMethod.setItems(FXCollections.observableArrayList("Cash", "Card","Mobile Transfer"));
         colAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
-        colPatient.setCellValueFactory(new PropertyValueFactory<>("patient"));
+        colPatient.setCellValueFactory(new PropertyValueFactory<>("patientId"));
         colPaymentId.setCellValueFactory(new PropertyValueFactory<>("payId"));
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         colPaymentMethod.setCellValueFactory(new PropertyValueFactory<>("payMethod"));
@@ -318,26 +321,42 @@ public class PaymentController implements Initializable {
 
     public void ClickedPation(ActionEvent event) {
         String patient = cmbPatient.getValue();
-        Registration registration=registrationBO.getRegistrationByPatientId(patient);
+        Registration registration = registrationBO.getRegistrationByPatientId(patient);
 
-        Double payemnt = registration.getPayment();
-        if (payemnt==0){
+        if (registration==null){
+            cmbPatient.setValue("Click This");
+        }
+        if (registration != null) {
+            Double payment = registration.getPayment();
+            Double allPaymentByPatientId = paymentBO.getAllPaymentByPatientId(patient);
+            System.out.println(allPaymentByPatientId);
+
+            if (payment == 0) {
+                txtPayment.setText("");
+            } else if (payment > allPaymentByPatientId) {
+                txtPayment.setText(String.valueOf(payment+allPaymentByPatientId));
+            } else {
+                Double total = payment + allPaymentByPatientId;
+                txtPayment.setText(String.valueOf(total));
+            }
+
+            Programs programs = registration.getPrograms();
+            if (programs != null) {
+                Double fullPayment = programs.getPrice();
+                txtAllPayment.setText(String.valueOf(fullPayment));
+
+                Double totalPaid = payment + allPaymentByPatientId;
+                Double balance = fullPayment - totalPaid;
+                txtAvailablePayment.setText(String.valueOf(balance));
+            } else {
+                txtAllPayment.setText("0.0");
+                txtAvailablePayment.setText("0.0");
+            }
+        } else {
             txtPayment.setText("");
+            txtAllPayment.setText("0.0");
+            txtAvailablePayment.setText("0.0");
         }
-        Double allPaymentByPatientId = paymentBO.getAllPaymentByPatientId(patient);
-
-        if(payemnt>allPaymentByPatientId){
-            txtPayment.setText(String.valueOf(payemnt));
-        }else {
-            Double total = payemnt+allPaymentByPatientId;
-            txtPayment.setText(String.valueOf(total));
-        }
-
-        Programs programs = registration.getPrograms();
-        Double fullpayment =programs.getPrice();
-        txtAllPayment.setText(String.valueOf(programs.getPrice()));
-
-        txtAvailablePayment.setText(String.valueOf(fullpayment-payemnt));
     }
     public void refreshPage() {
         txtPayment.clear();
@@ -345,12 +364,13 @@ public class PaymentController implements Initializable {
         txtAvailablePayment.clear();
         txtAllPayment.clear();
 
-        cmbPatient.getSelectionModel().clearSelection();
-        cmbPaymentMethod.getSelectionModel().clearSelection();
+        cmbPatient.setValue(null);
+        cmbPaymentMethod.setValue(null);
 
         datePicker.setValue(null);
         lblStatus.setText("");
-        txtPaymentId.setText("AUTO");
+        txtPaymentId.setText(paymentBO.generateId());
+        btnAdd.setDisable(false);
 
     }
     public void loadPatientsIds(){
@@ -366,9 +386,20 @@ public class PaymentController implements Initializable {
         ObservableList<PaymentTM> patientTM = FXCollections.observableArrayList();
 
         for(PaymentDTO paymentDTO : paymentDTOS){
-            PaymentTM paymentTM = new PaymentTM(paymentDTO.getPayId(),paymentDTO.getPayMethod(),paymentDTO.getAmount(),paymentDTO.getDate(),paymentDTO.getAvailabalAmout(),paymentDTO.getPatient());
+            Patient patient = paymentDTO.getPatient();
+            String pID= patient.getId();
+            PaymentTM paymentTM = new PaymentTM(paymentDTO.getPayId(),paymentDTO.getPayMethod(),paymentDTO.getAmount(),paymentDTO.getDate(),paymentDTO.getAvailabalAmout(),pID);
             patientTM.add(paymentTM);
         }
         paymentTable.setItems(patientTM);
+    }
+
+    public void generateInvoice(ActionEvent event) throws IOException {
+        Parent load = FXMLLoader.load(getClass().getResource("/Invoice/theropyInvoice.fxml"));
+        Scene scene = new Scene(load);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("Invoice");
+        stage.show();
     }
 }

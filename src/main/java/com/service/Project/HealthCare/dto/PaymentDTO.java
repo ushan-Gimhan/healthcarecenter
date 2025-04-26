@@ -22,13 +22,8 @@ public class PaymentDTO {
     private Double availabalAmout;
     private Patient patient;
     private Programs program;
+    private String patientId;
 
-    public PaymentDTO(String paymentId, String patient, String method, Double amount, LocalDate date) {
-        this.payId = paymentId;
-        this.payMethod = patient;
-        this.amount = amount;
-        this.date = date;
-    }
 
     public PaymentDTO(String payId, String payMethod, Double amount, LocalDate localDate, Double availabalAmout) {
         this.payId = payId;
@@ -37,4 +32,15 @@ public class PaymentDTO {
         this.date = localDate;
         this.availabalAmout = availabalAmout;
     }
+
+    public PaymentDTO(String id, String method, double amount, LocalDate date, Double avalableAmount, Patient patient, Programs programs) {
+        this.payId = id;
+        this.payMethod = method;
+        this.amount = amount;
+        this.date = date;
+        this.patient = patient;
+        this.program = programs;
+        this.availabalAmout = avalableAmount;
+    }
+
 }

@@ -118,6 +118,7 @@
                             <Button fx:id="btnUpdate" onAction="#updatePayment" styleClass="button, btn-update" text="Update" />
                             <Button fx:id="btnDelete" onAction="#deletePayment" styleClass="button, btn-delete" text="Delete" />
                             <Button fx:id="btnReset" onAction="#resetFields" styleClass="button, btn-secondary" text="Reset" />
+                            <Button fx:id="btnInvoice" onAction="#generateInvoice" styleClass="button, btn-invoice" text="Generate Invoice" />
                         </HBox>
                     </VBox>
                 </HBox>
