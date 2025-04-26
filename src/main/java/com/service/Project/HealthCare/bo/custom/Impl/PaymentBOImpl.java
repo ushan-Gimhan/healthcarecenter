@@ -40,12 +40,12 @@ public class PaymentBOImpl implements PaymentBO {
 
     @Override
     public boolean save(PaymentDTO payment) {
-        return paymentDAO.save(new Payement(payment.getPayId(), payment.getPayMethod(), payment.getAmount(),payment.getDate(),payment.getAvailabalAmout()));
+        return paymentDAO.save(new Payement(payment.getPayId(), payment.getPayMethod(), payment.getAmount(),payment.getDate(),payment.getAvailabalAmout(),payment.getPatient(),payment.getProgram()));
     }
 
     @Override
     public boolean update(PaymentDTO payment) {
-        return paymentDAO.update(new Payement(payment.getPayId(), payment.getPayMethod(), payment.getAmount(),payment.getDate(),payment.getAvailabalAmout()));
+        return paymentDAO.update(new Payement(payment.getPayId(), payment.getPayMethod(), payment.getAmount(),payment.getDate(),payment.getAvailabalAmout(),payment.getPatient(),payment.getProgram()));
     }
 
     @Override

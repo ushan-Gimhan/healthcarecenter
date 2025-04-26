@@ -44,4 +44,14 @@ public class Payement implements SuperEntity{
         this.date = Date.valueOf(date);
         this.availabalAmout = availabalAmout;
     }
+
+    public Payement(String payId, String payMethod, Double amount, LocalDate date, Double availabalAmout, Patient patient, Programs program) {
+        this.payId = payId;
+        this.payMethod = payMethod;
+        this.amount = amount;
+        this.date = Date.valueOf(date);
+        this.availabalAmout = availabalAmout;
+        this.patient = patient;
+        this.programs = program;
+    }
 }

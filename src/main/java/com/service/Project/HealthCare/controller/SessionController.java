@@ -23,6 +23,7 @@ import javafx.scene.input.MouseEvent;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
 import java.util.*;
@@ -131,10 +132,13 @@ public class SessionController implements Initializable {
 
         Patient patient= patientBO.getPationByID(patientID);
         Theropist theropist1 = theropist.getTheropistNameByID(therapist1);
+        String theropist_id=null;
 
         if (patient == null) {
             System.out.println("Patient not found for ID: " + patientID);
             // handle the null case, maybe return or throw exception
+        }else {
+          theropist_id = theropist1.getId();
         }
 
         if (therapist1 == null) {
@@ -170,7 +174,7 @@ public class SessionController implements Initializable {
         LocalDate date = dpSessionDate.getValue();
         Time time = Time.valueOf(Time.valueOf(timeText + ":00").toString());
 
-        boolean saved = sessionBO.save(new SessioonDTO(id, count, time,date, status,patient,theropist1));
+        boolean saved = sessionBO.save(new SessioonDTO(id, count, time, Date.valueOf(date), status,patient,theropist1));
 
         if (saved) {
             new Alert(Alert.AlertType.INFORMATION, "Session added!").show();
@@ -207,6 +211,10 @@ public class SessionController implements Initializable {
             txtSessions.setText(String.valueOf(selectedItem.getSessionCount()));
             cmbStatus.setValue(selectedItem.getStatus());
             lblSessionId.setText(selectedItem.getSId());
+            cmbPatientSelect.setValue(selectedItem.getPatient_id());
+            dpSessionDate.setValue(selectedItem.getDate());
+            lblSessionId.setText(selectedItem.getSId());
+            cmbTherapistSelect.setValue(selectedItem.getProgram_id());
         }
     }
 
@@ -220,8 +228,19 @@ public class SessionController implements Initializable {
         String pationID = cmbPatientSelect.getValue();
         String theropistId = cmbTherapistSelect.getValue();
 
-        Patient  patient= patientBO.getPationByID(pationID);
+        Patient patient= patientBO.getPationByID(pationID);
         Theropist theropist1 = theropist.getTheropistNameByID(theropistId);
+        String theropist_id=null;
+
+        if (patient == null) {
+            System.out.println("Patient not found for ID: " + pationID);
+        }else {
+            theropist_id = theropist1.getId();
+        }
+
+        if (theropistId == null) {
+            System.out.println("Therapist not found for ID: " + theropistId);
+        }
 
 
         String countPattern = "\\d+";                       // Only digits
@@ -251,7 +270,7 @@ public class SessionController implements Initializable {
         LocalDate date = dpSessionDate.getValue();
         Time time = Time.valueOf(Time.valueOf(timeText + ":00").toString());
 
-        boolean saved = sessionBO.update(new SessioonDTO(id, count, time,date, status,patient,theropist1));
+        boolean saved = sessionBO.update(new SessioonDTO(id, count, time, Date.valueOf(date), status,patient,theropist1));
 
         if (saved) {
             new Alert(Alert.AlertType.INFORMATION, "Session updated!").show();
@@ -280,7 +299,7 @@ public class SessionController implements Initializable {
         ObservableList<SessionTM> data = FXCollections.observableArrayList();
 
         for(SessioonDTO s : all){
-            SessionTM sessionTM = new SessionTM(s.getSId(),s.getSessionCount(),s.getTime(),s.getDate(),s.getStatus(),s.getPatient(),s.getId());
+            SessionTM sessionTM = new SessionTM(s.getSId(),s.getSessionCount(),s.getTime(),s.getDate(),s.getStatus(),s.getPatient().getId(),s.getId().getId());
             data.add(sessionTM);
         }
         sessionTable.setItems(data);
@@ -295,8 +314,8 @@ public class SessionController implements Initializable {
         colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
         colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
         colTime.setCellValueFactory(new PropertyValueFactory<>("time"));
-        colTherapyProgram.setCellValueFactory(new PropertyValueFactory<>("program"));
-        colPatient.setCellValueFactory(new PropertyValueFactory<>("patient"));
+        colTherapist.setCellValueFactory(new PropertyValueFactory<>("program_id"));
+        colPatient.setCellValueFactory(new PropertyValueFactory<>("patient_id"));
 
         lblSessionId.setText(sessionBO.generateId());
         loadTableData();

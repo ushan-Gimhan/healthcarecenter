@@ -23,5 +23,17 @@ public class SessionTM {
     private String status;
     private Patient patient;
     private Theropist program;
+    private String patient_id;
+    private String program_id;
 
+
+    public SessionTM(String sId, int sessionCount, Time time, LocalDate date, String status, String id, String id1) {
+        this.sId = sId;
+        this.SessionCount = sessionCount;
+        this.time = time;
+        this.date = date;
+        this.status = status;
+        this.patient_id = id;
+        this.program_id = id1;
+    }
 }

@@ -40,4 +40,13 @@ public class TherapySession implements SuperEntity{
 
     }
 
+    public TherapySession(String sId, int sessionCount, Time time, LocalDate date, String status, Patient patient, Theropist id) {
+        this.sId = sId;
+        this.SessionCount = sessionCount;
+        this.time = time;
+        this.date = Date.valueOf(date);
+        this.status = status;
+        this.patient = patient;
+        this.theropist = id;
+    }
 }

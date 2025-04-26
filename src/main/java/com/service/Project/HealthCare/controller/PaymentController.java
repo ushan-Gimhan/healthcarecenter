@@ -329,7 +329,8 @@ public class PaymentController implements Initializable {
         if(payemnt>allPaymentByPatientId){
             txtPayment.setText(String.valueOf(payemnt));
         }else {
-            txtPayment.setText(String.valueOf(allPaymentByPatientId));
+            Double total = payemnt+allPaymentByPatientId;
+            txtPayment.setText(String.valueOf(total));
         }
 
         Programs programs = registration.getPrograms();
