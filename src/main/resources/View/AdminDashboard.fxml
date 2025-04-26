@@ -133,11 +133,6 @@
                             <padding>
                                 <Insets bottom="15" left="15" right="15" top="15" />
                             </padding>
-                            <ImageView pickOnBounds="true" preserveRatio="true" visible="true">
-                                <image>
-                                    <Image url="@../images/LoginFile/visible.png" />
-                                </image>
-                            </ImageView>
                             <Label styleClass="card-title" text="🗓️ Today's Appointments" />
                             <Label styleClass="card-value" text="12">
                                 <font>

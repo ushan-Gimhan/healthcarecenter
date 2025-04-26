@@ -4,7 +4,9 @@ import com.service.Project.HealthCare.bo.BOFactory;
 import com.service.Project.HealthCare.bo.custom.PatientBO;
 import com.service.Project.HealthCare.bo.custom.PaymentBO;
 import com.service.Project.HealthCare.bo.custom.RegistrationBO;
+import com.service.Project.HealthCare.dto.PatientDTO;
 import com.service.Project.HealthCare.dto.PaymentDTO;
+import com.service.Project.HealthCare.dto.TM.PatientTM;
 import com.service.Project.HealthCare.dto.TM.PaymentTM;
 import com.service.Project.HealthCare.entity.Patient;
 import com.service.Project.HealthCare.entity.Programs;
@@ -110,14 +112,25 @@ public class PaymentController implements Initializable {
 
     @FXML
     void addPayment(ActionEvent event) {
-        String patient = cmbPatient.getValue();
+        String id = txtPaymentId.getText();
+        String patientId = cmbPatient.getValue();
         String method = cmbPaymentMethod.getValue();
         String amountText = txtAmount.getText();
+        Double avalableAmount = Double.valueOf(txtAvailablePayment.getText());
         LocalDate date = datePicker.getValue();
+        Patient patient = pationBO.getPationByID(patientId);
+        Programs programs=null;
+
+        Registration registration =registrationBO.getRegistrationByPatientId(patientId);
+        if (registration != null) {
+            programs= registration.getPrograms();
+        } else {
+            new Alert(Alert.AlertType.WARNING, "Not program Found for Patient!!!").showAndWait();
+        }
 
 
 
-        if (patient == null || patient.isEmpty()) {
+        if (patient == null) {
             new Alert(Alert.AlertType.WARNING, "Please select a patient.").showAndWait();
             return;
         }
@@ -149,9 +162,7 @@ public class PaymentController implements Initializable {
             return;
         }
 
-        String paymentId = java.util.UUID.randomUUID().toString();
-
-        boolean isSaved = paymentBO.save(new PaymentDTO(paymentId, patient, method, amount, date));
+        boolean isSaved = paymentBO.save(new PaymentDTO(id, method, amount, date,avalableAmount,patient,programs));
 
         if (isSaved) {
             new Alert(Alert.AlertType.INFORMATION, "Payment Successful!").showAndWait();
@@ -159,6 +170,7 @@ public class PaymentController implements Initializable {
         } else {
             new Alert(Alert.AlertType.ERROR, "Failed to make payment.").showAndWait();
         }
+
 
     }
 
@@ -192,12 +204,25 @@ public class PaymentController implements Initializable {
 
     @FXML
     void updatePayment(ActionEvent event) {
-        String patient = cmbPatient.getValue();
+        String id = txtPaymentId.getText();
+        String patientId = cmbPatient.getValue();
         String method = cmbPaymentMethod.getValue();
         String amountText = txtAmount.getText();
+        Double avalableAmount = Double.valueOf(txtAvailablePayment.getText());
         LocalDate date = datePicker.getValue();
+        Patient patient = pationBO.getPationByID(patientId);
+        Programs programs=null;
 
-        if (patient == null || patient.isEmpty()) {
+        Registration registration =registrationBO.getRegistrationByPatientId(patientId);
+        if (registration != null) {
+             programs= registration.getPrograms();
+        } else {
+            new Alert(Alert.AlertType.WARNING, "Not program Found for Patient!!!").showAndWait();
+        }
+
+
+
+        if (patient == null) {
             new Alert(Alert.AlertType.WARNING, "Please select a patient.").showAndWait();
             return;
         }
@@ -229,9 +254,7 @@ public class PaymentController implements Initializable {
             return;
         }
 
-        String paymentId = java.util.UUID.randomUUID().toString();
-
-        boolean isSaved = paymentBO.update(new PaymentDTO(paymentId, patient, method, amount, date));
+        boolean isSaved = paymentBO.update(new PaymentDTO(id, method, amount, date,avalableAmount,patient,programs));
 
         if (isSaved) {
             new Alert(Alert.AlertType.INFORMATION, "Payment Successful!").showAndWait();
@@ -284,8 +307,13 @@ public class PaymentController implements Initializable {
         txtPaymentId.setText(paymentBO.generateId());
         cmbPaymentMethod.setItems(FXCollections.observableArrayList("Cash", "Card","Mobile Transfer"));
         colAmount.setCellValueFactory(new PropertyValueFactory<>("amount"));
+        colPatient.setCellValueFactory(new PropertyValueFactory<>("patient"));
+        colPaymentId.setCellValueFactory(new PropertyValueFactory<>("payId"));
+        colDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+        colPaymentMethod.setCellValueFactory(new PropertyValueFactory<>("payMethod"));
 
         loadPatientsIds();
+        loadTableData();
     }
 
     public void ClickedPation(ActionEvent event) {
@@ -315,7 +343,6 @@ public class PaymentController implements Initializable {
         txtAmount.clear();
         txtAvailablePayment.clear();
         txtAllPayment.clear();
-        txtSearch.clear();
 
         cmbPatient.getSelectionModel().clearSelection();
         cmbPaymentMethod.getSelectionModel().clearSelection();
@@ -334,6 +361,13 @@ public class PaymentController implements Initializable {
         cmbPatient.setItems((patientId));
     }
     public void loadTableData(){
+        List<PaymentDTO> paymentDTOS = paymentBO.findAll();
+        ObservableList<PaymentTM> patientTM = FXCollections.observableArrayList();
 
+        for(PaymentDTO paymentDTO : paymentDTOS){
+            PaymentTM paymentTM = new PaymentTM(paymentDTO.getPayId(),paymentDTO.getPayMethod(),paymentDTO.getAmount(),paymentDTO.getDate(),paymentDTO.getAvailabalAmout(),paymentDTO.getPatient());
+            patientTM.add(paymentTM);
+        }
+        paymentTable.setItems(patientTM);
     }
 }

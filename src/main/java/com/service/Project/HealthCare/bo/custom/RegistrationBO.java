@@ -3,6 +3,7 @@ package com.service.Project.HealthCare.bo.custom;
 import com.service.Project.HealthCare.bo.SuperBO;
 import com.service.Project.HealthCare.dto.PatientDTO;
 import com.service.Project.HealthCare.dto.RegitrationDTO;
+import com.service.Project.HealthCare.entity.Programs;
 import com.service.Project.HealthCare.entity.Registration;
 
 import java.util.List;
